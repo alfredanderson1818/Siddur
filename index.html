@@ -1022,6 +1022,199 @@
     margin-top: 4px;
   }
 
+  /* ===== MODAL OVERLAYS (search & bookmarks) ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 15, 8, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 80px 16px 16px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-panel {
+    background: linear-gradient(180deg, #ebdfc4 0%, #ddc9a3 100%);
+    border: 1px solid #8c7649;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px 12px;
+    background: linear-gradient(180deg, #2a2418 0%, #1a1610 100%);
+    color: #d4c190 !important;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 1px solid #8c7649;
+  }
+
+  .modal-close {
+    background: transparent;
+    border: 1px solid rgba(212, 193, 144, 0.4);
+    color: #d4c190;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+  .modal-close:active { transform: scale(0.92); }
+
+  .search-input {
+    margin: 14px 16px;
+    padding: 10px 14px;
+    border: 1px solid #8c7649;
+    border-radius: 4px;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1rem;
+    background: rgba(255, 250, 235, 0.6);
+    color: #2a2418;
+    outline: none;
+  }
+  .search-input:focus {
+    border-color: #5c4220;
+    background: rgba(255, 250, 235, 0.9);
+  }
+
+  .search-results, .bookmarks-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 8px 14px;
+  }
+
+  .search-result, .bookmark-item {
+    padding: 12px 14px;
+    margin: 4px 0;
+    background: rgba(140, 118, 73, 0.08);
+    border-left: 3px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'EB Garamond', serif;
+    color: #2a2418 !important;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .search-result:active, .bookmark-item:active {
+    background: rgba(140, 118, 73, 0.18);
+  }
+
+  .search-result-title {
+    font-weight: 600;
+    color: var(--accent) !important;
+    font-size: 1rem;
+  }
+  .search-result-section {
+    font-size: 0.75rem;
+    color: var(--ink-faint) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-style: italic;
+  }
+
+  .bookmark-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--accent) !important;
+    font-size: 1.05rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .bookmark-remove {
+    background: transparent;
+    border: 1px solid rgba(140, 70, 60, 0.4);
+    color: #8b3d2f;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .bookmark-current {
+    margin: 14px 16px 4px;
+    padding: 12px 14px;
+    background: rgba(232, 200, 120, 0.18);
+    border: 1px dashed #8c7649;
+    border-radius: 4px;
+    font-family: 'EB Garamond', serif;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .bookmark-add-btn {
+    background: var(--accent);
+    color: #ebdfc4 !important;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .bookmark-add-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .bookmarks-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-faint);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .search-empty {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--ink-faint);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+  }
+
+  /* Bookmark indicator on header button when current page is bookmarked */
+  .icon-btn.is-bookmarked {
+    color: #e8c878 !important;
+    background: rgba(232, 200, 120, 0.15);
+  }
+
   .scroll-top-target { scroll-margin-top: 140px; }
 
   /* IMPORTANT: prevent any forced dark mode from outside */
@@ -1042,6 +1235,8 @@
       Siddur Zéjer Dov
     </div>
     <div style="display:flex; gap:8px; position: relative;">
+      <button class="icon-btn" id="searchBtn" title="Buscar" aria-label="Buscar rezo">⌕</button>
+      <button class="icon-btn" id="bookmarkBtn" title="Marcadores" aria-label="Marcadores">☆</button>
       <button class="icon-btn" id="textSizeBtn" title="Tamaño de texto" aria-label="Cambiar tamaño de texto">A</button>
       <div class="size-panel" id="sizePanel" aria-hidden="true">
         <div class="size-panel-header">Tamaño del texto</div>
@@ -1156,6 +1351,10 @@
     <h2>2. Netilat Yadáyim</h2>
     <p class="heb">נְטִילַת יָדַיִם</p>
     <p class="rubric">Después de lavarse las manos por la mañana.</p>
+        <div class="heb-block">
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל נְטִילַת יָדָיִם.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמּוֹצִיא לֶחֶם מִן הָאָרֶץ.</p>
+    </div>
     <p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher kideshánu bemitzvotáv vetzivánu al netilat yadáyim.</p>
     <hr class="divider">
     <p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher yatzar et haadám bejojmá, uvará vo nekavím nekavím, jalulím jalulím. Galui veyadúa lifnéi jisé jevodéja, sheim yipatéaj ejad mehém o yisatém ejad mehém, i efshár lehitkayém velaamód lefanéja. Baruj Atá Adonái, rofé jol basár umafli laasót.</p>
@@ -1172,6 +1371,11 @@
     <p class="rubric">Bendiciones de la mañana.</p>
 
     <p><strong>Sobre la Torá:</strong></p>
+    <div class="heb-block">
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לַעֲסֹק בְּדִבְרֵי תוֹרָה.</p>
+      <p>וְהַעֲרֶב נָא, יְהֹוָה אֱלֹהֵינוּ, אֶת דִּבְרֵי תוֹרָתְךָ בְּפִינוּ וּבְפִי עַמְּךָ בֵּית יִשְׂרָאֵל. וְנִהְיֶה אֲנַחְנוּ וְצֶאֱצָאֵינוּ, וְצֶאֱצָאֵי עַמְּךָ בֵּית יִשְׂרָאֵל, כֻּלָּנוּ יוֹדְעֵי שְׁמֶךָ וְלוֹמְדֵי תוֹרָתֶךָ לִשְׁמָהּ. בָּרוּךְ אַתָּה יְהֹוָה, הַמְלַמֵּד תּוֹרָה לְעַמּוֹ יִשְׂרָאֵל.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בָּחַר בָּנוּ מִכָּל הָעַמִּים וְנָתַן לָנוּ אֶת תּוֹרָתוֹ. בָּרוּךְ אַתָּה יְהֹוָה, נוֹתֵן הַתּוֹרָה.</p>
+    </div>
     <p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher kideshánu bemitzvotáv vetzivánu laasók bedivréi Torá.</p>
 
     <p>Veháarev na, Adonái Elohéinu, et divréi toratejá befínu uvefí amejá beit Israel. Venihyé anájnu vetzeetzaénu, vetzeetzaéi amejá beit Israel, kulánu yodéi shemejá velomdéi toratéja lishmá. Baruj Atá Adonái, hamelaméd Torá leamó Israel.</p>
@@ -1181,6 +1385,23 @@
     <hr class="divider">
 
     <p><strong>Bendiciones del despertar:</strong></p>
+    <div class="heb-block">
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַשֶּׂכְוִי בִינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי גּוֹי.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי עָבֶד.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי אִשָּׁה (לנשים: שֶׁעָשַׂנִי כִּרְצוֹנוֹ).</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, פּוֹקֵחַ עִוְרִים.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַלְבִּישׁ עֲרֻמִּים.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַתִּיר אֲסוּרִים.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹקֵף כְּפוּפִים.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, רוֹקַע הָאָרֶץ עַל הַמָּיִם.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמֵּכִין מִצְעֲדֵי גָבֶר.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשָׂה לִי כָּל צָרְכִּי.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אוֹזֵר יִשְׂרָאֵל בִּגְבוּרָה.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עוֹטֵר יִשְׂרָאֵל בְּתִפְאָרָה.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַיָּעֵף כֹּחַ.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמַּעֲבִיר שֵׁנָה מֵעֵינַי וּתְנוּמָה מֵעַפְעַפָּי.</p>
+    </div>
     <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hanotén lasejví viná lehavjín bein yom uvein láila.</p>
     <p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni goi.</p>
     <p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni áved.</p>
@@ -1467,6 +1688,9 @@
   <article class="prayer" id="sh-aleinu">
     <h2>16. Aleinu</h2>
     <p class="heb">עָלֵינוּ לְשַׁבֵּחַ</p>
+        <div class="heb-block">
+      <p>עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית, שֶׁלֹּא עָשָׂנוּ כְּגוֹיֵי הָאֲרָצוֹת, וְלֹא שָׂמָנוּ כְּמִשְׁפְּחוֹת הָאֲדָמָה. שֶׁלֹּא שָׂם חֶלְקֵנוּ כָּהֶם, וְגֹרָלֵנוּ כְּכָל הֲמוֹנָם. וַאֲנַחְנוּ כּוֹרְעִים וּמִשְׁתַּחֲוִים וּמוֹדִים, לִפְנֵי מֶלֶךְ מַלְכֵי הַמְּלָכִים, הַקָּדוֹשׁ בָּרוּךְ הוּא.</p>
+    </div>
     <p class="lead">Aléinu leshabéaj laAdón hakól, latét guedulá leyotzér bereshít, sheló asánu kegoyéi haaratzót, veló samánu kemishpejót haadamá, sheló sam jelkéinu kahém, vegoraléinu kejol hamonám.</p>
     <p>Vaanájnu korím umishtajavím umodím lifnéi mélej maljéi hamlajím, haKadósh Baruj Hu. ShéHu noté shamáyim veyosed áretz, umoshav yekaró bashamáyim mimaal, ushjinát uzó begovhéi meromím. Hu Elohéinu, éin od. Emét malkéinu, éfes zulató.</p>
     <p>Al ken nekavé Lejá, Adonái Elohéinu, lirót meherá betiféret uzéja, lehaavír gilulím min haáretz, vehaelilím karót yikaretún, letakén olám bemaljút Shadái. Vejol bnei vasár yikreú vishméja, lehafnót eléja kol rishei áretz. Veneemár: Vehayá Adonái lemélej al kol haáretz, bayóm haHu yihyé Adonái Ejád ushmó Ejád.</p>
@@ -1543,6 +1767,10 @@
   <article class="prayer" id="mi-ashrei">
     <h2>1. Ashréi</h2>
     <p class="heb">אַשְׁרֵי</p>
+        <div class="heb-block">
+      <p style="text-align:center; font-weight:500;">אַשְׁרֵי יוֹשְׁבֵי בֵיתֶךָ, עוֹד יְהַלְלוּךָ סֶּלָה. אַשְׁרֵי הָעָם שֶׁכָּכָה לּוֹ, אַשְׁרֵי הָעָם שֶׁיְהֹוָה אֱלֹהָיו.</p>
+      <p>תְּהִלָּה לְדָוִד: אֲרוֹמִמְךָ אֱלוֹהַי הַמֶּלֶךְ, וַאֲבָרְכָה שִׁמְךָ לְעוֹלָם וָעֶד. בְּכָל יוֹם אֲבָרְכֶךָּ, וַאֲהַלְלָה שִׁמְךָ לְעוֹלָם וָעֶד. גָּדוֹל יְהֹוָה וּמְהֻלָּל מְאֹד, וְלִגְדֻלָּתוֹ אֵין חֵקֶר. דּוֹר לְדוֹר יְשַׁבַּח מַעֲשֶׂיךָ, וּגְבוּרֹתֶיךָ יַגִּידוּ. הֲדַר כְּבוֹד הוֹדֶךָ, וְדִבְרֵי נִפְלְאֹתֶיךָ אָשִׂיחָה. וֶעֱזוּז נוֹרְאוֹתֶיךָ יֹאמֵרוּ, וּגְדֻלָּתְךָ אֲסַפְּרֶנָּה. זֵכֶר רַב טוּבְךָ יַבִּיעוּ, וְצִדְקָתְךָ יְרַנֵּנוּ. חַנּוּן וְרַחוּם יְהֹוָה, אֶרֶךְ אַפַּיִם וּגְדָל חָסֶד. טוֹב יְהֹוָה לַכֹּל, וְרַחֲמָיו עַל כָּל מַעֲשָׂיו. יוֹדוּךָ יְהֹוָה כָּל מַעֲשֶׂיךָ, וַחֲסִידֶיךָ יְבָרְכוּכָה. כְּבוֹד מַלְכוּתְךָ יֹאמֵרוּ, וּגְבוּרָתְךָ יְדַבֵּרוּ. לְהוֹדִיעַ לִבְנֵי הָאָדָם גְּבוּרֹתָיו, וּכְבוֹד הֲדַר מַלְכוּתוֹ. מַלְכוּתְךָ מַלְכוּת כָּל עוֹלָמִים, וּמֶמְשַׁלְתְּךָ בְּכָל דּוֹר וָדֹר. סוֹמֵךְ יְהֹוָה לְכָל הַנֹּפְלִים, וְזוֹקֵף לְכָל הַכְּפוּפִים. עֵינֵי כֹל אֵלֶיךָ יְשַׂבֵּרוּ, וְאַתָּה נוֹתֵן לָהֶם אֶת אָכְלָם בְּעִתּוֹ. פּוֹתֵחַ אֶת יָדֶךָ, וּמַשְׂבִּיעַ לְכָל חַי רָצוֹן. צַדִּיק יְהֹוָה בְּכָל דְּרָכָיו, וְחָסִיד בְּכָל מַעֲשָׂיו. קָרוֹב יְהֹוָה לְכָל קֹרְאָיו, לְכֹל אֲשֶׁר יִקְרָאֻהוּ בֶאֱמֶת. רְצוֹן יְרֵאָיו יַעֲשֶׂה, וְאֶת שַׁוְעָתָם יִשְׁמַע וְיוֹשִׁיעֵם. שׁוֹמֵר יְהֹוָה אֶת כָּל אֹהֲבָיו, וְאֵת כָּל הָרְשָׁעִים יַשְׁמִיד. תְּהִלַּת יְהֹוָה יְדַבֶּר פִּי, וִיבָרֵךְ כָּל בָּשָׂר שֵׁם קָדְשׁוֹ לְעוֹלָם וָעֶד. וַאֲנַחְנוּ נְבָרֵךְ יָהּ, מֵעַתָּה וְעַד עוֹלָם, הַלְלוּיָהּ.</p>
+    </div>
     <p class="lead">Ashréi yoshvéi veitéja, od yehaleljá sela. Ashréi haám shekája lo, ashréi haám sheAdonái Eloháv.</p>
     <p>Tehilá leDavid: Aromimjá, Elohái haMélej, vaavarjá Shimjá leolám vaéd. Bejol yom avarjekjá, vaahalelá Shimjá leolám vaéd. Gadól Adonái umhulál meód, veligdulató éin jéker. Dor ledór yeshabaj maaséja, ugvurotéja yagídu. Hadár kevód hodéja, vedivréi nifleotéja asíja. Veezúz noreotéja yoméru, ugdulatejá asaperéna. Zéjer rav tuvjá yabíu, vetzidkatejá yeranénu. Janún verajúm Adonái, érej apáyim ugdol jásed. Tov Adonái lakól, verajamáv al kol maasáv. Yodúja Adonái kol maaséja, vajasidéja yevarjúja. Kevód maljutéja yoméru, ugvuratejá yedabéru. Lehodía livnéi haadám gevurotáv, ujvód hadár maljutó. Maljutéja maljút kol olamím, umemshalt'já bejol dor vadór. Soméj Adonái lejol hanofelím, vezokéf lejol hakefufím. Einéi jol eléja yesabéru, veAtá notén lahém et ojlám beitó. Potéaj et yadéja, umasbía lejol jai ratzón. Tzadík Adonái bejol derajáv, vejasíd bejol maasáv. Karóv Adonái lejol koráv, lejol asher yikraúhu veemét. Retzón yereáv yaasé, veet shavatám yishmá veyoshiém. Shomér Adonái et kol ohaváv, veét kol harshaím yashmíd. Tehilát Adonái yedabér pi, vivaréj kol basár Shem kodshó leolám vaéd.</p>
     <p>Vaanájnu nevaréj Yah, meatá vead olám. Haleluyá.</p>
@@ -1638,6 +1866,9 @@
 
   <article class="prayer" id="mi-aleinu">
     <h2>5. Aleinu</h2>
+        <div class="heb-block">
+      <p>עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית, שֶׁלֹּא עָשָׂנוּ כְּגוֹיֵי הָאֲרָצוֹת, וְלֹא שָׂמָנוּ כְּמִשְׁפְּחוֹת הָאֲדָמָה. שֶׁלֹּא שָׂם חֶלְקֵנוּ כָּהֶם, וְגֹרָלֵנוּ כְּכָל הֲמוֹנָם. וַאֲנַחְנוּ כּוֹרְעִים וּמִשְׁתַּחֲוִים וּמוֹדִים, לִפְנֵי מֶלֶךְ מַלְכֵי הַמְּלָכִים, הַקָּדוֹשׁ בָּרוּךְ הוּא.</p>
+    </div>
     <p class="lead">Aléinu leshabéaj laAdón hakól, latét guedulá leyotzér bereshít, sheló asánu kegoyéi haaratzót, veló samánu kemishpejót haadamá, sheló sam jelkéinu kahém, vegoraléinu kejol hamonám.</p>
     <p>Vaanájnu korím umishtajavím umodím lifnéi mélej maljéi hamlajím, haKadósh Baruj Hu. ShéHu noté shamáyim veyosed áretz, umoshav yekaró bashamáyim mimaal, ushjinát uzó begovhéi meromím. Hu Elohéinu, éin od. Emét malkéinu, éfes zulató.</p>
     <p>Veneemár: Vehayá Adonái lemélej al kol haáretz, bayóm haHu yihyé Adonái Ejád ushmó Ejád.</p>
@@ -1850,6 +2081,9 @@
 
   <article class="prayer" id="ar-aleinu">
     <h2>10. Aleinu</h2>
+        <div class="heb-block">
+      <p>עָלֵינוּ לְשַׁבֵּחַ לַאֲדוֹן הַכֹּל, לָתֵת גְּדֻלָּה לְיוֹצֵר בְּרֵאשִׁית, שֶׁלֹּא עָשָׂנוּ כְּגוֹיֵי הָאֲרָצוֹת, וְלֹא שָׂמָנוּ כְּמִשְׁפְּחוֹת הָאֲדָמָה. שֶׁלֹּא שָׂם חֶלְקֵנוּ כָּהֶם, וְגֹרָלֵנוּ כְּכָל הֲמוֹנָם. וַאֲנַחְנוּ כּוֹרְעִים וּמִשְׁתַּחֲוִים וּמוֹדִים, לִפְנֵי מֶלֶךְ מַלְכֵי הַמְּלָכִים, הַקָּדוֹשׁ בָּרוּךְ הוּא.</p>
+    </div>
     <p class="lead">Aléinu leshabéaj laAdón hakól, latét guedulá leyotzér bereshít, sheló asánu kegoyéi haaratzót, veló samánu kemishpejót haadamá, sheló sam jelkéinu kahém, vegoraléinu kejol hamonám.</p>
     <p>Vaanájnu korím umishtajavím umodím lifnéi mélej maljéi hamlajím, haKadósh Baruj Hu. ShéHu noté shamáyim veyosed áretz, umoshav yekaró bashamáyim mimaal, ushjinát uzó begovhéi meromím. Hu Elohéinu, éin od. Emét malkéinu, éfes zulató.</p>
     <p>Veneemár: Vehayá Adonái lemélej al kol haáretz, bayóm haHu yihyé Adonái Ejád ushmó Ejád.</p>
@@ -1923,6 +2157,11 @@
     <h2>4. Kidush de la Noche</h2>
     <p class="heb">קִדּוּשׁ לֵיל שַׁבָּת</p>
     <p class="rubric">Antes de la cena del viernes, levantando una copa de vino con la mano derecha.</p>
+        <div class="heb-block">
+      <p>יוֹם הַשִּׁשִּׁי. וַיְכֻלּוּ הַשָּׁמַיִם וְהָאָרֶץ וְכָל צְבָאָם. וַיְכַל אֱלֹהִים בַּיּוֹם הַשְּׁבִיעִי מְלַאכְתּוֹ אֲשֶׁר עָשָׂה, וַיִּשְׁבֹּת בַּיּוֹם הַשְּׁבִיעִי מִכָּל מְלַאכְתּוֹ אֲשֶׁר עָשָׂה. וַיְבָרֶךְ אֱלֹהִים אֶת יוֹם הַשְּׁבִיעִי וַיְקַדֵּשׁ אֹתוֹ, כִּי בוֹ שָׁבַת מִכָּל מְלַאכְתּוֹ אֲשֶׁר בָּרָא אֱלֹהִים לַעֲשׂוֹת.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגָּפֶן.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְרָצָה בָנוּ, וְשַׁבַּת קָדְשׁוֹ בְּאַהֲבָה וּבְרָצוֹן הִנְחִילָנוּ, זִכָּרוֹן לְמַעֲשֵׂה בְרֵאשִׁית. כִּי הוּא יוֹם תְּחִלָּה לְמִקְרָאֵי קֹדֶשׁ, זֵכֶר לִיצִיאַת מִצְרָיִם. כִּי בָנוּ בָחַרְתָּ וְאוֹתָנוּ קִדַּשְׁתָּ מִכָּל הָעַמִּים, וְשַׁבַּת קָדְשְׁךָ בְּאַהֲבָה וּבְרָצוֹן הִנְחַלְתָּנוּ. בָּרוּךְ אַתָּה יְהֹוָה, מְקַדֵּשׁ הַשַּׁבָּת.</p>
+    </div>
     <p>Yom hashishí. Vayjulú hashamáyim vehaáretz vejol tzevaám. Vayjál Elohím bayóm hashvií melajtó asher asá, vayishbót bayóm hashvií mikol melajtó asher asá. Vayvárej Elohím et yom hashvií vaykadésh otó, ki vo shavát mikol melajtó asher bará Elohím laasót.</p>
     <p class="rubric">Mira el vino:</p>
     <p>Savrí maranán verabanán verabotái:</p>
@@ -2036,6 +2275,11 @@
     <p class="heb">לְכָה דוֹדִי</p>
     <p class="rubric">Himno central de Kabalat Shabat, compuesto por Rabí Shlomó Halevi Alkabetz (siglo XVI). En la última estrofa todos se ponen de pie y se giran hacia la puerta para recibir a la "Novia Shabat".</p>
 
+        <div class="heb-block">
+      <p style="text-align:center; font-size:1.25rem; font-weight:500;">לְכָה דוֹדִי לִקְרַאת כַּלָּה,<br>פְּנֵי שַׁבָּת נְקַבְּלָה.</p>
+      <p>שָׁמוֹר וְזָכוֹר בְּדִבּוּר אֶחָד, הִשְׁמִיעָנוּ אֵל הַמְיֻחָד. יְהֹוָה אֶחָד וּשְׁמוֹ אֶחָד, לְשֵׁם וּלְתִפְאֶרֶת וְלִתְהִלָּה.</p>
+      <p>בּוֹאִי בְשָׁלוֹם עֲטֶרֶת בַּעְלָהּ, גַּם בְּשִׂמְחָה וּבְצָהֳלָה. תּוֹךְ אֱמוּנֵי עַם סְגֻלָּה, בּוֹאִי כַלָּה, בּוֹאִי כַלָּה.</p>
+    </div>
     <p class="response" style="font-size:1.15rem;">Lejá dodí likrát kalá,<br>penéi Shabat nekabelá.</p>
 
     <p>Shamór vezajór bedibúr ejad, hishmiánu El haMjuyad. Adonái ejad ushmó ejad, leshém ultiféret velithilá. <em>(Lejá dodí…)</em></p>
@@ -2244,7 +2488,15 @@
     <p class="heb">הַבְדָּלָה</p>
     <p class="rubric">Ceremonia de despedida del Shabat, sábado por la noche al ver tres estrellas. Se necesita una copa de vino, especias (besamim) y una vela trenzada.</p>
 
-    <p class="rubric">Versos introductorios — sosteniendo la copa con la mano derecha:</p>
+    <p class="rubric">Versos introductorios — sosteniendo la copa con la mano derecha:</p>    <div class="heb-block">
+      <p style="font-weight:500; text-align:center;">סדר הַבְדָּלָה</p>
+      <p>הִנֵּה אֵל יְשׁוּעָתִי, אֶבְטַח וְלֹא אֶפְחָד, כִּי עָזִּי וְזִמְרָת יָהּ יְהֹוָה, וַיְהִי לִי לִישׁוּעָה.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגָּפֶן.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא מִינֵי בְשָׂמִים.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא מְאוֹרֵי הָאֵשׁ.</p>
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמַּבְדִּיל בֵּין קֹדֶשׁ לְחוֹל, בֵּין אוֹר לְחֹשֶׁךְ, בֵּין יִשְׂרָאֵל לָעַמִּים, בֵּין יוֹם הַשְּׁבִיעִי לְשֵׁשֶׁת יְמֵי הַמַּעֲשֶׂה. בָּרוּךְ אַתָּה יְהֹוָה, הַמַּבְדִּיל בֵּין קֹדֶשׁ לְחוֹל.</p>
+    </div>
+    
     <p>Hiné El yeshuatí, evtáj veló efjád, ki ozí vezimrát Yah Adonái, vayhi li lishuá. Ushavtém máyim besasón mimaaynéi hayeshuá. LAdonái hayeshuá, al ameja birjatéja, sela. Adonái Tzevaót imánu, misgáv lánu Elohéi Yaakóv, sela. Adonái Tzevaót, ashréi adám botéaj baj.</p>
     <p>Adonái hoshía, haMélej yaanéinu veyom korénu. Layehudím haytá orá vesimjá, vesasón vikár — ken tihyé lánu. Kos yeshuót essá, uvshém Adonái ekrá.</p>
 
@@ -2273,6 +2525,30 @@
 </section>
 
 </main>
+
+<!-- ===== SEARCH MODAL ===== -->
+<div class="modal-overlay" id="searchModal" aria-hidden="true">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <span>Buscar rezo</span>
+      <button class="modal-close" id="searchClose" aria-label="Cerrar">×</button>
+    </div>
+    <input type="text" id="searchInput" class="search-input" placeholder="Escribe el nombre del rezo..." autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ===== BOOKMARKS MODAL ===== -->
+<div class="modal-overlay" id="bookmarksModal" aria-hidden="true">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <span>Marcadores</span>
+      <button class="modal-close" id="bookmarksClose" aria-label="Cerrar">×</button>
+    </div>
+    <div class="bookmark-current" id="bookmarkCurrent"></div>
+    <div class="bookmarks-list" id="bookmarksList"></div>
+  </div>
+</div>
 
 <button class="tap-zone left" id="tapLeft" aria-label="Página anterior"></button>
 <button class="tap-zone right" id="tapRight" aria-label="Página siguiente"></button>
@@ -2724,6 +3000,255 @@
   } catch(e) {
     applySize(3);
   }
+
+  // ===== SEARCH FUNCTIONALITY =====
+  const searchBtn = document.getElementById('searchBtn');
+  const searchModal = document.getElementById('searchModal');
+  const searchClose = document.getElementById('searchClose');
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  // Build search index from all prayers
+  let searchIndex = [];
+  function buildSearchIndex() {
+    searchIndex = [];
+    const sectionNames = {
+      'shajarit': 'Shajarit',
+      'minja': 'Minjá',
+      'arvit': 'Arvit',
+      'shabat': 'Shabat'
+    };
+    for (const svc of ['shajarit', 'minja', 'arvit', 'shabat']) {
+      const section = document.getElementById(svc);
+      if (!section) continue;
+      const prayers = section.querySelectorAll('.prayer');
+      prayers.forEach((p, idx) => {
+        const h2 = p.querySelector('h2');
+        const heb = p.querySelector('.heb');
+        if (h2) {
+          searchIndex.push({
+            title: h2.textContent.trim(),
+            hebrew: heb ? heb.textContent.trim() : '',
+            section: sectionNames[svc],
+            service: svc,
+            index: idx,
+            id: p.id
+          });
+        }
+      });
+    }
+  }
+
+  function normalizeSearch(s) {
+    return s.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // remove accents
+      .replace(/[^\w\s]/g, '');
+  }
+
+  function performSearch(query) {
+    if (!query || query.length < 1) {
+      searchResults.innerHTML = '<div class="search-empty">Escribe el nombre de un rezo<br>(ej: Shemá, Kadish, Aleinu, Lejá Dodí)</div>';
+      return;
+    }
+    const q = normalizeSearch(query);
+    const matches = searchIndex.filter(item => {
+      const t = normalizeSearch(item.title);
+      const h = item.hebrew;
+      return t.includes(q) || h.includes(query);
+    });
+    if (matches.length === 0) {
+      searchResults.innerHTML = '<div class="search-empty">No se encontraron rezos<br>con "' + query + '"</div>';
+      return;
+    }
+    searchResults.innerHTML = matches.map(m => `
+      <div class="search-result" data-service="${m.service}" data-index="${m.index}">
+        <div>
+          <div class="search-result-title">${m.title}</div>
+          <div class="search-result-section">${m.section}</div>
+        </div>
+        <div style="font-family:'EB Garamond',serif; color:var(--ink-faint); font-size:0.9rem;">${m.hebrew}</div>
+      </div>
+    `).join('');
+    // Wire up click handlers
+    searchResults.querySelectorAll('.search-result').forEach(el => {
+      el.addEventListener('click', () => {
+        const svc = el.dataset.service;
+        const idx = parseInt(el.dataset.index);
+        searchModal.classList.remove('open');
+        showPage(svc, idx, 'forward');
+      });
+    });
+  }
+
+  searchBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (searchIndex.length === 0) buildSearchIndex();
+    searchModal.classList.add('open');
+    setTimeout(() => searchInput.focus(), 100);
+    performSearch('');
+  });
+  searchClose.addEventListener('click', () => searchModal.classList.remove('open'));
+  searchModal.addEventListener('click', (e) => {
+    if (e.target === searchModal) searchModal.classList.remove('open');
+  });
+  searchInput.addEventListener('input', (e) => performSearch(e.target.value));
+
+  // ===== BOOKMARKS FUNCTIONALITY =====
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  const bookmarksModal = document.getElementById('bookmarksModal');
+  const bookmarksClose = document.getElementById('bookmarksClose');
+  const bookmarksList = document.getElementById('bookmarksList');
+  const bookmarkCurrent = document.getElementById('bookmarkCurrent');
+
+  function getBookmarks() {
+    try {
+      const stored = localStorage.getItem('siddur-bookmarks');
+      return stored ? JSON.parse(stored) : [];
+    } catch(e) { return []; }
+  }
+
+  function saveBookmarks(arr) {
+    try { localStorage.setItem('siddur-bookmarks', JSON.stringify(arr)); } catch(e) {}
+  }
+
+  function isCurrentBookmarked() {
+    const ded = document.getElementById('dedication');
+    if (ded.classList.contains('current')) return false;
+    const bookmarks = getBookmarks();
+    return bookmarks.some(b => b.service === currentService && b.index === currentPageIndex);
+  }
+
+  function updateBookmarkButton() {
+    if (isCurrentBookmarked()) {
+      bookmarkBtn.classList.add('is-bookmarked');
+      bookmarkBtn.textContent = '★';
+    } else {
+      bookmarkBtn.classList.remove('is-bookmarked');
+      bookmarkBtn.textContent = '☆';
+    }
+  }
+
+  function getCurrentPageInfo() {
+    const ded = document.getElementById('dedication');
+    if (ded.classList.contains('current')) return null;
+    const pages = pagesByService[currentService];
+    if (!pages || !pages[currentPageIndex]) return null;
+    const h2 = pages[currentPageIndex].querySelector('h2');
+    const sectionNames = { shajarit: 'Shajarit', minja: 'Minjá', arvit: 'Arvit', shabat: 'Shabat' };
+    return {
+      title: h2 ? h2.textContent.trim() : 'Página ' + (currentPageIndex + 1),
+      section: sectionNames[currentService] || currentService,
+      service: currentService,
+      index: currentPageIndex
+    };
+  }
+
+  function renderBookmarks() {
+    const bookmarks = getBookmarks();
+    const current = getCurrentPageInfo();
+
+    // Top section: current page with add/remove button
+    if (current) {
+      const isMarked = bookmarks.some(b => b.service === current.service && b.index === current.index);
+      bookmarkCurrent.innerHTML = `
+        <div>
+          <div style="font-style:normal; color:var(--accent); font-weight:600;">${current.title}</div>
+          <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em; margin-top:2px;">${current.section} · página actual</div>
+        </div>
+        <button class="bookmark-add-btn" id="addRemoveBtn" ${isMarked ? 'data-action="remove"' : 'data-action="add"'}>${isMarked ? 'Quitar' : 'Marcar'}</button>
+      `;
+      const btn = document.getElementById('addRemoveBtn');
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        let bookmarks = getBookmarks();
+        if (action === 'add') {
+          bookmarks.push(current);
+        } else {
+          bookmarks = bookmarks.filter(b => !(b.service === current.service && b.index === current.index));
+        }
+        saveBookmarks(bookmarks);
+        renderBookmarks();
+        updateBookmarkButton();
+      });
+    } else {
+      bookmarkCurrent.innerHTML = '<div style="text-align:center; width:100%;">Estás en la dedicatoria</div>';
+    }
+
+    // List of all bookmarks
+    if (bookmarks.length === 0) {
+      bookmarksList.innerHTML = '<div class="bookmarks-empty">No tienes marcadores aún.<br><br>Mientras estés en cualquier rezo,<br>presiona "Marcar" arriba para guardarlo aquí.</div>';
+      return;
+    }
+    bookmarksList.innerHTML = bookmarks.map((b, i) => `
+      <div class="bookmark-item">
+        <div data-go="${i}" style="flex:1; cursor:pointer;">
+          <div class="bookmark-item-title">${b.title}</div>
+          <div class="search-result-section" style="margin-top:2px;">${b.section}</div>
+        </div>
+        <button class="bookmark-remove" data-remove="${i}" aria-label="Eliminar marcador">×</button>
+      </div>
+    `).join('');
+
+    bookmarksList.querySelectorAll('[data-go]').forEach(el => {
+      el.addEventListener('click', () => {
+        const i = parseInt(el.dataset.go);
+        const bm = getBookmarks()[i];
+        if (bm) {
+          bookmarksModal.classList.remove('open');
+          showPage(bm.service, bm.index, 'forward');
+        }
+      });
+    });
+    bookmarksList.querySelectorAll('[data-remove]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const i = parseInt(el.dataset.remove);
+        let bookmarks = getBookmarks();
+        bookmarks.splice(i, 1);
+        saveBookmarks(bookmarks);
+        renderBookmarks();
+        updateBookmarkButton();
+      });
+    });
+  }
+
+  bookmarkBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    bookmarksModal.classList.add('open');
+    renderBookmarks();
+  });
+  bookmarksClose.addEventListener('click', () => bookmarksModal.classList.remove('open'));
+  bookmarksModal.addEventListener('click', (e) => {
+    if (e.target === bookmarksModal) bookmarksModal.classList.remove('open');
+  });
+
+  // Update bookmark button when page changes
+  const originalShowPage = showPage;
+  showPage = function(service, index, direction) {
+    originalShowPage(service, index, direction);
+    setTimeout(updateBookmarkButton, 50);
+  };
+  const originalShowDedication = showDedication;
+  showDedication = function() {
+    originalShowDedication();
+    setTimeout(updateBookmarkButton, 50);
+  };
+
+  // Initial state
+  setTimeout(() => {
+    buildSearchIndex();
+    updateBookmarkButton();
+  }, 200);
+
+  // Close modals on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      searchModal.classList.remove('open');
+      bookmarksModal.classList.remove('open');
+      sizePanel.classList.remove('open');
+    }
+  });
 </script>
 
 <script>
