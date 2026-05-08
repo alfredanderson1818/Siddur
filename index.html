@@ -2717,9 +2717,41 @@
   function updateHebrewDateBar() {
     try {
       const today = new Date();
-      const hd = getHebrewDate(today);
-      const hebStr = hebrewNumeral(hd.day) + ' ' + HEBREW_MONTHS_HE[hd.month - 1] + ' ' + hebrewNumeral(hd.year % 1000);
-      const spanStr = hd.day + ' de ' + HEBREW_MONTHS[hd.month - 1] + ' ' + (5000 + (hd.year % 1000));
+
+      // Use native iOS/Safari Hebrew calendar — always correct
+      const hebFormatter = new Intl.DateTimeFormat('he-u-ca-hebrew', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      const hebPartsArr = hebFormatter.formatToParts(today);
+
+      // Get day number (Latin), month name in Hebrew, year number
+      let hebDay = '', hebMonth = '', hebYear = '';
+      for (const p of hebPartsArr) {
+        if (p.type === 'day') hebDay = p.value;
+        if (p.type === 'month') hebMonth = p.value;
+        if (p.type === 'year') hebYear = p.value;
+      }
+
+      // Build Hebrew string with Hebrew numerals for day and short year
+      const dayHe = hebrewNumeral(parseInt(hebDay));
+      // Year: keep last 3 digits in Hebrew numerals (e.g. 5786 -> תשפ״ו)
+      const yearNum = parseInt(hebYear);
+      const yearShort = yearNum - 5000; // e.g. 786
+      const yearHe = hebrewYear(yearShort);
+      const hebStr = dayHe + ' ' + hebMonth + ' ' + yearHe;
+
+      // Spanish version: try to map Hebrew month name to Spanish phonetic
+      const monthMap = {
+        'תשרי': 'Tishréi', 'חשון': 'Jeshván', 'מרחשון': 'Jeshván',
+        'כסלו': 'Kislév', 'טבת': 'Tevet', 'שבט': 'Shvat',
+        'אדר': 'Adár', 'אדר א׳': 'Adár I', 'אדר ב׳': 'Adár II',
+        'ניסן': 'Nisán', 'אייר': 'Iyar', 'סיון': 'Siván',
+        'תמוז': 'Tamúz', 'אב': 'Av', 'אלול': 'Elul'
+      };
+      const spanMonth = monthMap[hebMonth] || hebMonth;
+      const spanStr = hebDay + ' de ' + spanMonth + ' ' + hebYear;
 
       const hebEl = document.getElementById('hdHebrew');
       const spanEl = document.getElementById('hdSpanish');
@@ -2728,15 +2760,73 @@
       if (hebEl) hebEl.textContent = hebStr;
       if (spanEl) spanEl.textContent = spanStr;
 
+      // Compute special day using getSpecialDay - but we need Hebrew month/day numbers
+      // Build hd object compatible with our existing getSpecialDay function
+      const monthNumberMap = {
+        'ניסן': 1, 'אייר': 2, 'סיון': 3, 'תמוז': 4, 'אב': 5, 'אלול': 6,
+        'תשרי': 7, 'חשון': 8, 'מרחשון': 8, 'כסלו': 9, 'טבת': 10,
+        'שבט': 11, 'אדר': 12, 'אדר א׳': 12, 'אדר ב׳': 13
+      };
+      const hd = {
+        year: yearNum,
+        month: monthNumberMap[hebMonth] || 1,
+        day: parseInt(hebDay)
+      };
+
       const event = getSpecialDay(hd, today);
-      const seasonal = isWinter(hd) ? 'Mashív harúaj umorid hagáshem' : 'Morid hatal';
 
       if (eventEl) {
-        eventEl.textContent = event ? (event + ' · ' + seasonal) : seasonal;
+        eventEl.textContent = event ? event : '';
       }
     } catch(e) {
       console.error('Hebrew date error:', e);
+      // Hide bar if date can't be computed
+      const eventEl = document.getElementById('hdEvent');
+      if (eventEl) eventEl.textContent = '';
     }
+  }
+
+  // Helper: convert year number (e.g. 786) to Hebrew letters with quotes (תשפ״ו)
+  function hebrewYear(n) {
+    let result = '';
+    if (n >= 100) {
+      // Build hundreds part - Hebrew uses up to 400 then combines
+      let h = n;
+      while (h >= 400) {
+        result += 'ת';
+        h -= 400;
+      }
+      if (h >= 100) {
+        const hundredsLetter = { 100: 'ק', 200: 'ר', 300: 'ש' };
+        result += hundredsLetter[Math.floor(h / 100) * 100] || '';
+        h = h % 100;
+      }
+      n = h;
+    }
+    if (n >= 10) {
+      // Special cases for 15, 16
+      if (n === 15) {
+        result += 'טו';
+        n = 0;
+      } else if (n === 16) {
+        result += 'טז';
+        n = 0;
+      } else {
+        const tensLetter = { 10: 'י', 20: 'כ', 30: 'ל', 40: 'מ', 50: 'נ', 60: 'ס', 70: 'ע', 80: 'פ', 90: 'צ' };
+        result += tensLetter[Math.floor(n / 10) * 10] || '';
+        n = n % 10;
+      }
+    }
+    if (n > 0) {
+      result += HEBREW_NUMERALS[n] || '';
+    }
+    // Insert geresh/gershayim
+    if (result.length > 1) {
+      result = result.slice(0, -1) + '״' + result.slice(-1);
+    } else if (result.length === 1) {
+      result += '׳';
+    }
+    return result;
   }
 
   updateHebrewDateBar();
