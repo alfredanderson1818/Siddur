@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -28,1022 +27,1027 @@
     --accent: #5c4220;
   }
 
-- {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
   }
 
-html {
-scroll-behavior: smooth;
-background: #1a1610;
-overflow-x: hidden;
-}
-
-/* ANTIQUE BOOK PAGE - simplified for performance */
-body {
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif;
-color: var(–ink) !important;
-line-height: 1.7;
-font-size: 18px;
-min-height: 100vh;
--webkit-font-smoothing: antialiased;
-background-color: var(–paper) !important;
-background-image: linear-gradient(180deg, #ebdfc4 0%, #e4d6b8 50%, #ddc9a3 100%);
-overflow-x: hidden;
-}
-
-/* Page-flip animation when changing tabs */
-@keyframes flipPage {
-0% {
-opacity: 0;
-transform: translateX(40px) rotateY(12deg);
-filter: brightness(0.85);
-}
-50% {
-opacity: 0.7;
-filter: brightness(0.95);
-}
-100% {
-opacity: 1;
-transform: translateX(0) rotateY(0);
-filter: brightness(1);
-}
-}
-
-/* ===== PAGE-BASED VIEW (no scrolling, tap to turn pages) ===== */
-html, body {
-overflow: hidden !important;
-height: 100vh;
-height: 100dvh;
-margin: 0;
-padding: 0;
-}
-
-main {
-padding: 0 !important;
-max-width: 100% !important;
-}
-
-.service {
-display: block;
-position: static;
-}
-.service > .ornament,
-.service > .title-frame,
-.service > .toc {
-display: none !important;
-}
-
-/* Each prayer is now a “page” */
-.prayer {
-display: none;
-position: fixed;
-top: 145px;
-left: 0; right: 0; bottom: 0;
-margin: 0 !important;
-padding: 24px 26px 90px;
-overflow-y: auto;
-overflow-x: hidden;
--webkit-overflow-scrolling: touch;
-background-color: var(–paper);
-background-image: linear-gradient(180deg, #ebdfc4 0%, #e4d6b8 50%, #ddc9a3 100%);
-scrollbar-width: none;
-z-index: 20;
-}
-.prayer::-webkit-scrollbar { display: none; }
-
-.prayer.current {
-display: block;
-animation: simpleFade 0.2s ease;
-z-index: 2;
-}
-@keyframes simpleFade {
-from { opacity: 0; }
-to { opacity: 1; }
-}
-.prayer.flip-out-left,
-.prayer.flip-out-right {
-display: none !important;
-}
-
-@keyframes pageFlipIn {
-0% {
-opacity: 0;
-transform: translateX(20px) rotateY(8deg);
-filter: brightness(0.9);
-}
-100% {
-opacity: 1;
-transform: translateX(0) rotateY(0);
-filter: brightness(1);
-}
-}
-
-@keyframes pageFlipOutLeft {
-0% {
-opacity: 1;
-transform: translateX(0) rotateY(0);
-}
-100% {
-opacity: 0;
-transform: translateX(-30px) rotateY(-8deg);
-}
-}
-
-@keyframes pageFlipOutRight {
-0% {
-opacity: 1;
-transform: translateX(0) rotateY(0);
-}
-100% {
-opacity: 0;
-transform: translateX(30px) rotateY(8deg);
-}
-}
-
-/* Page header (prayer title with ornamental frame inside the page) */
-.prayer h2 {
-text-align: center !important;
-margin-top: 8px !important;
-margin-bottom: 4px !important;
-padding-bottom: 8px;
-border-bottom: 1px solid var(–rule);
-}
-.prayer .heb {
-text-align: center !important;
-direction: rtl;
-margin-bottom: 16px !important;
-}
-
-/* Page footer - page number indicator */
-.page-folio {
-position: fixed;
-bottom: 0;
-left: 0;
-right: 0;
-text-align: center;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.78rem;
-font-style: italic;
-color: var(–ink-faint);
-letter-spacing: 0.2em;
-pointer-events: none;
-z-index: 60;
-padding: 14px 0 16px;
-background: linear-gradient(180deg, transparent 0%, var(–paper-deep) 60%);
-}
-
-/* Tap zones — only at the very edges, narrow strip */
-.tap-zone {
-position: fixed;
-top: 145px;
-bottom: 30px;
-width: 32px;
-z-index: 50;
-cursor: pointer;
-background: transparent;
-border: none;
-padding: 0;
-}
-.tap-zone.left { left: 0; }
-.tap-zone.right { right: 0; }
-
-/* Visual hint - subtle arrow on tap zones */
-.tap-zone::before {
-content: ‘’;
-position: absolute;
-top: 50%;
-width: 8px;
-height: 8px;
-border-top: 1.5px solid rgba(140, 118, 73, 0.35);
-border-right: 1.5px solid rgba(140, 118, 73, 0.35);
-transform: translateY(-50%) rotate(45deg);
-}
-.tap-zone.left::before {
-left: 12px;
-transform: translateY(-50%) rotate(-135deg);
-}
-.tap-zone.right::before {
-right: 12px;
-}
-
-/* Floating controls hidden in page mode */
-.floating-controls { display: none !important; }
-
-/* DEDICATION PAGE */
-.dedication-page {
-text-align: center;
-padding: 24px 24px 90px !important;
-display: none;
-position: fixed;
-top: 145px;
-left: 0; right: 0; bottom: 0;
-overflow-y: auto;
--webkit-overflow-scrolling: touch;
-background-color: var(–paper);
-background-image: linear-gradient(180deg, #ebdfc4 0%, #e4d6b8 50%, #ddc9a3 100%);
-scrollbar-width: none;
-z-index: 30;
-}
-.dedication-page::-webkit-scrollbar { display: none; }
-
-.dedication-page.current {
-display: block;
-animation: pageFlipIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.ded-frame {
-border: 1px solid var(–rule);
-padding: 38px 24px 34px;
-margin: 18px auto;
-max-width: 440px;
-position: relative;
-background: linear-gradient(180deg, rgba(232, 220, 192, 0.5) 0%, rgba(220, 200, 160, 0.5) 100%);
-box-shadow:
-inset 0 0 0 1px rgba(140, 118, 73, 0.3),
-0 1px 3px rgba(80, 50, 20, 0.08);
-}
-.ded-frame::before, .ded-frame::after {
-content: ‘’;
-position: absolute;
-left: 10px; right: 10px;
-height: 1px;
-background: var(–rule);
-opacity: 0.45;
-}
-.ded-frame::before { top: 5px; }
-.ded-frame::after { bottom: 5px; }
-
-/* Hebrew opening line */
-.ded-hebrew-large {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.5rem;
-color: var(–ink-soft);
-direction: rtl;
-letter-spacing: 0.02em;
-margin-bottom: 6px;
-font-weight: 500;
-}
-
-.ded-translit {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.85rem;
-font-style: italic;
-color: var(–ink-faint);
-letter-spacing: 0.18em;
-text-transform: lowercase;
-margin-bottom: 10px;
-}
-
-.ded-rule-thin {
-border: none;
-height: 1px;
-background: var(–rule);
-width: 50%;
-margin: 18px auto;
-opacity: 0.5;
-}
-
-/* Main name */
-.ded-name-hebrew {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 2rem;
-font-weight: 600;
-color: var(–accent);
-direction: rtl;
-letter-spacing: 0.03em;
-line-height: 1.25;
-margin: 6px 0 12px;
-}
-
-.ded-name-translit {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.4rem;
-font-style: italic;
-color: var(–ink-soft);
-letter-spacing: 0.02em;
-line-height: 1.35;
-margin-bottom: 4px;
-}
-
-.ded-zl {
-font-size: 0.78rem;
-font-style: italic;
-color: var(–ink-faint);
-letter-spacing: 0.1em;
-display: inline-block;
-margin-top: 4px;
-}
-
-/* Blessing */
-.ded-blessing-hebrew {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.4rem;
-color: var(–ink-soft);
-direction: rtl;
-letter-spacing: 0.02em;
-line-height: 1.5;
-margin: 8px 0 8px;
-font-weight: 500;
-}
-
-.ded-blessing-translit {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.95rem;
-font-style: italic;
-color: var(–ink-faint);
-letter-spacing: 0.04em;
-line-height: 1.5;
-margin-bottom: 12px;
-}
-
-.ded-blessing-trans {
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif;
-font-size: 1rem;
-color: var(–ink-soft);
-line-height: 1.55;
-font-style: italic;
-margin: 10px auto 0;
-max-width: 320px;
-}
-
-.ded-ornament {
-color: var(–rule);
-margin: 24px 0 18px;
-letter-spacing: 0.6em;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.95rem;
-opacity: 0.7;
-}
-
-/* Personal message from son */
-.ded-personal {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.05rem;
-font-style: italic;
-color: var(–accent);
-line-height: 1.6;
-margin: 0 auto;
-max-width: 340px;
-letter-spacing: 0.01em;
-}
-
-/* Family dedication — elegant prose */
-.ded-family {
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif;
-font-size: 0.95rem;
-color: var(–ink-soft);
-font-style: italic;
-line-height: 1.7;
-margin: 6px auto 0;
-max-width: 380px;
-text-align: center;
-letter-spacing: 0.01em;
-}
-
-/* ===== HEADER ===== */
-header.top {
-position: sticky;
-top: 0;
-z-index: 100;
-background: linear-gradient(180deg, #2a2418 0%, #1a1610 100%);
-border-bottom: 1px solid #8c7649;
-padding: 9px 18px;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.top-inner {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 12px;
-max-width: 720px;
-margin: 0 auto;
-}
-
-.brand {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-weight: 600;
-font-size: 1.25rem;
-letter-spacing: 0.04em;
-color: #d4c190 !important;
-line-height: 1;
-font-style: italic;
-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.brand small {
-display: block;
-font-size: 0.6rem;
-letter-spacing: 0.4em;
-color: #a8956a !important;
-text-transform: uppercase;
-margin-top: 6px;
-font-weight: 400;
-font-style: normal;
-}
-
-.icon-btn {
-background: rgba(212, 193, 144, 0.08);
-border: 1px solid #8c7649;
-color: #d4c190 !important;
-width: 34px;
-height: 34px;
-border-radius: 50%;
-cursor: pointer;
-display: grid;
-place-items: center;
-font-size: 0.85rem;
-font-weight: 600;
-transition: all 0.2s;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-}
-.icon-btn:active {
-transform: scale(0.92);
-background: rgba(212, 193, 144, 0.2);
-}
-
-/* Hebrew date bar */
-.hebrew-date-bar {
-background: linear-gradient(180deg, #1a1610 0%, #0f0d08 100%);
-border-bottom: 1px solid rgba(140, 118, 73, 0.4);
-padding: 6px 14px;
-text-align: center;
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 0.78rem;
-color: #b8a472 !important;
-letter-spacing: 0.04em;
-line-height: 1.4;
-position: sticky;
-top: 90px;
-z-index: 99;
-}
-
-.hd-hebrew {
-color: #d4c190 !important;
-font-weight: 500;
-font-size: 0.85rem;
-direction: rtl;
-unicode-bidi: isolate;
-}
-
-.hd-sep {
-color: #6b5a35 !important;
-margin: 0 6px;
-}
-
-.hd-spanish {
-color: #b8a472 !important;
-font-style: italic;
-}
-
-.hd-event {
-display: block;
-color: #e8c878 !important;
-font-size: 0.74rem;
-letter-spacing: 0.18em;
-text-transform: uppercase;
-margin-top: 2px;
-font-style: italic;
-}
-.hd-event:empty { display: none; }
-
-/* ===== TAB NAV ===== */
-nav.tabs {
-display: flex;
-background: #d8c8a0 !important;
-border-bottom: 1px solid #8c7649;
-position: sticky;
-top: 90px;
-z-index: 99;
-box-shadow: 0 2px 8px rgba(60, 40, 10, 0.15);
-}
-
-nav.tabs button {
-flex: 1;
-padding: 12px 4px;
-background: transparent;
-border: none;
-border-bottom: 3px solid transparent;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.92rem;
-font-weight: 600;
-color: #6b5a35 !important;
-cursor: pointer;
-letter-spacing: 0.1em;
-transition: all 0.25s;
-text-transform: uppercase;
-font-style: italic;
-}
-
-nav.tabs button.active {
-color: #5c4220 !important;
-border-bottom-color: #5c4220;
-background: var(–paper) !important;
-}
-
-/* ===== MAIN ===== */
-main {
-position: relative;
-z-index: 2;
-max-width: 720px;
-margin: 0 auto;
-padding: 28px 26px 100px;
-}
-
-/* (old service display rules removed - now handled by page system above) */
-
-@keyframes fadeIn {
-from { opacity: 0; transform: translateY(8px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== SERVICE TITLE — like illuminated manuscript ===== */
-.service-title {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 3rem;
-font-weight: 600;
-color: var(–accent) !important;
-text-align: center;
-margin: 8px 0 4px;
-letter-spacing: 0.02em;
-line-height: 1;
-text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5);
-}
-
-.service-sub {
-text-align: center;
-color: var(–ink-soft) !important;
-font-style: italic;
-font-size: 1.05rem;
-margin-bottom: 6px;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-}
-
-.ornament {
-text-align: center;
-color: var(–rule) !important;
-margin: 18px 0 28px;
-font-size: 0.95rem;
-letter-spacing: 0.6em;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-}
-
-/* Decorative double-line frame around title */
-.title-frame {
-border-top: 1px solid var(–rule);
-border-bottom: 1px solid var(–rule);
-padding: 18px 0 20px;
-margin: 0 0 32px;
-position: relative;
-}
-.title-frame::before,
-.title-frame::after {
-content: ‘’;
-position: absolute;
-left: 0; right: 0;
-height: 1px;
-background: var(–rule);
-}
-.title-frame::before { top: 4px; }
-.title-frame::after { bottom: 4px; }
-
-/* ===== TOC ===== */
-.toc {
-background: linear-gradient(180deg, #ddc9a3 0%, #d4bf95 100%);
-border: 1px solid var(–rule);
-border-radius: 2px;
-padding: 18px 22px 20px;
-margin-bottom: 38px;
-box-shadow:
-inset 0 0 0 1px rgba(140, 118, 73, 0.4),
-0 2px 6px rgba(80, 50, 20, 0.1);
-}
-
-.toc-title {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.7rem;
-letter-spacing: 0.35em;
-text-transform: uppercase;
-color: var(–ink-soft) !important;
-margin-bottom: 12px;
-font-weight: 600;
-text-align: center;
-border-bottom: 1px solid var(–rule);
-padding-bottom: 8px;
-}
-
-.toc ol {
-list-style: none;
-counter-reset: toc;
-columns: 1;
-}
-
-.toc li {
-counter-increment: toc;
-padding: 5px 0;
-font-size: 0.98rem;
-color: var(–ink) !important;
-}
-
-.toc li::before {
-content: counter(toc, decimal-leading-zero) ‘.’;
-color: var(–accent) !important;
-font-weight: 600;
-margin-right: 10px;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-style: italic;
-}
-
-.toc a {
-color: var(–ink) !important;
-text-decoration: none;
-border-bottom: 1px dotted var(–rule);
-}
-.toc a:active { color: var(–accent) !important; }
-
-/* ===== PRAYER SECTIONS ===== */
-.prayer {
-margin: 42px 0;
-scroll-margin-top: 140px;
-}
-
-.prayer h2 {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.7rem;
-font-weight: 600;
-color: var(–accent) !important;
-margin-bottom: 4px;
-line-height: 1.15;
-letter-spacing: 0.01em;
-}
-
-.prayer .heb {
-font-size: 1.25rem;
-color: var(–ink-faint) !important;
-margin-bottom: 16px;
-letter-spacing: 0.02em;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-direction: rtl;
-text-align: right;
-font-weight: 500;
-}
-
-.prayer .rubric {
-font-size: 0.92rem;
-color: var(–ink-soft) !important;
-font-style: italic;
-border-left: 2px solid var(–rule);
-padding: 8px 0 8px 14px;
-margin: 12px 0 18px;
-background: rgba(140, 118, 73, 0.05);
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif;
-}
-
-.prayer p {
-margin: 14px 0;
-text-align: justify;
-hyphens: auto;
-color: var(–ink) !important;
-}
-
-.prayer p strong {
-color: var(–ink-soft) !important;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.08em;
-letter-spacing: 0.02em;
-}
-
-.prayer p em {
-color: var(–ink-soft) !important;
-}
-
-/* DROPCAP - illuminated first letter */
-.prayer p.lead::first-letter {
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 4em;
-float: left;
-line-height: 0.85;
-padding: 8px 10px 0 0;
-color: var(–accent) !important;
-font-weight: 600;
-text-shadow: 1px 1px 0 rgba(140, 118, 73, 0.3);
-}
-
-.response {
-text-align: center;
-font-style: italic;
-color: var(–accent) !important;
-font-weight: 500;
-margin: 18px 0;
-font-size: 1.08rem;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-padding: 10px 16px;
-border-top: 1px solid var(–rule);
-border-bottom: 1px solid var(–rule);
-background: rgba(140, 118, 73, 0.06);
-}
-
-/* Inline Hebrew alongside phonetic */
-.heb-block {
-direction: rtl;
-text-align: right;
-font-family: ‘EB Garamond’, ‘Cormorant Garamond’, Georgia, serif;
-font-size: 1.15rem;
-line-height: 1.95;
-color: var(–ink) !important;
-margin: 14px 0 8px;
-padding: 14px 18px;
-background: rgba(140, 118, 73, 0.07);
-border-right: 2px solid var(–rule);
-border-radius: 2px;
-}
-.heb-block p {
-direction: rtl;
-text-align: right;
-margin: 6px 0;
-color: var(–ink) !important;
-font-size: 1.15rem;
-}
-.heb-large {
-font-size: 1.4rem !important;
-text-align: center !important;
-font-weight: 500;
-}
-
-.divider {
-border: none;
-text-align: center;
-margin: 32px 0;
-height: 1.2em;
-position: relative;
-}
-.divider::before {
-content: ‘·   ·   ·’;
-color: var(–rule) !important;
-letter-spacing: 0.4em;
-font-size: 1rem;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-}
-
-/* ===== COMMENTARY AS FOOTNOTES ===== */
-.comentario {
-margin: 14px 0 8px;
-padding: 10px 0 6px 16px;
-border-left: 1px solid var(–rule);
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif;
-font-size: 0.82rem;
-color: var(–ink-soft) !important;
-line-height: 1.55;
-font-style: italic;
-opacity: 0.85;
-}
-
-.comentario::before {
-content: ‘Nota.’;
-display: inline;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-font-size: 0.78rem;
-font-weight: 600;
-letter-spacing: 0.15em;
-color: var(–accent) !important;
-text-transform: uppercase;
-margin-right: 8px;
-font-style: normal;
-}
-
-.comentario p {
-display: inline;
-margin: 0 !important;
-color: var(–ink-soft) !important;
-text-align: left !important;
-font-size: 0.82rem !important;
-font-style: italic;
-}
-
-.comentario p::after {
-content: ’ ’;
-}
-
-.comentario p + p::before {
-content: ’— ’;
-color: var(–rule);
-font-style: normal;
-}
-
-.comentario strong {
-color: var(–ink-soft) !important;
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif !important;
-font-weight: 600 !important;
-font-size: 1em !important;
-letter-spacing: normal !important;
-font-style: italic;
-}
-
-.comentario em {
-font-style: normal;
-color: var(–ink-soft) !important;
-}
-
-/* Costumbre / nota práctica */
-.costumbre {
-background: transparent;
-border: none;
-padding: 4px 0;
-margin: 6px 0;
-font-family: ‘EB Garamond’, Georgia, ‘Times New Roman’, serif;
-font-size: 0.82rem;
-color: var(–ink-soft) !important;
-font-style: italic;
-display: inline;
-}
-
-.costumbre::before {
-content: ‘’;
-margin-right: 0;
-}
-
-/* ===== FLOATING CONTROLS ===== */
-.floating-controls {
-position: fixed;
-bottom: 22px;
-right: 22px;
-display: flex;
-flex-direction: column;
-gap: 10px;
-z-index: 95;
-}
-
-.fc-btn {
-width: 48px;
-height: 48px;
-border-radius: 50%;
-background: linear-gradient(180deg, #5c4220 0%, #3d2c15 100%);
-color: #e8dcc0 !important;
-border: 1px solid #8c7649;
-box-shadow:
-0 4px 14px rgba(40, 25, 8, 0.4),
-inset 0 1px 0 rgba(232, 220, 192, 0.2);
-cursor: pointer;
-font-size: 1.1rem;
-font-weight: 600;
-display: grid;
-place-items: center;
-transition: transform 0.2s;
-font-family: ‘Cormorant Garamond’, Georgia, serif;
-}
-.fc-btn:active { transform: scale(0.9); }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
-.service-title { font-size: 2.4rem; }
-body { font-size: 17px; }
-main { padding: 22px 20px 90px; }
-.prayer h2 { font-size: 1.45rem; }
-.prayer .heb { font-size: 1.15rem; }
-.brand { font-size: 1.4rem; }
-}
-
-/* Bigger text accessibility */
-/* Text size — 7 levels of granularity */
-body { font-size: 18px; transition: font-size 0.25s ease; }
-body.text-size-0 { font-size: 14px; }
-body.text-size-1 { font-size: 16px; }
-body.text-size-2 { font-size: 18px; }
-body.text-size-3 { font-size: 20px; }
-body.text-size-4 { font-size: 22px; }
-body.text-size-5 { font-size: 25px; }
-body.text-size-6 { font-size: 28px; }
-
-/* Size adjustment panel */
-.size-panel {
-position: fixed;
-top: 56px;
-right: 12px;
-background: linear-gradient(180deg, #2a2418 0%, #1a1610 100%);
-border: 1px solid #8c7649;
-border-radius: 8px;
-padding: 14px 16px 12px;
-width: 240px;
-z-index: 200;
-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-display: none;
-animation: panelFadeIn 0.18s ease;
-}
-.size-panel.open { display: block; }
-
-@keyframes panelFadeIn {
-from { opacity: 0; transform: translateY(-6px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-.size-panel-header {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 0.7rem;
-letter-spacing: 0.3em;
-text-transform: uppercase;
-color: #b8a472 !important;
-text-align: center;
-margin-bottom: 12px;
-font-weight: 600;
-font-style: italic;
-padding-bottom: 8px;
-border-bottom: 1px solid rgba(140, 118, 73, 0.3);
-}
-
-.size-slider-wrap {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-bottom: 10px;
-}
-
-.size-label-small,
-.size-label-large {
-color: #d4c190 !important;
-font-family: ‘Cormorant Garamond’, serif;
-font-weight: 600;
-flex-shrink: 0;
-user-select: none;
-}
-.size-label-small { font-size: 0.85rem; }
-.size-label-large { font-size: 1.5rem; }
-
-/* Custom slider */
-.size-slider {
-flex: 1;
--webkit-appearance: none;
-appearance: none;
-height: 4px;
-background: linear-gradient(90deg, #5c4220 0%, #d4c190 100%);
-border-radius: 4px;
-outline: none;
-cursor: pointer;
-}
-
-.size-slider::-webkit-slider-thumb {
--webkit-appearance: none;
-appearance: none;
-width: 22px;
-height: 22px;
-border-radius: 50%;
-background: #e8c878;
-border: 2px solid #2a2418;
-cursor: pointer;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-transition: transform 0.15s;
-}
-.size-slider::-webkit-slider-thumb:active {
-transform: scale(1.15);
-}
-.size-slider::-moz-range-thumb {
-width: 22px;
-height: 22px;
-border-radius: 50%;
-background: #e8c878;
-border: 2px solid #2a2418;
-cursor: pointer;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.size-preview {
-text-align: center;
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 0.78rem;
-font-style: italic;
-color: #b8a472 !important;
-letter-spacing: 0.1em;
-margin-top: 4px;
-}
-
-.scroll-top-target { scroll-margin-top: 140px; }
-
-/* IMPORTANT: prevent any forced dark mode from outside */
-@media (prefers-color-scheme: dark) {
-body {
-background-color: var(–paper) !important;
-color: var(–ink) !important;
-}
-}
+  html {
+    scroll-behavior: smooth;
+    background: #1a1610;
+    overflow-x: hidden;
+  }
+
+  /* ANTIQUE BOOK PAGE - simplified for performance */
+  body {
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    color: var(--ink) !important;
+    line-height: 1.7;
+    font-size: 18px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--paper) !important;
+    background-image: linear-gradient(180deg, #ebdfc4 0%, #e4d6b8 50%, #ddc9a3 100%);
+    overflow-x: hidden;
+  }
+
+  /* Page-flip animation when changing tabs */
+  @keyframes flipPage {
+    0% {
+      opacity: 0;
+      transform: translateX(40px) rotateY(12deg);
+      filter: brightness(0.85);
+    }
+    50% {
+      opacity: 0.7;
+      filter: brightness(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) rotateY(0);
+      filter: brightness(1);
+    }
+  }
+
+
+
+  /* ===== PAGE-BASED VIEW (no scrolling, tap to turn pages) ===== */
+  html, body {
+    overflow: hidden !important;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .service {
+    display: block;
+    position: static;
+  }
+  .service > .ornament,
+  .service > .title-frame,
+  .service > .toc {
+    display: none !important;
+  }
+
+  /* Each prayer is now a "page" */
+  .prayer {
+    display: none;
+    position: fixed;
+    top: var(--top-chrome-height, 145px);
+    left: 0; right: 0; bottom: 0;
+    margin: 0 !important;
+    padding: 24px 26px 90px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    background-color: var(--paper);
+    background-image: linear-gradient(180deg, #ebdfc4 0%, #e4d6b8 50%, #ddc9a3 100%);
+    scrollbar-width: none;
+    z-index: 20;
+  }
+  .prayer::-webkit-scrollbar { display: none; }
+
+  .prayer.current {
+    display: block;
+    animation: simpleFade 0.2s ease;
+    z-index: 2;
+  }
+  @keyframes simpleFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .prayer.flip-out-left,
+  .prayer.flip-out-right {
+    display: none !important;
+  }
+
+  @keyframes pageFlipIn {
+    0% {
+      opacity: 0;
+      transform: translateX(20px) rotateY(8deg);
+      filter: brightness(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) rotateY(0);
+      filter: brightness(1);
+    }
+  }
+
+  @keyframes pageFlipOutLeft {
+    0% {
+      opacity: 1;
+      transform: translateX(0) rotateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-30px) rotateY(-8deg);
+    }
+  }
+
+  @keyframes pageFlipOutRight {
+    0% {
+      opacity: 1;
+      transform: translateX(0) rotateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(30px) rotateY(8deg);
+    }
+  }
+
+  /* Page header (prayer title with ornamental frame inside the page) */
+  .prayer h2 {
+    text-align: center !important;
+    margin-top: 8px !important;
+    margin-bottom: 4px !important;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prayer .heb {
+    text-align: center !important;
+    direction: rtl;
+    margin-bottom: 16px !important;
+  }
+
+  /* Page footer - page number indicator */
+  .page-folio {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    pointer-events: none;
+    z-index: 60;
+    padding: 14px 0 16px;
+    background: linear-gradient(180deg, transparent 0%, var(--paper-deep) 60%);
+  }
+
+  /* Tap zones — only at the very edges, narrow strip */
+  .tap-zone {
+    position: fixed;
+    top: var(--top-chrome-height, 145px);
+    bottom: 30px;
+    width: 32px;
+    z-index: 50;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  .tap-zone.left { left: 0; }
+  .tap-zone.right { right: 0; }
+
+  /* Visual hint - subtle arrow on tap zones */
+  .tap-zone::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-top: 1.5px solid rgba(140, 118, 73, 0.35);
+    border-right: 1.5px solid rgba(140, 118, 73, 0.35);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .tap-zone.left::before {
+    left: 12px;
+    transform: translateY(-50%) rotate(-135deg);
+  }
+  .tap-zone.right::before {
+    right: 12px;
+  }
+
+  /* Floating controls hidden in page mode */
+  .floating-controls { display: none !important; }
+
+  /* DEDICATION PAGE */
+  .dedication-page {
+    text-align: center;
+    padding: 24px 24px 90px !important;
+    display: none;
+    position: fixed;
+    top: var(--top-chrome-height, 145px);
+    left: 0; right: 0; bottom: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: var(--paper);
+    background-image: linear-gradient(180deg, #ebdfc4 0%, #e4d6b8 50%, #ddc9a3 100%);
+    scrollbar-width: none;
+    z-index: 30;
+  }
+  .dedication-page::-webkit-scrollbar { display: none; }
+
+  .dedication-page.current {
+    display: block;
+    animation: pageFlipIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .ded-frame {
+    border: 1px solid var(--rule);
+    padding: 38px 24px 34px;
+    margin: 18px auto;
+    max-width: 440px;
+    position: relative;
+    background: linear-gradient(180deg, rgba(232, 220, 192, 0.5) 0%, rgba(220, 200, 160, 0.5) 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(140, 118, 73, 0.3),
+      0 1px 3px rgba(80, 50, 20, 0.08);
+  }
+  .ded-frame::before, .ded-frame::after {
+    content: '';
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 1px;
+    background: var(--rule);
+    opacity: 0.45;
+  }
+  .ded-frame::before { top: 5px; }
+  .ded-frame::after { bottom: 5px; }
+
+  /* Hebrew opening line */
+  .ded-hebrew-large {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--ink-soft);
+    direction: rtl;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .ded-translit {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink-faint);
+    letter-spacing: 0.18em;
+    text-transform: lowercase;
+    margin-bottom: 10px;
+  }
+
+  .ded-rule-thin {
+    border: none;
+    height: 1px;
+    background: var(--rule);
+    width: 50%;
+    margin: 18px auto;
+    opacity: 0.5;
+  }
+
+  /* Main name */
+  .ded-name-hebrew {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent);
+    direction: rtl;
+    letter-spacing: 0.03em;
+    line-height: 1.25;
+    margin: 6px 0 12px;
+  }
+
+  .ded-name-translit {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+
+  .ded-zl {
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  /* Blessing */
+  .ded-blessing-hebrew {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    color: var(--ink-soft);
+    direction: rtl;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    margin: 8px 0 8px;
+    font-weight: 500;
+  }
+
+  .ded-blessing-translit {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .ded-blessing-trans {
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    font-style: italic;
+    margin: 10px auto 0;
+    max-width: 320px;
+  }
+
+  .ded-ornament {
+    color: var(--rule);
+    margin: 24px 0 18px;
+    letter-spacing: 0.6em;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.95rem;
+    opacity: 0.7;
+  }
+
+  /* Personal message from son */
+  .ded-personal {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 340px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Family dedication — elegant prose */
+  .ded-family {
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    line-height: 1.7;
+    margin: 6px auto 0;
+    max-width: 380px;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  /* ===== HEADER ===== */
+  /* Top chrome wrapper - keeps header + date + tabs always at top, never overlap */
+  .top-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+
+  header.top {
+    background: linear-gradient(180deg, #2a2418 0%, #1a1610 100%);
+    border-bottom: 1px solid #8c7649;
+    padding: 9px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .top-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: #d4c190 !important;
+    line-height: 1;
+    font-style: italic;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .brand small {
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: #a8956a !important;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .icon-btn {
+    background: rgba(212, 193, 144, 0.08);
+    border: 1px solid #8c7649;
+    color: #d4c190 !important;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .icon-btn:active {
+    transform: scale(0.92);
+    background: rgba(212, 193, 144, 0.2);
+  }
+
+  /* Hebrew date bar */
+  .hebrew-date-bar {
+    background: linear-gradient(180deg, #1a1610 0%, #0f0d08 100%);
+    border-bottom: 1px solid rgba(140, 118, 73, 0.4);
+    padding: 6px 14px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    color: #b8a472 !important;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  .hd-hebrew {
+    color: #d4c190 !important;
+    font-weight: 500;
+    font-size: 0.85rem;
+    direction: rtl;
+    unicode-bidi: isolate;
+  }
+
+  .hd-sep {
+    color: #6b5a35 !important;
+    margin: 0 6px;
+  }
+
+  .hd-spanish {
+    color: #b8a472 !important;
+    font-style: italic;
+  }
+
+  .hd-event {
+    display: block;
+    color: #e8c878 !important;
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-style: italic;
+  }
+  .hd-event:empty { display: none; }
+
+  /* ===== TAB NAV ===== */
+  nav.tabs {
+    display: flex;
+    background: #d8c8a0 !important;
+    border-bottom: 1px solid #8c7649;
+    box-shadow: 0 2px 8px rgba(60, 40, 10, 0.15);
+  }
+
+  nav.tabs button {
+    flex: 1;
+    padding: 12px 4px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #6b5a35 !important;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+
+  nav.tabs button.active {
+    color: #5c4220 !important;
+    border-bottom-color: #5c4220;
+    background: var(--paper) !important;
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 26px 100px;
+  }
+
+  /* (old service display rules removed - now handled by page system above) */
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== SERVICE TITLE — like illuminated manuscript ===== */
+  .service-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--accent) !important;
+    text-align: center;
+    margin: 8px 0 4px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5);
+  }
+
+  .service-sub {
+    text-align: center;
+    color: var(--ink-soft) !important;
+    font-style: italic;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--rule) !important;
+    margin: 18px 0 28px;
+    font-size: 0.95rem;
+    letter-spacing: 0.6em;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  /* Decorative double-line frame around title */
+  .title-frame {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0 20px;
+    margin: 0 0 32px;
+    position: relative;
+  }
+  .title-frame::before,
+  .title-frame::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+  .title-frame::before { top: 4px; }
+  .title-frame::after { bottom: 4px; }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: linear-gradient(180deg, #ddc9a3 0%, #d4bf95 100%);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 18px 22px 20px;
+    margin-bottom: 38px;
+    box-shadow:
+      inset 0 0 0 1px rgba(140, 118, 73, 0.4),
+      0 2px 6px rgba(80, 50, 20, 0.1);
+  }
+
+  .toc-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ink-soft) !important;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+    columns: 1;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    padding: 5px 0;
+    font-size: 0.98rem;
+    color: var(--ink) !important;
+  }
+
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero) '.';
+    color: var(--accent) !important;
+    font-weight: 600;
+    margin-right: 10px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+  }
+
+  .toc a {
+    color: var(--ink) !important;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .toc a:active { color: var(--accent) !important; }
+
+  /* ===== PRAYER SECTIONS ===== */
+  .prayer {
+    margin: 42px 0;
+    scroll-margin-top: 140px;
+  }
+
+  .prayer h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--accent) !important;
+    margin-bottom: 4px;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+
+  .prayer .heb {
+    font-size: 1.25rem;
+    color: var(--ink-faint) !important;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    direction: rtl;
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .prayer .rubric {
+    font-size: 0.92rem;
+    color: var(--ink-soft) !important;
+    font-style: italic;
+    border-left: 2px solid var(--rule);
+    padding: 8px 0 8px 14px;
+    margin: 12px 0 18px;
+    background: rgba(140, 118, 73, 0.05);
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  }
+
+  .prayer p {
+    margin: 14px 0;
+    text-align: justify;
+    hyphens: auto;
+    color: var(--ink) !important;
+  }
+
+  .prayer p strong {
+    color: var(--ink-soft) !important;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.08em;
+    letter-spacing: 0.02em;
+  }
+
+  .prayer p em {
+    color: var(--ink-soft) !important;
+  }
+
+  /* DROPCAP - illuminated first letter */
+  .prayer p.lead::first-letter {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 4em;
+    float: left;
+    line-height: 0.85;
+    padding: 8px 10px 0 0;
+    color: var(--accent) !important;
+    font-weight: 600;
+    text-shadow: 1px 1px 0 rgba(140, 118, 73, 0.3);
+  }
+
+  .response {
+    text-align: center;
+    font-style: italic;
+    color: var(--accent) !important;
+    font-weight: 500;
+    margin: 18px 0;
+    font-size: 1.08rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    padding: 10px 16px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: rgba(140, 118, 73, 0.06);
+  }
+
+  /* Inline Hebrew alongside phonetic */
+  .heb-block {
+    direction: rtl;
+    text-align: right;
+    font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.95;
+    color: var(--ink) !important;
+    margin: 14px 0 8px;
+    padding: 14px 18px;
+    background: rgba(140, 118, 73, 0.07);
+    border-right: 2px solid var(--rule);
+    border-radius: 2px;
+  }
+  .heb-block p {
+    direction: rtl;
+    text-align: right;
+    margin: 6px 0;
+    color: var(--ink) !important;
+    font-size: 1.15rem;
+  }
+  .heb-large {
+    font-size: 1.4rem !important;
+    text-align: center !important;
+    font-weight: 500;
+  }
+
+  .divider {
+    border: none;
+    text-align: center;
+    margin: 32px 0;
+    height: 1.2em;
+    position: relative;
+  }
+  .divider::before {
+    content: '·   ·   ·';
+    color: var(--rule) !important;
+    letter-spacing: 0.4em;
+    font-size: 1rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  /* ===== COMMENTARY AS FOOTNOTES ===== */
+  .comentario {
+    margin: 14px 0 8px;
+    padding: 10px 0 6px 16px;
+    border-left: 1px solid var(--rule);
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 0.82rem;
+    color: var(--ink-soft) !important;
+    line-height: 1.55;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .comentario::before {
+    content: 'Nota.';
+    display: inline;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent) !important;
+    text-transform: uppercase;
+    margin-right: 8px;
+    font-style: normal;
+  }
+
+  .comentario p {
+    display: inline;
+    margin: 0 !important;
+    color: var(--ink-soft) !important;
+    text-align: left !important;
+    font-size: 0.82rem !important;
+    font-style: italic;
+  }
+
+  .comentario p::after {
+    content: ' ';
+  }
+
+  .comentario p + p::before {
+    content: '— ';
+    color: var(--rule);
+    font-style: normal;
+  }
+
+  .comentario strong {
+    color: var(--ink-soft) !important;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif !important;
+    font-weight: 600 !important;
+    font-size: 1em !important;
+    letter-spacing: normal !important;
+    font-style: italic;
+  }
+
+  .comentario em {
+    font-style: normal;
+    color: var(--ink-soft) !important;
+  }
+
+  /* Costumbre / nota práctica */
+  .costumbre {
+    background: transparent;
+    border: none;
+    padding: 4px 0;
+    margin: 6px 0;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 0.82rem;
+    color: var(--ink-soft) !important;
+    font-style: italic;
+    display: inline;
+  }
+
+  .costumbre::before {
+    content: '';
+    margin-right: 0;
+  }
+
+  /* ===== FLOATING CONTROLS ===== */
+  .floating-controls {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 95;
+  }
+
+  .fc-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #5c4220 0%, #3d2c15 100%);
+    color: #e8dcc0 !important;
+    border: 1px solid #8c7649;
+    box-shadow:
+      0 4px 14px rgba(40, 25, 8, 0.4),
+      inset 0 1px 0 rgba(232, 220, 192, 0.2);
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    transition: transform 0.2s;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .fc-btn:active { transform: scale(0.9); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 480px) {
+    .service-title { font-size: 2.4rem; }
+    body { font-size: 17px; }
+    main { padding: 22px 20px 90px; }
+    .prayer h2 { font-size: 1.45rem; }
+    .prayer .heb { font-size: 1.15rem; }
+    .brand { font-size: 1.4rem; }
+  }
+
+  /* Bigger text accessibility */
+  /* Text size — wider range with finer granularity */
+  body { font-size: 18px; transition: font-size 0.2s ease; }
+  body.text-size-0 { font-size: 12px; }
+  body.text-size-1 { font-size: 14px; }
+  body.text-size-2 { font-size: 16px; }
+  body.text-size-3 { font-size: 18px; }
+  body.text-size-4 { font-size: 20px; }
+  body.text-size-5 { font-size: 22px; }
+  body.text-size-6 { font-size: 25px; }
+  body.text-size-7 { font-size: 28px; }
+  body.text-size-8 { font-size: 32px; }
+  body.text-size-9 { font-size: 36px; }
+
+  /* Size adjustment panel */
+  .size-panel {
+    position: fixed;
+    top: 56px;
+    right: 12px;
+    background: linear-gradient(180deg, #2a2418 0%, #1a1610 100%);
+    border: 1px solid #8c7649;
+    border-radius: 8px;
+    padding: 14px 16px 12px;
+    width: 240px;
+    z-index: 200;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    display: none;
+    animation: panelFadeIn 0.18s ease;
+  }
+  .size-panel.open { display: block; }
+
+  @keyframes panelFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .size-panel-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #b8a472 !important;
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-style: italic;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(140, 118, 73, 0.3);
+  }
+
+  .size-slider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .size-label-small,
+  .size-label-large {
+    color: #d4c190 !important;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .size-label-small { font-size: 0.85rem; }
+  .size-label-large { font-size: 1.5rem; }
+
+  /* Custom slider */
+  .size-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: linear-gradient(90deg, #5c4220 0%, #d4c190 100%);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .size-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e8c878;
+    border: 2px solid #2a2418;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.15s;
+  }
+  .size-slider::-webkit-slider-thumb:active {
+    transform: scale(1.15);
+  }
+  .size-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e8c878;
+    border: 2px solid #2a2418;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .size-preview {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: #b8a472 !important;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .scroll-top-target { scroll-margin-top: 140px; }
+
+  /* IMPORTANT: prevent any forced dark mode from outside */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: var(--paper) !important;
+      color: var(--ink) !important;
+    }
+  }
 </style>
-
 </head>
 <body>
 
+<div class="top-wrap" id="topWrap">
 <header class="top">
   <div class="top-inner">
     <div class="brand">
       Siddur Zéjer Dov
     </div>
-    <div style="display:flex; gap:8px;">
+    <div style="display:flex; gap:8px; position: relative;">
       <button class="icon-btn" id="textSizeBtn" title="Tamaño de texto" aria-label="Cambiar tamaño de texto">A</button>
       <div class="size-panel" id="sizePanel" aria-hidden="true">
         <div class="size-panel-header">Tamaño del texto</div>
         <div class="size-slider-wrap">
           <span class="size-label-small">A</span>
-          <input type="range" id="sizeSlider" class="size-slider" min="0" max="6" step="1" value="2">
+          <input type="range" id="sizeSlider" class="size-slider" min="0" max="9" step="1" value="3">
           <span class="size-label-large">A</span>
         </div>
         <div class="size-preview" id="sizePreview">Mediano</div>
@@ -1065,47 +1069,43 @@ color: var(–ink) !important;
   <button class="tab-btn" data-target="arvit" role="tab">Arvit</button>
   <button class="tab-btn" data-target="shabat" role="tab">Shabat</button>
 </nav>
+</div>
 
 <main>
 
 <!-- ============================ DEDICATORIA ============================ -->
-
 <section id="dedication" class="dedication-page current scroll-top-target">
   <div class="ded-frame">
     <div class="ded-hebrew-large">לְעִלּוּי נִשְׁמַת</div>
     <div class="ded-translit">Le'ilui nishmat</div>
 
-```
-<hr class="ded-rule-thin">
+    <hr class="ded-rule-thin">
 
-<div class="ded-name-hebrew">דֹּב בֶּן יִשְׂרָאֵל ז״ל</div>
-<div class="ded-name-translit">Dov ben Israel<br><span class="ded-zl">zijronó livrajá</span></div>
+    <div class="ded-name-hebrew">דֹּב בֶּן יִשְׂרָאֵל ז״ל</div>
+    <div class="ded-name-translit">Dov ben Israel<br><span class="ded-zl">zijronó livrajá</span></div>
 
-<hr class="ded-rule-thin">
+    <hr class="ded-rule-thin">
 
-<div class="ded-blessing-hebrew">תְּהֵא נִשְׁמָתוֹ צְרוּרָה<br>בִּצְרוֹר הַחַיִּים</div>
-<div class="ded-blessing-translit">Tehé nishmató tzrurá bitzrór hajayím</div>
-<div class="ded-blessing-trans">«Que su alma sea atada<br>en el haz de la vida»</div>
+    <div class="ded-blessing-hebrew">תְּהֵא נִשְׁמָתוֹ צְרוּרָה<br>בִּצְרוֹר הַחַיִּים</div>
+    <div class="ded-blessing-translit">Tehé nishmató tzrurá bitzrór hajayím</div>
+    <div class="ded-blessing-trans">«Que su alma sea atada<br>en el haz de la vida»</div>
 
-<div class="ded-ornament">·  ·  ·</div>
+    <div class="ded-ornament">·  ·  ·</div>
 
-<div class="ded-family">
-  Dedicado por su esposa Ilana, sus hijos Moshe, Adam y Natan, sus yernas Karina y Sharon, y sus nietos Alberto y Alan.
-</div>
+    <div class="ded-family">
+      Dedicado por su esposa Ilana, sus hijos Moshe, Adam y Natan, sus nueras Karina y Sharon, y sus nietos Alberto y Alan.
+    </div>
 
-<div class="ded-ornament">·  ·  ·</div>
+    <div class="ded-ornament">·  ·  ·</div>
 
-<div class="ded-personal">
-  Cada palabra de este siddur<br>
-  es un peldaño que sube por ti.
-</div>
-```
-
+    <div class="ded-personal">
+      Cada palabra de este siddur<br>
+      es un peldaño que sube por ti.
+    </div>
   </div>
 </section>
 
 <!-- ============================ SHAJARIT ============================ -->
-
 <section id="shajarit" class="service active scroll-top-target">
   <div class="title-frame">
     <h1 class="service-title">Shajarit</h1>
@@ -1171,41 +1171,38 @@ color: var(–ink) !important;
     <p class="heb">בִּרְכוֹת הַשַּׁחַר</p>
     <p class="rubric">Bendiciones de la mañana.</p>
 
-```
-<p><strong>Sobre la Torá:</strong></p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher kideshánu bemitzvotáv vetzivánu laasók bedivréi Torá.</p>
+    <p><strong>Sobre la Torá:</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher kideshánu bemitzvotáv vetzivánu laasók bedivréi Torá.</p>
 
-<p>Veháarev na, Adonái Elohéinu, et divréi toratejá befínu uvefí amejá beit Israel. Venihyé anájnu vetzeetzaénu, vetzeetzaéi amejá beit Israel, kulánu yodéi shemejá velomdéi toratéja lishmá. Baruj Atá Adonái, hamelaméd Torá leamó Israel.</p>
+    <p>Veháarev na, Adonái Elohéinu, et divréi toratejá befínu uvefí amejá beit Israel. Venihyé anájnu vetzeetzaénu, vetzeetzaéi amejá beit Israel, kulánu yodéi shemejá velomdéi toratéja lishmá. Baruj Atá Adonái, hamelaméd Torá leamó Israel.</p>
 
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher bájar bánu mikol haamím venátan lánu et toratá. Baruj Atá Adonái, notén haTorá.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, asher bájar bánu mikol haamím venátan lánu et toratá. Baruj Atá Adonái, notén haTorá.</p>
 
-<hr class="divider">
+    <hr class="divider">
 
-<p><strong>Bendiciones del despertar:</strong></p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, hanotén lasejví viná lehavjín bein yom uvein láila.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni goi.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni áved.</p>
-<p><em>Hombre dice:</em> Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni ishá.<br>
-<em>Mujer dice:</em> Beruja At Adonái, Elohéinu Mélej haolám, sheasáni kirtzonó.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, pokéaj ivrím.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, malbísh arumím.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, matír asurím.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, zokéf kefufím.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, roká haáretz al hamáyim.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheasá li kol tzorkí.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, hamejín mitzadéi gáver.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, ozer Israel bigvurá.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, otér Israel betifará.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, hanotén layaéf kóaj.</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, hamaavír shená meeinái utenumá meafapái.</p>
-<div class="comentario">
-  <p>Las <strong>Birjot HaShájar</strong> son una serie de bendiciones que agradecen a HaShem por las cosas básicas de la vida: poder ver, vestirse, pararse, caminar… cosas que damos por sentadas pero que son verdaderos regalos.</p>
-  <p>Originalmente, cada bendición se decía al realizar la acción correspondiente (al abrir los ojos, al pararse, etc.). Hoy se dicen todas juntas en la sinagoga o en casa antes de comenzar el rezo.</p>
-  <p><strong>Las tres bendiciones controvertidas</strong> ("sheló asáni goi/áved/ishá") expresan agradecimiento por el privilegio de tener más mitzvot que cumplir, no superioridad. Las mujeres dicen "<em>sheasáni kirtzonó</em>" — "que me hizo según Su voluntad".</p>
-  <p>Las bendiciones de la Torá son especialmente importantes: el Talmud dice que Israel sufrió por no haberlas dicho con la intención debida.</p>
-</div>
-```
-
+    <p><strong>Bendiciones del despertar:</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hanotén lasejví viná lehavjín bein yom uvein láila.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni goi.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni áved.</p>
+    <p><em>Hombre dice:</em> Baruj Atá Adonái, Elohéinu Mélej haolám, sheló asáni ishá.<br>
+    <em>Mujer dice:</em> Beruja At Adonái, Elohéinu Mélej haolám, sheasáni kirtzonó.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, pokéaj ivrím.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, malbísh arumím.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, matír asurím.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, zokéf kefufím.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, roká haáretz al hamáyim.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, sheasá li kol tzorkí.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hamejín mitzadéi gáver.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, ozer Israel bigvurá.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, otér Israel betifará.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hanotén layaéf kóaj.</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hamaavír shená meeinái utenumá meafapái.</p>
+    <div class="comentario">
+      <p>Las <strong>Birjot HaShájar</strong> son una serie de bendiciones que agradecen a HaShem por las cosas básicas de la vida: poder ver, vestirse, pararse, caminar… cosas que damos por sentadas pero que son verdaderos regalos.</p>
+      <p>Originalmente, cada bendición se decía al realizar la acción correspondiente (al abrir los ojos, al pararse, etc.). Hoy se dicen todas juntas en la sinagoga o en casa antes de comenzar el rezo.</p>
+      <p><strong>Las tres bendiciones controvertidas</strong> ("sheló asáni goi/áved/ishá") expresan agradecimiento por el privilegio de tener más mitzvot que cumplir, no superioridad. Las mujeres dicen "<em>sheasáni kirtzonó</em>" — "que me hizo según Su voluntad".</p>
+      <p>Las bendiciones de la Torá son especialmente importantes: el Talmud dice que Israel sufrió por no haberlas dicho con la intención debida.</p>
+    </div>
   </article>
 
   <article class="prayer" id="sh-akeda">
@@ -1330,26 +1327,23 @@ color: var(–ink) !important;
     <p class="response" style="font-size:1.3rem;">Shemá Israel, Adonái Elohéinu, Adonái Ejád.</p>
     <p class="response" style="font-style:italic; font-size:1rem;">(En voz baja:) Baruj shem kevód maljutó leolám vaéd.</p>
 
-```
-<p><strong>Veahavtá:</strong></p>
-<div class="heb-block">
-  <p>וְאָהַבְתָּ אֵת יְהֹוָה אֱלֹהֶיךָ, בְּכָל לְבָבְךָ, וּבְכָל נַפְשְׁךָ, וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ, וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.</p>
-</div>
-<p>Veahavtá et Adonái Elohéja, bejol levavjá, uvjol nafshejá, uvjol meodéja. Vehayú hadevarím haéle, asher Anojí metzavjá hayóm, al levavéja. Veshinantám levanéja, vedibartá bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ukshartám leót al yadéja, vehayú letotafót béin einéja. Ujtavtám al mezuzót beitéja uvisharéja.</p>
+    <p><strong>Veahavtá:</strong></p>
+    <div class="heb-block">
+      <p>וְאָהַבְתָּ אֵת יְהֹוָה אֱלֹהֶיךָ, בְּכָל לְבָבְךָ, וּבְכָל נַפְשְׁךָ, וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם, בְּשִׁבְתְּךָ בְּבֵיתֶךָ, וּבְלֶכְתְּךָ בַדֶּרֶךְ, וּבְשָׁכְבְּךָ וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדֶךָ, וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ.</p>
+    </div>
+    <p>Veahavtá et Adonái Elohéja, bejol levavjá, uvjol nafshejá, uvjol meodéja. Vehayú hadevarím haéle, asher Anojí metzavjá hayóm, al levavéja. Veshinantám levanéja, vedibartá bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ukshartám leót al yadéja, vehayú letotafót béin einéja. Ujtavtám al mezuzót beitéja uvisharéja.</p>
 
-<p><strong>Vehayá im shamóa:</strong></p>
-<p>Vehayá im shamóa tishmeú el mitzvotái, asher Anojí metzavé etjém hayóm, leahavá et Adonái Eloheijém ulavdó, bejol levavjém uvjol nafshejém. Venatatí metár artzejém beitó, yoré umalkósh, veasaftá deganéja vetiroshjá veyitzharéja. Venatatí éisev besadejá livhemtéja, veajaltá vesavájta. Hishameru lajém pen yifté levavjém, vesartém vaavadtém elohím ajerím vehishtajavitém lahém. Vejará af Adonái bajém, veatzár et hashamáyim veló yihyé matár, vehaadamá lo titén et yevulá, vaavadtém meherá meál haáretz hatová asher Adonái notén lajém. Vesamtém et devarái éle al levavjém veál nafshejém, ukshartém otám leót al yedjém vehayú letotafót béin einejém. Velimadtém otám et beneijém, ledabér bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ujtavtám al mezuzót beitéja uvisharéja. Lemáan yirbú yemeijém vyméi veneijém al haadamá, asher nishbá Adonái laavoteijém latét lahém, kiyméi hashamáyim al haáretz.</p>
+    <p><strong>Vehayá im shamóa:</strong></p>
+    <p>Vehayá im shamóa tishmeú el mitzvotái, asher Anojí metzavé etjém hayóm, leahavá et Adonái Eloheijém ulavdó, bejol levavjém uvjol nafshejém. Venatatí metár artzejém beitó, yoré umalkósh, veasaftá deganéja vetiroshjá veyitzharéja. Venatatí éisev besadejá livhemtéja, veajaltá vesavájta. Hishameru lajém pen yifté levavjém, vesartém vaavadtém elohím ajerím vehishtajavitém lahém. Vejará af Adonái bajém, veatzár et hashamáyim veló yihyé matár, vehaadamá lo titén et yevulá, vaavadtém meherá meál haáretz hatová asher Adonái notén lajém. Vesamtém et devarái éle al levavjém veál nafshejém, ukshartém otám leót al yedjém vehayú letotafót béin einejém. Velimadtém otám et beneijém, ledabér bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ujtavtám al mezuzót beitéja uvisharéja. Lemáan yirbú yemeijém vyméi veneijém al haadamá, asher nishbá Adonái laavoteijém latét lahém, kiyméi hashamáyim al haáretz.</p>
 
-<p><strong>Vayómer (Tzitzit):</strong></p>
-<p>Vayómer Adonái el Moshé lemór: Daber el bnei Israel, veamartá alehem, veasú lahém tzitzít al kanféi vigdeihém ledorotám, venatenú al tzitzít hakanáf petíl tjélet. Vehayá lajém letzitzít, ureitém otó, uzjartém et kol mitzvót Adonái, vaasitém otám, veló tatúru ajaré levavjém veajaré einejém, asher atém zoním ajareihém. Lemáan tizkerú vaasitém et kol mitzvotái, vihyitém kedoshím lEloheijém. Aní Adonái Eloheijém, asher hotzéti etjém meéretz Mitzráyim, lihyót lajém lEelohím. Aní Adonái Eloheijém. Emét.</p>
-<div class="comentario">
-  <p>El <strong>Shemá Israel</strong> es la declaración fundamental del judaísmo: la unicidad absoluta de HaShem. Es lo último que dice un judío antes de morir, lo primero que se enseña a un niño, y se recita dos veces al día — mañana y noche — como mandó la Torá.</p>
-  <p><strong>El primer verso</strong> debe decirse con concentración total. Se cubren los ojos con la mano derecha para evitar distracciones y se alarga ligeramente la palabra "<em>Ejád</em>" (uno) — meditando en cada letra: que HaShem es Uno en los cielos, en la tierra, y en las cuatro direcciones.</p>
-  <p><strong>"Baruj shem kevód..."</strong> se dice en voz baja todo el año, excepto en Yom Kipur cuando se dice en voz alta. Hay varias razones tradicionales: una es que Iaakov bendijo así a sus hijos antes de morir, pero como no es un verso de la Torá, no debemos elevarlo al mismo nivel.</p>
-  <p>Las <strong>tres parshiyot</strong> (Veahavtá, Vehayá im shamóa, Vayómer) contienen las mitzvot de amar a HaShem, las recompensas y consecuencias del cumplimiento, y los tzitzit como recordatorio constante. Hay <strong>248 palabras</strong> en el Shemá, igual al número de miembros del cuerpo según los Sabios — completando los 365 al añadir las palabras finales del jazán.</p>
-</div>
-```
-
+    <p><strong>Vayómer (Tzitzit):</strong></p>
+    <p>Vayómer Adonái el Moshé lemór: Daber el bnei Israel, veamartá alehem, veasú lahém tzitzít al kanféi vigdeihém ledorotám, venatenú al tzitzít hakanáf petíl tjélet. Vehayá lajém letzitzít, ureitém otó, uzjartém et kol mitzvót Adonái, vaasitém otám, veló tatúru ajaré levavjém veajaré einejém, asher atém zoním ajareihém. Lemáan tizkerú vaasitém et kol mitzvotái, vihyitém kedoshím lEloheijém. Aní Adonái Eloheijém, asher hotzéti etjém meéretz Mitzráyim, lihyót lajém lEelohím. Aní Adonái Eloheijém. Emét.</p>
+    <div class="comentario">
+      <p>El <strong>Shemá Israel</strong> es la declaración fundamental del judaísmo: la unicidad absoluta de HaShem. Es lo último que dice un judío antes de morir, lo primero que se enseña a un niño, y se recita dos veces al día — mañana y noche — como mandó la Torá.</p>
+      <p><strong>El primer verso</strong> debe decirse con concentración total. Se cubren los ojos con la mano derecha para evitar distracciones y se alarga ligeramente la palabra "<em>Ejád</em>" (uno) — meditando en cada letra: que HaShem es Uno en los cielos, en la tierra, y en las cuatro direcciones.</p>
+      <p><strong>"Baruj shem kevód..."</strong> se dice en voz baja todo el año, excepto en Yom Kipur cuando se dice en voz alta. Hay varias razones tradicionales: una es que Iaakov bendijo así a sus hijos antes de morir, pero como no es un verso de la Torá, no debemos elevarlo al mismo nivel.</p>
+      <p>Las <strong>tres parshiyot</strong> (Veahavtá, Vehayá im shamóa, Vayómer) contienen las mitzvot de amar a HaShem, las recompensas y consecuencias del cumplimiento, y los tzitzit como recordatorio constante. Hay <strong>248 palabras</strong> en el Shemá, igual al número de miembros del cuerpo según los Sabios — completando los 365 al añadir las palabras finales del jazán.</p>
+    </div>
   </article>
 
   <article class="prayer" id="sh-emet">
@@ -1370,92 +1364,89 @@ color: var(–ink) !important;
     <p class="heb">תְּפִלַּת הָעֲמִידָה</p>
     <p class="rubric">De pie, los pies juntos, mirando hacia Jerusalén. En voz baja.</p>
 
-```
-<div class="comentario">
-  <p>La <strong>Amidá</strong> ("estar de pie") es <strong>el corazón del rezo judío</strong>. También se llama <em>Shemoné Esré</em> (Dieciocho), aunque en realidad tiene 19 bendiciones: los Sabios añadieron una contra los enemigos de Israel.</p>
-  <p>Se compone de tres partes: las <strong>3 primeras bendiciones</strong> son alabanzas (como un siervo que se acerca al Rey), las <strong>13 del medio</strong> son peticiones (en días laborables), y las <strong>3 últimas</strong> son agradecimientos (como un siervo que se retira haciendo reverencia).</p>
-  <p><strong>Costumbres importantes:</strong> Los pies se juntan como un solo pie (imitando a los ángeles). Se reza en voz suficientemente baja para que solo uno mismo se oiga, pero no en silencio total. No se interrumpe por ningún motivo. Tres pasos hacia atrás al inicio, tres hacia adelante. En "<em>Baruj Atá</em>" del inicio (Avot) y de Modím se hace una reverencia.</p>
-  <p>En Shabat y festividades, las 13 bendiciones del medio se reemplazan por una sola bendición especial del día.</p>
-</div>
+    <div class="comentario">
+      <p>La <strong>Amidá</strong> ("estar de pie") es <strong>el corazón del rezo judío</strong>. También se llama <em>Shemoné Esré</em> (Dieciocho), aunque en realidad tiene 19 bendiciones: los Sabios añadieron una contra los enemigos de Israel.</p>
+      <p>Se compone de tres partes: las <strong>3 primeras bendiciones</strong> son alabanzas (como un siervo que se acerca al Rey), las <strong>13 del medio</strong> son peticiones (en días laborables), y las <strong>3 últimas</strong> son agradecimientos (como un siervo que se retira haciendo reverencia).</p>
+      <p><strong>Costumbres importantes:</strong> Los pies se juntan como un solo pie (imitando a los ángeles). Se reza en voz suficientemente baja para que solo uno mismo se oiga, pero no en silencio total. No se interrumpe por ningún motivo. Tres pasos hacia atrás al inicio, tres hacia adelante. En "<em>Baruj Atá</em>" del inicio (Avot) y de Modím se hace una reverencia.</p>
+      <p>En Shabat y festividades, las 13 bendiciones del medio se reemplazan por una sola bendición especial del día.</p>
+    </div>
 
-<p>Adonái sefatái tiftáj, ufí yagíd tehilatéja.</p>
-<div class="heb-block">
-  <p style="text-align:center;">אֲדֹנָי שְׂפָתַי תִּפְתָּח, וּפִי יַגִּיד תְּהִלָּתֶךָ.</p>
-</div>
+    <p>Adonái sefatái tiftáj, ufí yagíd tehilatéja.</p>
+    <div class="heb-block">
+      <p style="text-align:center;">אֲדֹנָי שְׂפָתַי תִּפְתָּח, וּפִי יַגִּיד תְּהִלָּתֶךָ.</p>
+    </div>
 
-<p><strong>1. Avot</strong></p>
-<div class="heb-block">
-  <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, אֱלֹהֵי אַבְרָהָם, אֱלֹהֵי יִצְחָק, וֵאלֹהֵי יַעֲקֹב, הָאֵל הַגָּדוֹל הַגִּבּוֹר וְהַנּוֹרָא, אֵל עֶלְיוֹן, גּוֹמֵל חֲסָדִים טוֹבִים וְקוֹנֵה הַכֹּל, וְזוֹכֵר חַסְדֵי אָבוֹת, וּמֵבִיא גוֹאֵל לִבְנֵי בְנֵיהֶם לְמַעַן שְׁמוֹ בְּאַהֲבָה. מֶלֶךְ עוֹזֵר וּמוֹשִׁיעַ וּמָגֵן. בָּרוּךְ אַתָּה יְהֹוָה, מָגֵן אַבְרָהָם.</p>
-</div>
-<p>Baruj Atá Adonái, Elohéinu vElohéi avoténu, Elohéi Avrahám, Elohéi Itzjak, vElohéi Yaakóv, haEl hagadól, hagibór vehanorá, El Elión, gomél jasadím tovím vekoné hakól, vezojer jasdéi avót, umeví goél livnéi vneihém lemáan Shemó beahavá. Mélej ozer umoshía umaguén. Baruj Atá Adonái, magén Avrahám.</p>
+    <p><strong>1. Avot</strong></p>
+    <div class="heb-block">
+      <p>בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, אֱלֹהֵי אַבְרָהָם, אֱלֹהֵי יִצְחָק, וֵאלֹהֵי יַעֲקֹב, הָאֵל הַגָּדוֹל הַגִּבּוֹר וְהַנּוֹרָא, אֵל עֶלְיוֹן, גּוֹמֵל חֲסָדִים טוֹבִים וְקוֹנֵה הַכֹּל, וְזוֹכֵר חַסְדֵי אָבוֹת, וּמֵבִיא גוֹאֵל לִבְנֵי בְנֵיהֶם לְמַעַן שְׁמוֹ בְּאַהֲבָה. מֶלֶךְ עוֹזֵר וּמוֹשִׁיעַ וּמָגֵן. בָּרוּךְ אַתָּה יְהֹוָה, מָגֵן אַבְרָהָם.</p>
+    </div>
+    <p>Baruj Atá Adonái, Elohéinu vElohéi avoténu, Elohéi Avrahám, Elohéi Itzjak, vElohéi Yaakóv, haEl hagadól, hagibór vehanorá, El Elión, gomél jasadím tovím vekoné hakól, vezojer jasdéi avót, umeví goél livnéi vneihém lemáan Shemó beahavá. Mélej ozer umoshía umaguén. Baruj Atá Adonái, magén Avrahám.</p>
 
-<p><strong>2. Guevurót</strong></p>
-<div class="heb-block">
-  <p>אַתָּה גִּבּוֹר לְעוֹלָם אֲדֹנָי, מְחַיֵּה מֵתִים אַתָּה, רַב לְהוֹשִׁיעַ. מְכַלְכֵּל חַיִּים בְּחֶסֶד, מְחַיֵּה מֵתִים בְּרַחֲמִים רַבִּים, סוֹמֵךְ נוֹפְלִים, וְרוֹפֵא חוֹלִים, וּמַתִּיר אֲסוּרִים, וּמְקַיֵּם אֱמוּנָתוֹ לִישֵׁנֵי עָפָר. מִי כָמוֹךָ בַּעַל גְּבוּרוֹת, וּמִי דּוֹמֶה לָּךְ, מֶלֶךְ מֵמִית וּמְחַיֶּה וּמַצְמִיחַ יְשׁוּעָה. וְנֶאֱמָן אַתָּה לְהַחֲיוֹת מֵתִים. בָּרוּךְ אַתָּה יְהֹוָה, מְחַיֵּה הַמֵּתִים.</p>
-</div>
-<p>Atá guibór leolám Adonái, mejayé metím Atá, rav lehoshía. (En verano: Morid hatal. En invierno: Mashív harúaj umorid hagáshem.) Mejalkél jayím bejésed, mejayé metím berajamím rabím, somej noflím, verofé jolím, umatír asurím, umkayém emunató lisheneí afár. Mi jamoja, báal guevurót, umí dóme laj, mélej memít umjayé umatzmíaj yeshuá. Veneemán Atá lehajayót metím. Baruj Atá Adonái, mejayé hametím.</p>
+    <p><strong>2. Guevurót</strong></p>
+    <div class="heb-block">
+      <p>אַתָּה גִּבּוֹר לְעוֹלָם אֲדֹנָי, מְחַיֵּה מֵתִים אַתָּה, רַב לְהוֹשִׁיעַ. מְכַלְכֵּל חַיִּים בְּחֶסֶד, מְחַיֵּה מֵתִים בְּרַחֲמִים רַבִּים, סוֹמֵךְ נוֹפְלִים, וְרוֹפֵא חוֹלִים, וּמַתִּיר אֲסוּרִים, וּמְקַיֵּם אֱמוּנָתוֹ לִישֵׁנֵי עָפָר. מִי כָמוֹךָ בַּעַל גְּבוּרוֹת, וּמִי דּוֹמֶה לָּךְ, מֶלֶךְ מֵמִית וּמְחַיֶּה וּמַצְמִיחַ יְשׁוּעָה. וְנֶאֱמָן אַתָּה לְהַחֲיוֹת מֵתִים. בָּרוּךְ אַתָּה יְהֹוָה, מְחַיֵּה הַמֵּתִים.</p>
+    </div>
+    <p>Atá guibór leolám Adonái, mejayé metím Atá, rav lehoshía. (En verano: Morid hatal. En invierno: Mashív harúaj umorid hagáshem.) Mejalkél jayím bejésed, mejayé metím berajamím rabím, somej noflím, verofé jolím, umatír asurím, umkayém emunató lisheneí afár. Mi jamoja, báal guevurót, umí dóme laj, mélej memít umjayé umatzmíaj yeshuá. Veneemán Atá lehajayót metím. Baruj Atá Adonái, mejayé hametím.</p>
 
-<p><strong>3. Kedushá</strong></p>
-<div class="heb-block">
-  <p>אַתָּה קָדוֹשׁ וְשִׁמְךָ קָדוֹשׁ, וּקְדוֹשִׁים בְּכָל יוֹם יְהַלְלוּךָ סֶּלָה. בָּרוּךְ אַתָּה יְהֹוָה, הָאֵל הַקָּדוֹשׁ.</p>
-</div>
-<p>Atá kadósh veshimjá kadósh, ukdoshím bejol yom yehaleluja sela. Baruj Atá Adonái, haEl hakadósh.</p>
+    <p><strong>3. Kedushá</strong></p>
+    <div class="heb-block">
+      <p>אַתָּה קָדוֹשׁ וְשִׁמְךָ קָדוֹשׁ, וּקְדוֹשִׁים בְּכָל יוֹם יְהַלְלוּךָ סֶּלָה. בָּרוּךְ אַתָּה יְהֹוָה, הָאֵל הַקָּדוֹשׁ.</p>
+    </div>
+    <p>Atá kadósh veshimjá kadósh, ukdoshím bejol yom yehaleluja sela. Baruj Atá Adonái, haEl hakadósh.</p>
 
-<p><strong>4. Daat</strong></p>
-<p>Atá jonén leadám dáat, umlaméd leenósh biná. Jonéinu meitejá deá biná vehaskél. Baruj Atá Adonái, jonén hadáat.</p>
+    <p><strong>4. Daat</strong></p>
+    <p>Atá jonén leadám dáat, umlaméd leenósh biná. Jonéinu meitejá deá biná vehaskél. Baruj Atá Adonái, jonén hadáat.</p>
 
-<p><strong>5. Teshuvá</strong></p>
-<p>Hashivéinu Avínu letoratéja, vekarvéinu malkéinu laavodatéja, vehajazirénu betshuvá shelemá lefanéja. Baruj Atá Adonái, harotzé bitshuvá.</p>
+    <p><strong>5. Teshuvá</strong></p>
+    <p>Hashivéinu Avínu letoratéja, vekarvéinu malkéinu laavodatéja, vehajazirénu betshuvá shelemá lefanéja. Baruj Atá Adonái, harotzé bitshuvá.</p>
 
-<p><strong>6. Selijá</strong></p>
-<p>Selaj lánu Avínu, ki jatánu, mejol lánu malkéinu, ki fashánu, ki El tov vesalaj Atá. Baruj Atá Adonái, janún hamarbé lislóaj.</p>
+    <p><strong>6. Selijá</strong></p>
+    <p>Selaj lánu Avínu, ki jatánu, mejol lánu malkéinu, ki fashánu, ki El tov vesalaj Atá. Baruj Atá Adonái, janún hamarbé lislóaj.</p>
 
-<p><strong>7. Gueulá</strong></p>
-<p>Reé na veonyéinu, veriva rivéinu, ugaaléinu meherá lemáan Shemejá, ki goél jazák Atá. Baruj Atá Adonái, goél Israel.</p>
+    <p><strong>7. Gueulá</strong></p>
+    <p>Reé na veonyéinu, veriva rivéinu, ugaaléinu meherá lemáan Shemejá, ki goél jazák Atá. Baruj Atá Adonái, goél Israel.</p>
 
-<p><strong>8. Refuá</strong></p>
-<p>Refaénu Adonái veneraféi, hoshiéinu venivashéa, ki tehilatéinu Atá. Vehaalé arujá ushlemá lejol makotéinu, ki El mélej rofé neemán verajamán Atá. Baruj Atá Adonái, rofé jolei amó Israel.</p>
+    <p><strong>8. Refuá</strong></p>
+    <p>Refaénu Adonái veneraféi, hoshiéinu venivashéa, ki tehilatéinu Atá. Vehaalé arujá ushlemá lejol makotéinu, ki El mélej rofé neemán verajamán Atá. Baruj Atá Adonái, rofé jolei amó Israel.</p>
 
-<p><strong>9. Birkat Hashaním</strong></p>
-<p>Bareij aléinu, Adonái Elohéinu, et hashaná hazót, veét kol minéi tevuatá letová, vetén berajá al pneí haadamá, vesabéinu mituvá, uvaréij shenatéinu kashaním hatovót. Baruj Atá Adonái, mevaréij hashaním.</p>
+    <p><strong>9. Birkat Hashaním</strong></p>
+    <p>Bareij aléinu, Adonái Elohéinu, et hashaná hazót, veét kol minéi tevuatá letová, vetén berajá al pneí haadamá, vesabéinu mituvá, uvaréij shenatéinu kashaním hatovót. Baruj Atá Adonái, mevaréij hashaním.</p>
 
-<p><strong>10. Kibutz Galuyót</strong></p>
-<p>Tekáh beshofár gadól lejeruténu, vesá nes lekabétz galuyoténu, vekabtzéinu yájad mearbá kanfót haáretz. Baruj Atá Adonái, mekabétz nidjéi amó Israel.</p>
+    <p><strong>10. Kibutz Galuyót</strong></p>
+    <p>Tekáh beshofár gadól lejeruténu, vesá nes lekabétz galuyoténu, vekabtzéinu yájad mearbá kanfót haáretz. Baruj Atá Adonái, mekabétz nidjéi amó Israel.</p>
 
-<p><strong>11. Mishpat</strong></p>
-<p>Hashíva shoftéinu kevarishoná veyoatzéinu kevatejilá, vehasér miménu yagón vaanajá, umlój aléinu Atá Adonái levadejá bejésed uvrajamím, vetzadkéinu bamishpát. Baruj Atá Adonái, mélej ohév tzedaká umishpát.</p>
+    <p><strong>11. Mishpat</strong></p>
+    <p>Hashíva shoftéinu kevarishoná veyoatzéinu kevatejilá, vehasér miménu yagón vaanajá, umlój aléinu Atá Adonái levadejá bejésed uvrajamím, vetzadkéinu bamishpát. Baruj Atá Adonái, mélej ohév tzedaká umishpát.</p>
 
-<p><strong>12. Birkat haminím</strong></p>
-<p>Velamalshiním al tehí tikvá, vejol harishá kerégaa tovéid, vejol oyveí amjá meherá yikarétu, vehazedím meherá teakér uteshabér uteagér vetajnía bimheirá veyaméinu. Baruj Atá Adonái, shovér oyvím umajnía zedím.</p>
+    <p><strong>12. Birkat haminím</strong></p>
+    <p>Velamalshiním al tehí tikvá, vejol harishá kerégaa tovéid, vejol oyveí amjá meherá yikarétu, vehazedím meherá teakér uteshabér uteagér vetajnía bimheirá veyaméinu. Baruj Atá Adonái, shovér oyvím umajnía zedím.</p>
 
-<p><strong>13. Tzadikím</strong></p>
-<p>Al hatzadikím veál hajasidím veál ziknéi amejá béit Israel, veál peletát soferéihem, veál guéri hatzédek vealéinu, yehemú rajaméja, Adonái Elohéinu, vetén sajár tov lejol habotjím beShimjá beemét, vesím jelkéinu imahém, uleolám lo nevósh, ki vejá batájnu. Baruj Atá Adonái, mishán umivtáj latzadikím.</p>
+    <p><strong>13. Tzadikím</strong></p>
+    <p>Al hatzadikím veál hajasidím veál ziknéi amejá béit Israel, veál peletát soferéihem, veál guéri hatzédek vealéinu, yehemú rajaméja, Adonái Elohéinu, vetén sajár tov lejol habotjím beShimjá beemét, vesím jelkéinu imahém, uleolám lo nevósh, ki vejá batájnu. Baruj Atá Adonái, mishán umivtáj latzadikím.</p>
 
-<p><strong>14. Yerushaláyim</strong></p>
-<p>Velirushaláyim irjá berajamím tashúv, vetishkón betojá kaashér dibárta, uvné otá bekarov beyaméinu binyán olám, vejisé David avdejá meherá letojá tajín. Baruj Atá Adonái, boné Yerushaláyim.</p>
+    <p><strong>14. Yerushaláyim</strong></p>
+    <p>Velirushaláyim irjá berajamím tashúv, vetishkón betojá kaashér dibárta, uvné otá bekarov beyaméinu binyán olám, vejisé David avdejá meherá letojá tajín. Baruj Atá Adonái, boné Yerushaláyim.</p>
 
-<p><strong>15. David</strong></p>
-<p>Et tzémaj David avdejá meherá tatzmíaj, vekarnó tarum bishuatéja, ki lishuatéja kivínu kol hayóm. Baruj Atá Adonái, matzmíaj kéren yeshuá.</p>
+    <p><strong>15. David</strong></p>
+    <p>Et tzémaj David avdejá meherá tatzmíaj, vekarnó tarum bishuatéja, ki lishuatéja kivínu kol hayóm. Baruj Atá Adonái, matzmíaj kéren yeshuá.</p>
 
-<p><strong>16. Tefilá</strong></p>
-<p>Shemá kolénu, Adonái Elohéinu, jus verajem aléinu, vekabél berajamím uvratzón et tefilatéinu. Ki El shoméa tefilót vetajanunim Atá, umilfanéja malkéinu reikám al teshivéinu, ki Atá shoméa tefilát amjá Israel berajamím. Baruj Atá Adonái, shoméa tefilá.</p>
+    <p><strong>16. Tefilá</strong></p>
+    <p>Shemá kolénu, Adonái Elohéinu, jus verajem aléinu, vekabél berajamím uvratzón et tefilatéinu. Ki El shoméa tefilót vetajanunim Atá, umilfanéja malkéinu reikám al teshivéinu, ki Atá shoméa tefilát amjá Israel berajamím. Baruj Atá Adonái, shoméa tefilá.</p>
 
-<p><strong>17. Avodá</strong></p>
-<p>Retzé, Adonái Elohéinu, beamejá Israel uvitfilatám, vehashév et haavodá lidvír beitéja, veishéi Israel utfilatám beahavá tekabél beratzón, uthí leratzón tamíd avodát Israel amejá. Vetejezéina einéinu beshuvjá leTziyón berajamím. Baruj Atá Adonái, hamajazír shejinató leTziyón.</p>
+    <p><strong>17. Avodá</strong></p>
+    <p>Retzé, Adonái Elohéinu, beamejá Israel uvitfilatám, vehashév et haavodá lidvír beitéja, veishéi Israel utfilatám beahavá tekabél beratzón, uthí leratzón tamíd avodát Israel amejá. Vetejezéina einéinu beshuvjá leTziyón berajamím. Baruj Atá Adonái, hamajazír shejinató leTziyón.</p>
 
-<p><strong>18. Hodaá</strong></p>
-<p>Modím anájnu Laj, shaAtá Hu Adonái Elohéinu vElohéi avoténu leolám vaéd, tzur jayéinu, maguén yishéinu Atá Hu ledór vadór. Nodé Lejá unsapér tehilatéja al jayéinu hamesurím beyadéja, veál nishmoténu hapekudót Laj, veál niséja shebejol yom imánu, veál nifleotéja vetovotéja shebejol et, érev vavóker vetzohoráyim. Hatóv, ki ló jalú rajaméja, vehamerajém ki ló támu jasadéja, meolám kivínu Laj.</p>
-<p>Veál kulám yitbaráj veyitromám shimjá malkéinu tamíd leolám vaéd. Vejol hajayím yodúja sela, vihalelú et shimjá beemét, haEl yeshuaténu veezraténu sela. Baruj Atá Adonái, hatóv shimjá ulejá naé lehodót.</p>
+    <p><strong>18. Hodaá</strong></p>
+    <p>Modím anájnu Laj, shaAtá Hu Adonái Elohéinu vElohéi avoténu leolám vaéd, tzur jayéinu, maguén yishéinu Atá Hu ledór vadór. Nodé Lejá unsapér tehilatéja al jayéinu hamesurím beyadéja, veál nishmoténu hapekudót Laj, veál niséja shebejol yom imánu, veál nifleotéja vetovotéja shebejol et, érev vavóker vetzohoráyim. Hatóv, ki ló jalú rajaméja, vehamerajém ki ló támu jasadéja, meolám kivínu Laj.</p>
+    <p>Veál kulám yitbaráj veyitromám shimjá malkéinu tamíd leolám vaéd. Vejol hajayím yodúja sela, vihalelú et shimjá beemét, haEl yeshuaténu veezraténu sela. Baruj Atá Adonái, hatóv shimjá ulejá naé lehodót.</p>
 
-<p><strong>19. Shalóm</strong></p>
-<p>Sim shalóm, tová uvrajá, jen vajésed verajamím, aléinu veál kol Israel amejá. Barjéinu Avínu, kulánu keejad beór panéja, ki veór panéja natáta lánu, Adonái Elohéinu, torát jayím veahavát jésed, utzdaká uvrajá verajamím vejayím veshalóm. Vetóv beeinéja levaréij et amjá Israel bejol et uvjol shaá bishlomeja. Baruj Atá Adonái, hamevaréij et amó Israel bashalóm.</p>
+    <p><strong>19. Shalóm</strong></p>
+    <p>Sim shalóm, tová uvrajá, jen vajésed verajamím, aléinu veál kol Israel amejá. Barjéinu Avínu, kulánu keejad beór panéja, ki veór panéja natáta lánu, Adonái Elohéinu, torát jayím veahavát jésed, utzdaká uvrajá verajamím vejayím veshalóm. Vetóv beeinéja levaréij et amjá Israel bejol et uvjol shaá bishlomeja. Baruj Atá Adonái, hamevaréij et amó Israel bashalóm.</p>
 
-<p class="rubric">Conclusión silenciosa:</p>
-<p>Elohái, netzór leshoní merá, usfatái midabér mirmá, velimkalelai nafshí tidóm, venafshí keafár lakól tihyé. Petáj libí betoratéja, uvmitzvotéja tirdóf nafshí.</p>
-<p>Yihyú leratzón imréi fi, vehegyón libí lefanéja, Adonái tzurí vegoalí.</p>
-<p>Osé shalóm bimromáv, Hu yaasé shalóm aléinu, veál kol Israel, veimrú: Amén.</p>
-```
-
+    <p class="rubric">Conclusión silenciosa:</p>
+    <p>Elohái, netzór leshoní merá, usfatái midabér mirmá, velimkalelai nafshí tidóm, venafshí keafár lakól tihyé. Petáj libí betoratéja, uvmitzvotéja tirdóf nafshí.</p>
+    <p>Yihyú leratzón imréi fi, vehegyón libí lefanéja, Adonái tzurí vegoalí.</p>
+    <p>Osé shalóm bimromáv, Hu yaasé shalóm aléinu, veál kol Israel, veimrú: Amén.</p>
   </article>
 
   <article class="prayer" id="sh-tajanun">
@@ -1523,7 +1514,6 @@ color: var(–ink) !important;
 </section>
 
 <!-- ============================ MINJÁ ============================ -->
-
 <section id="minja" class="service scroll-top-target">
   <div class="title-frame">
     <h1 class="service-title">Minjá</h1>
@@ -1576,69 +1566,66 @@ color: var(–ink) !important;
     <p class="heb">תְּפִלַּת הָעֲמִידָה</p>
     <p class="rubric">De pie, los pies juntos, mirando hacia Jerusalén.</p>
 
-```
-<p>Adonái sefatái tiftáj, ufí yagíd tehilatéja.</p>
+    <p>Adonái sefatái tiftáj, ufí yagíd tehilatéja.</p>
 
-<p><strong>1. Avot</strong></p>
-<p>Baruj Atá Adonái, Elohéinu vElohéi avoténu, Elohéi Avrahám, Elohéi Itzjak, vElohéi Yaakóv, haEl hagadól, hagibór vehanorá, El Elión, gomél jasadím tovím vekoné hakól, vezojer jasdéi avót, umeví goél livnéi vneihém lemáan Shemó beahavá. Mélej ozer umoshía umaguén. Baruj Atá Adonái, magén Avrahám.</p>
+    <p><strong>1. Avot</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu vElohéi avoténu, Elohéi Avrahám, Elohéi Itzjak, vElohéi Yaakóv, haEl hagadól, hagibór vehanorá, El Elión, gomél jasadím tovím vekoné hakól, vezojer jasdéi avót, umeví goél livnéi vneihém lemáan Shemó beahavá. Mélej ozer umoshía umaguén. Baruj Atá Adonái, magén Avrahám.</p>
 
-<p><strong>2. Guevurót</strong></p>
-<p>Atá guibór leolám Adonái, mejayé metím Atá, rav lehoshía. Mejalkél jayím bejésed, mejayé metím berajamím rabím, somej noflím, verofé jolím, umatír asurím, umkayém emunató lisheneí afár. Mi jamoja, báal guevurót, umí dóme laj, mélej memít umjayé umatzmíaj yeshuá. Veneemán Atá lehajayót metím. Baruj Atá Adonái, mejayé hametím.</p>
+    <p><strong>2. Guevurót</strong></p>
+    <p>Atá guibór leolám Adonái, mejayé metím Atá, rav lehoshía. Mejalkél jayím bejésed, mejayé metím berajamím rabím, somej noflím, verofé jolím, umatír asurím, umkayém emunató lisheneí afár. Mi jamoja, báal guevurót, umí dóme laj, mélej memít umjayé umatzmíaj yeshuá. Veneemán Atá lehajayót metím. Baruj Atá Adonái, mejayé hametím.</p>
 
-<p><strong>3. Kedushá</strong></p>
-<p>Atá kadósh veshimjá kadósh, ukdoshím bejol yom yehaleluja sela. Baruj Atá Adonái, haEl hakadósh.</p>
+    <p><strong>3. Kedushá</strong></p>
+    <p>Atá kadósh veshimjá kadósh, ukdoshím bejol yom yehaleluja sela. Baruj Atá Adonái, haEl hakadósh.</p>
 
-<p><strong>4. Daat</strong></p>
-<p>Atá jonén leadám dáat, umlaméd leenósh biná. Jonéinu meitejá deá biná vehaskél. Baruj Atá Adonái, jonén hadáat.</p>
+    <p><strong>4. Daat</strong></p>
+    <p>Atá jonén leadám dáat, umlaméd leenósh biná. Jonéinu meitejá deá biná vehaskél. Baruj Atá Adonái, jonén hadáat.</p>
 
-<p><strong>5. Teshuvá</strong></p>
-<p>Hashivéinu Avínu letoratéja, vekarvéinu malkéinu laavodatéja, vehajazirénu betshuvá shelemá lefanéja. Baruj Atá Adonái, harotzé bitshuvá.</p>
+    <p><strong>5. Teshuvá</strong></p>
+    <p>Hashivéinu Avínu letoratéja, vekarvéinu malkéinu laavodatéja, vehajazirénu betshuvá shelemá lefanéja. Baruj Atá Adonái, harotzé bitshuvá.</p>
 
-<p><strong>6. Selijá</strong></p>
-<p>Selaj lánu Avínu, ki jatánu, mejol lánu malkéinu, ki fashánu, ki El tov vesalaj Atá. Baruj Atá Adonái, janún hamarbé lislóaj.</p>
+    <p><strong>6. Selijá</strong></p>
+    <p>Selaj lánu Avínu, ki jatánu, mejol lánu malkéinu, ki fashánu, ki El tov vesalaj Atá. Baruj Atá Adonái, janún hamarbé lislóaj.</p>
 
-<p><strong>7. Gueulá</strong></p>
-<p>Reé na veonyéinu, veriva rivéinu, ugaaléinu meherá lemáan Shemejá, ki goél jazák Atá. Baruj Atá Adonái, goél Israel.</p>
+    <p><strong>7. Gueulá</strong></p>
+    <p>Reé na veonyéinu, veriva rivéinu, ugaaléinu meherá lemáan Shemejá, ki goél jazák Atá. Baruj Atá Adonái, goél Israel.</p>
 
-<p><strong>8. Refuá</strong></p>
-<p>Refaénu Adonái veneraféi, hoshiéinu venivashéa, ki tehilatéinu Atá. Vehaalé arujá ushlemá lejol makotéinu, ki El mélej rofé neemán verajamán Atá. Baruj Atá Adonái, rofé jolei amó Israel.</p>
+    <p><strong>8. Refuá</strong></p>
+    <p>Refaénu Adonái veneraféi, hoshiéinu venivashéa, ki tehilatéinu Atá. Vehaalé arujá ushlemá lejol makotéinu, ki El mélej rofé neemán verajamán Atá. Baruj Atá Adonái, rofé jolei amó Israel.</p>
 
-<p><strong>9. Birkat Hashaním</strong></p>
-<p>Bareij aléinu, Adonái Elohéinu, et hashaná hazót, veét kol minéi tevuatá letová, vetén berajá al pneí haadamá, vesabéinu mituvá, uvaréij shenatéinu kashaním hatovót. Baruj Atá Adonái, mevaréij hashaním.</p>
+    <p><strong>9. Birkat Hashaním</strong></p>
+    <p>Bareij aléinu, Adonái Elohéinu, et hashaná hazót, veét kol minéi tevuatá letová, vetén berajá al pneí haadamá, vesabéinu mituvá, uvaréij shenatéinu kashaním hatovót. Baruj Atá Adonái, mevaréij hashaním.</p>
 
-<p><strong>10. Kibutz Galuyót</strong></p>
-<p>Tekáh beshofár gadól lejeruténu, vesá nes lekabétz galuyoténu, vekabtzéinu yájad mearbá kanfót haáretz. Baruj Atá Adonái, mekabétz nidjéi amó Israel.</p>
+    <p><strong>10. Kibutz Galuyót</strong></p>
+    <p>Tekáh beshofár gadól lejeruténu, vesá nes lekabétz galuyoténu, vekabtzéinu yájad mearbá kanfót haáretz. Baruj Atá Adonái, mekabétz nidjéi amó Israel.</p>
 
-<p><strong>11. Mishpat</strong></p>
-<p>Hashíva shoftéinu kevarishoná veyoatzéinu kevatejilá, vehasér miménu yagón vaanajá, umlój aléinu Atá Adonái levadejá bejésed uvrajamím, vetzadkéinu bamishpát. Baruj Atá Adonái, mélej ohév tzedaká umishpát.</p>
+    <p><strong>11. Mishpat</strong></p>
+    <p>Hashíva shoftéinu kevarishoná veyoatzéinu kevatejilá, vehasér miménu yagón vaanajá, umlój aléinu Atá Adonái levadejá bejésed uvrajamím, vetzadkéinu bamishpát. Baruj Atá Adonái, mélej ohév tzedaká umishpát.</p>
 
-<p><strong>12. Birkat haminím</strong></p>
-<p>Velamalshiním al tehí tikvá, vejol harishá kerégaa tovéid, vejol oyveí amjá meherá yikarétu, vehazedím meherá teakér uteshabér uteagér vetajnía bimheirá veyaméinu. Baruj Atá Adonái, shovér oyvím umajnía zedím.</p>
+    <p><strong>12. Birkat haminím</strong></p>
+    <p>Velamalshiním al tehí tikvá, vejol harishá kerégaa tovéid, vejol oyveí amjá meherá yikarétu, vehazedím meherá teakér uteshabér uteagér vetajnía bimheirá veyaméinu. Baruj Atá Adonái, shovér oyvím umajnía zedím.</p>
 
-<p><strong>13. Tzadikím</strong></p>
-<p>Al hatzadikím veál hajasidím veál ziknéi amejá béit Israel, veál peletát soferéihem, veál guéri hatzédek vealéinu, yehemú rajaméja, Adonái Elohéinu, vetén sajár tov lejol habotjím beShimjá beemét, vesím jelkéinu imahém, uleolám lo nevósh, ki vejá batájnu. Baruj Atá Adonái, mishán umivtáj latzadikím.</p>
+    <p><strong>13. Tzadikím</strong></p>
+    <p>Al hatzadikím veál hajasidím veál ziknéi amejá béit Israel, veál peletát soferéihem, veál guéri hatzédek vealéinu, yehemú rajaméja, Adonái Elohéinu, vetén sajár tov lejol habotjím beShimjá beemét, vesím jelkéinu imahém, uleolám lo nevósh, ki vejá batájnu. Baruj Atá Adonái, mishán umivtáj latzadikím.</p>
 
-<p><strong>14. Yerushaláyim</strong></p>
-<p>Velirushaláyim irjá berajamím tashúv, vetishkón betojá kaashér dibárta, uvné otá bekarov beyaméinu binyán olám, vejisé David avdejá meherá letojá tajín. Baruj Atá Adonái, boné Yerushaláyim.</p>
+    <p><strong>14. Yerushaláyim</strong></p>
+    <p>Velirushaláyim irjá berajamím tashúv, vetishkón betojá kaashér dibárta, uvné otá bekarov beyaméinu binyán olám, vejisé David avdejá meherá letojá tajín. Baruj Atá Adonái, boné Yerushaláyim.</p>
 
-<p><strong>15. David</strong></p>
-<p>Et tzémaj David avdejá meherá tatzmíaj, vekarnó tarum bishuatéja, ki lishuatéja kivínu kol hayóm. Baruj Atá Adonái, matzmíaj kéren yeshuá.</p>
+    <p><strong>15. David</strong></p>
+    <p>Et tzémaj David avdejá meherá tatzmíaj, vekarnó tarum bishuatéja, ki lishuatéja kivínu kol hayóm. Baruj Atá Adonái, matzmíaj kéren yeshuá.</p>
 
-<p><strong>16. Tefilá</strong></p>
-<p>Shemá kolénu, Adonái Elohéinu, jus verajem aléinu, vekabél berajamím uvratzón et tefilatéinu. Ki El shoméa tefilót vetajanunim Atá, umilfanéja malkéinu reikám al teshivéinu, ki Atá shoméa tefilát amjá Israel berajamím. Baruj Atá Adonái, shoméa tefilá.</p>
+    <p><strong>16. Tefilá</strong></p>
+    <p>Shemá kolénu, Adonái Elohéinu, jus verajem aléinu, vekabél berajamím uvratzón et tefilatéinu. Ki El shoméa tefilót vetajanunim Atá, umilfanéja malkéinu reikám al teshivéinu, ki Atá shoméa tefilát amjá Israel berajamím. Baruj Atá Adonái, shoméa tefilá.</p>
 
-<p><strong>17. Avodá</strong></p>
-<p>Retzé, Adonái Elohéinu, beamejá Israel uvitfilatám, vehashév et haavodá lidvír beitéja, veishéi Israel utfilatám beahavá tekabél beratzón, uthí leratzón tamíd avodát Israel amejá. Vetejezéina einéinu beshuvjá leTziyón berajamím. Baruj Atá Adonái, hamajazír shejinató leTziyón.</p>
+    <p><strong>17. Avodá</strong></p>
+    <p>Retzé, Adonái Elohéinu, beamejá Israel uvitfilatám, vehashév et haavodá lidvír beitéja, veishéi Israel utfilatám beahavá tekabél beratzón, uthí leratzón tamíd avodát Israel amejá. Vetejezéina einéinu beshuvjá leTziyón berajamím. Baruj Atá Adonái, hamajazír shejinató leTziyón.</p>
 
-<p><strong>18. Hodaá</strong></p>
-<p>Modím anájnu Laj, shaAtá Hu Adonái Elohéinu vElohéi avoténu leolám vaéd, tzur jayéinu, maguén yishéinu Atá Hu ledór vadór. Nodé Lejá unsapér tehilatéja al jayéinu hamesurím beyadéja, veál nishmoténu hapekudót Laj, veál niséja shebejol yom imánu, veál nifleotéja vetovotéja shebejol et, érev vavóker vetzohoráyim. Hatóv, ki ló jalú rajaméja, vehamerajém ki ló támu jasadéja, meolám kivínu Laj. Veál kulám yitbaráj veyitromám shimjá malkéinu tamíd leolám vaéd. Baruj Atá Adonái, hatóv shimjá ulejá naé lehodót.</p>
+    <p><strong>18. Hodaá</strong></p>
+    <p>Modím anájnu Laj, shaAtá Hu Adonái Elohéinu vElohéi avoténu leolám vaéd, tzur jayéinu, maguén yishéinu Atá Hu ledór vadór. Nodé Lejá unsapér tehilatéja al jayéinu hamesurím beyadéja, veál nishmoténu hapekudót Laj, veál niséja shebejol yom imánu, veál nifleotéja vetovotéja shebejol et, érev vavóker vetzohoráyim. Hatóv, ki ló jalú rajaméja, vehamerajém ki ló támu jasadéja, meolám kivínu Laj. Veál kulám yitbaráj veyitromám shimjá malkéinu tamíd leolám vaéd. Baruj Atá Adonái, hatóv shimjá ulejá naé lehodót.</p>
 
-<p><strong>19. Shalóm</strong></p>
-<p>Sim shalóm, tová uvrajá, jen vajésed verajamím, aléinu veál kol Israel amejá. Barjéinu Avínu, kulánu keejad beór panéja, ki veór panéja natáta lánu, Adonái Elohéinu, torát jayím veahavát jésed, utzdaká uvrajá verajamím vejayím veshalóm. Baruj Atá Adonái, hamevaréij et amó Israel bashalóm.</p>
+    <p><strong>19. Shalóm</strong></p>
+    <p>Sim shalóm, tová uvrajá, jen vajésed verajamím, aléinu veál kol Israel amejá. Barjéinu Avínu, kulánu keejad beór panéja, ki veór panéja natáta lánu, Adonái Elohéinu, torát jayím veahavát jésed, utzdaká uvrajá verajamím vejayím veshalóm. Baruj Atá Adonái, hamevaréij et amó Israel bashalóm.</p>
 
-<p>Elohái, netzór leshoní merá, usfatái midabér mirmá. Yihyú leratzón imréi fi, vehegyón libí lefanéja, Adonái tzurí vegoalí. Osé shalóm bimromáv, Hu yaasé shalóm aléinu, veál kol Israel, veimrú: Amén.</p>
-```
-
+    <p>Elohái, netzór leshoní merá, usfatái midabér mirmá. Yihyú leratzón imréi fi, vehegyón libí lefanéja, Adonái tzurí vegoalí. Osé shalóm bimromáv, Hu yaasé shalóm aléinu, veál kol Israel, veimrú: Amén.</p>
   </article>
 
   <article class="prayer" id="mi-tajanun">
@@ -1674,7 +1661,6 @@ color: var(–ink) !important;
 </section>
 
 <!-- ============================ ARVIT ============================ -->
-
 <section id="arvit" class="service scroll-top-target">
   <div class="title-frame">
     <h1 class="service-title">Arvit</h1>
@@ -1746,17 +1732,14 @@ color: var(–ink) !important;
     <p class="response" style="font-size:1.3rem;">Shemá Israel, Adonái Elohéinu, Adonái Ejád.</p>
     <p class="response" style="font-style:italic; font-size:1rem;">(En voz baja:) Baruj shem kevód maljutó leolám vaéd.</p>
 
-```
-<p><strong>Veahavtá:</strong></p>
-<p>Veahavtá et Adonái Elohéja, bejol levavjá, uvjol nafshejá, uvjol meodéja. Vehayú hadevarím haéle, asher Anojí metzavjá hayóm, al levavéja. Veshinantám levanéja, vedibartá bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ukshartám leót al yadéja, vehayú letotafót béin einéja. Ujtavtám al mezuzót beitéja uvisharéja.</p>
+    <p><strong>Veahavtá:</strong></p>
+    <p>Veahavtá et Adonái Elohéja, bejol levavjá, uvjol nafshejá, uvjol meodéja. Vehayú hadevarím haéle, asher Anojí metzavjá hayóm, al levavéja. Veshinantám levanéja, vedibartá bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ukshartám leót al yadéja, vehayú letotafót béin einéja. Ujtavtám al mezuzót beitéja uvisharéja.</p>
 
-<p><strong>Vehayá im shamóa:</strong></p>
-<p>Vehayá im shamóa tishmeú el mitzvotái, asher Anojí metzavé etjém hayóm, leahavá et Adonái Eloheijém ulavdó, bejol levavjém uvjol nafshejém. Venatatí metár artzejém beitó, yoré umalkósh, veasaftá deganéja vetiroshjá veyitzharéja. Venatatí éisev besadejá livhemtéja, veajaltá vesavájta. Hishameru lajém pen yifté levavjém, vesartém vaavadtém elohím ajerím vehishtajavitém lahém. Vejará af Adonái bajém, veatzár et hashamáyim veló yihyé matár, vehaadamá lo titén et yevulá, vaavadtém meherá meál haáretz hatová asher Adonái notén lajém. Vesamtém et devarái éle al levavjém veál nafshejém, ukshartém otám leót al yedjém vehayú letotafót béin einejém. Velimadtém otám et beneijém, ledabér bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ujtavtám al mezuzót beitéja uvisharéja. Lemáan yirbú yemeijém vyméi veneijém al haadamá, asher nishbá Adonái laavoteijém latét lahém, kiyméi hashamáyim al haáretz.</p>
+    <p><strong>Vehayá im shamóa:</strong></p>
+    <p>Vehayá im shamóa tishmeú el mitzvotái, asher Anojí metzavé etjém hayóm, leahavá et Adonái Eloheijém ulavdó, bejol levavjém uvjol nafshejém. Venatatí metár artzejém beitó, yoré umalkósh, veasaftá deganéja vetiroshjá veyitzharéja. Venatatí éisev besadejá livhemtéja, veajaltá vesavájta. Hishameru lajém pen yifté levavjém, vesartém vaavadtém elohím ajerím vehishtajavitém lahém. Vejará af Adonái bajém, veatzár et hashamáyim veló yihyé matár, vehaadamá lo titén et yevulá, vaavadtém meherá meál haáretz hatová asher Adonái notén lajém. Vesamtém et devarái éle al levavjém veál nafshejém, ukshartém otám leót al yedjém vehayú letotafót béin einejém. Velimadtém otám et beneijém, ledabér bam, beshivtejá beveitéja, uvlejtejá vadérej, uvshojbejá uvkuméja. Ujtavtám al mezuzót beitéja uvisharéja. Lemáan yirbú yemeijém vyméi veneijém al haadamá, asher nishbá Adonái laavoteijém latét lahém, kiyméi hashamáyim al haáretz.</p>
 
-<p><strong>Vayómer (Tzitzit):</strong></p>
-<p>Vayómer Adonái el Moshé lemór: Daber el bnei Israel, veamartá alehem, veasú lahém tzitzít al kanféi vigdeihém ledorotám, venatenú al tzitzít hakanáf petíl tjélet. Vehayá lajém letzitzít, ureitém otó, uzjartém et kol mitzvót Adonái, vaasitém otám, veló tatúru ajaré levavjém veajaré einejém, asher atém zoním ajareihém. Lemáan tizkerú vaasitém et kol mitzvotái, vihyitém kedoshím lEloheijém. Aní Adonái Eloheijém, asher hotzéti etjém meéretz Mitzráyim, lihyót lajém lEelohím. Aní Adonái Eloheijém. Emét.</p>
-```
-
+    <p><strong>Vayómer (Tzitzit):</strong></p>
+    <p>Vayómer Adonái el Moshé lemór: Daber el bnei Israel, veamartá alehem, veasú lahém tzitzít al kanféi vigdeihém ledorotám, venatenú al tzitzít hakanáf petíl tjélet. Vehayá lajém letzitzít, ureitém otó, uzjartém et kol mitzvót Adonái, vaasitém otám, veló tatúru ajaré levavjém veajaré einejém, asher atém zoním ajareihém. Lemáan tizkerú vaasitém et kol mitzvotái, vihyitém kedoshím lEloheijém. Aní Adonái Eloheijém, asher hotzéti etjém meéretz Mitzráyim, lihyót lajém lEelohím. Aní Adonái Eloheijém. Emét.</p>
   </article>
 
   <article class="prayer" id="ar-emet">
@@ -1799,73 +1782,70 @@ color: var(–ink) !important;
     <p class="heb">תְּפִלַּת הָעֲמִידָה</p>
     <p class="rubric">De pie, los pies juntos. La Amidá de Arvit no se repite en voz alta.</p>
 
-```
-<p>Adonái sefatái tiftáj, ufí yagíd tehilatéja.</p>
+    <p>Adonái sefatái tiftáj, ufí yagíd tehilatéja.</p>
 
-<p><strong>1. Avot</strong></p>
-<p>Baruj Atá Adonái, Elohéinu vElohéi avoténu, Elohéi Avrahám, Elohéi Itzjak, vElohéi Yaakóv, haEl hagadól, hagibór vehanorá, El Elión, gomél jasadím tovím vekoné hakól, vezojer jasdéi avót, umeví goél livnéi vneihém lemáan Shemó beahavá. Mélej ozer umoshía umaguén. Baruj Atá Adonái, magén Avrahám.</p>
+    <p><strong>1. Avot</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu vElohéi avoténu, Elohéi Avrahám, Elohéi Itzjak, vElohéi Yaakóv, haEl hagadól, hagibór vehanorá, El Elión, gomél jasadím tovím vekoné hakól, vezojer jasdéi avót, umeví goél livnéi vneihém lemáan Shemó beahavá. Mélej ozer umoshía umaguén. Baruj Atá Adonái, magén Avrahám.</p>
 
-<p><strong>2. Guevurót</strong></p>
-<p>Atá guibór leolám Adonái, mejayé metím Atá, rav lehoshía. Mejalkél jayím bejésed, mejayé metím berajamím rabím, somej noflím, verofé jolím, umatír asurím, umkayém emunató lisheneí afár. Mi jamoja, báal guevurót, umí dóme laj, mélej memít umjayé umatzmíaj yeshuá. Veneemán Atá lehajayót metím. Baruj Atá Adonái, mejayé hametím.</p>
+    <p><strong>2. Guevurót</strong></p>
+    <p>Atá guibór leolám Adonái, mejayé metím Atá, rav lehoshía. Mejalkél jayím bejésed, mejayé metím berajamím rabím, somej noflím, verofé jolím, umatír asurím, umkayém emunató lisheneí afár. Mi jamoja, báal guevurót, umí dóme laj, mélej memít umjayé umatzmíaj yeshuá. Veneemán Atá lehajayót metím. Baruj Atá Adonái, mejayé hametím.</p>
 
-<p><strong>3. Kedushá</strong></p>
-<p>Atá kadósh veshimjá kadósh, ukdoshím bejol yom yehaleluja sela. Baruj Atá Adonái, haEl hakadósh.</p>
+    <p><strong>3. Kedushá</strong></p>
+    <p>Atá kadósh veshimjá kadósh, ukdoshím bejol yom yehaleluja sela. Baruj Atá Adonái, haEl hakadósh.</p>
 
-<p><strong>4. Daat — Conocimiento</strong></p>
-<p>Atá jonén leadám dáat, umlaméd leenósh biná. Jonéinu meitejá deá biná vehaskél. Baruj Atá Adonái, jonén hadáat.</p>
+    <p><strong>4. Daat — Conocimiento</strong></p>
+    <p>Atá jonén leadám dáat, umlaméd leenósh biná. Jonéinu meitejá deá biná vehaskél. Baruj Atá Adonái, jonén hadáat.</p>
 
-<p><strong>5. Teshuvá — Retorno</strong></p>
-<p>Hashivéinu Avínu letoratéja, vekarvéinu malkéinu laavodatéja, vehajazirénu betshuvá shelemá lefanéja. Baruj Atá Adonái, harotzé bitshuvá.</p>
+    <p><strong>5. Teshuvá — Retorno</strong></p>
+    <p>Hashivéinu Avínu letoratéja, vekarvéinu malkéinu laavodatéja, vehajazirénu betshuvá shelemá lefanéja. Baruj Atá Adonái, harotzé bitshuvá.</p>
 
-<p><strong>6. Selijá — Perdón</strong></p>
-<p>Selaj lánu Avínu, ki jatánu, mejol lánu malkéinu, ki fashánu, ki El tov vesalaj Atá. Baruj Atá Adonái, janún hamarbé lislóaj.</p>
+    <p><strong>6. Selijá — Perdón</strong></p>
+    <p>Selaj lánu Avínu, ki jatánu, mejol lánu malkéinu, ki fashánu, ki El tov vesalaj Atá. Baruj Atá Adonái, janún hamarbé lislóaj.</p>
 
-<p><strong>7. Gueulá — Redención</strong></p>
-<p>Reé na veonyéinu, veriva rivéinu, ugaaléinu meherá lemáan Shemejá, ki goél jazák Atá. Baruj Atá Adonái, goél Israel.</p>
+    <p><strong>7. Gueulá — Redención</strong></p>
+    <p>Reé na veonyéinu, veriva rivéinu, ugaaléinu meherá lemáan Shemejá, ki goél jazák Atá. Baruj Atá Adonái, goél Israel.</p>
 
-<p><strong>8. Refuá — Salud</strong></p>
-<p>Refaénu Adonái veneraféi, hoshiéinu venivashéa, ki tehilatéinu Atá. Vehaalé arujá ushlemá lejol makotéinu, ki El mélej rofé neemán verajamán Atá. Baruj Atá Adonái, rofé jolei amó Israel.</p>
+    <p><strong>8. Refuá — Salud</strong></p>
+    <p>Refaénu Adonái veneraféi, hoshiéinu venivashéa, ki tehilatéinu Atá. Vehaalé arujá ushlemá lejol makotéinu, ki El mélej rofé neemán verajamán Atá. Baruj Atá Adonái, rofé jolei amó Israel.</p>
 
-<p><strong>9. Birkat Hashaním — Año de bendición</strong></p>
-<p>Bareij aléinu, Adonái Elohéinu, et hashaná hazót, veét kol minéi tevuatá letová, vetén berajá al pneí haadamá, vesabéinu mituvá, uvaréij shenatéinu kashaním hatovót. Baruj Atá Adonái, mevaréij hashaním.</p>
+    <p><strong>9. Birkat Hashaním — Año de bendición</strong></p>
+    <p>Bareij aléinu, Adonái Elohéinu, et hashaná hazót, veét kol minéi tevuatá letová, vetén berajá al pneí haadamá, vesabéinu mituvá, uvaréij shenatéinu kashaním hatovót. Baruj Atá Adonái, mevaréij hashaním.</p>
 
-<p><strong>10. Kibutz Galuyót — Reunión de los Exiliados</strong></p>
-<p>Tekáh beshofár gadól lejeruténu, vesá nes lekabétz galuyoténu, vekabtzéinu yájad mearbá kanfót haáretz. Baruj Atá Adonái, mekabétz nidjéi amó Israel.</p>
+    <p><strong>10. Kibutz Galuyót — Reunión de los Exiliados</strong></p>
+    <p>Tekáh beshofár gadól lejeruténu, vesá nes lekabétz galuyoténu, vekabtzéinu yájad mearbá kanfót haáretz. Baruj Atá Adonái, mekabétz nidjéi amó Israel.</p>
 
-<p><strong>11. Mishpat — Justicia</strong></p>
-<p>Hashíva shoftéinu kevarishoná veyoatzéinu kevatejilá, vehasér miménu yagón vaanajá, umlój aléinu Atá Adonái levadejá bejésed uvrajamím, vetzadkéinu bamishpát. Baruj Atá Adonái, mélej ohév tzedaká umishpát.</p>
+    <p><strong>11. Mishpat — Justicia</strong></p>
+    <p>Hashíva shoftéinu kevarishoná veyoatzéinu kevatejilá, vehasér miménu yagón vaanajá, umlój aléinu Atá Adonái levadejá bejésed uvrajamím, vetzadkéinu bamishpát. Baruj Atá Adonái, mélej ohév tzedaká umishpát.</p>
 
-<p><strong>12. Birkat haminím — Contra los enemigos</strong></p>
-<p>Velamalshiním al tehí tikvá, vejol harishá kerégaa tovéid, vejol oyveí amjá meherá yikarétu, vehazedím meherá teakér uteshabér uteagér vetajnía bimheirá veyaméinu. Baruj Atá Adonái, shovér oyvím umajnía zedím.</p>
+    <p><strong>12. Birkat haminím — Contra los enemigos</strong></p>
+    <p>Velamalshiním al tehí tikvá, vejol harishá kerégaa tovéid, vejol oyveí amjá meherá yikarétu, vehazedím meherá teakér uteshabér uteagér vetajnía bimheirá veyaméinu. Baruj Atá Adonái, shovér oyvím umajnía zedím.</p>
 
-<p><strong>13. Tzadikím — Los Justos</strong></p>
-<p>Al hatzadikím veál hajasidím veál ziknéi amejá béit Israel, veál peletát soferéihem, veál guéri hatzédek vealéinu, yehemú rajaméja, Adonái Elohéinu, vetén sajár tov lejol habotjím beShimjá beemét, vesím jelkéinu imahém, uleolám lo nevósh, ki vejá batájnu. Baruj Atá Adonái, mishán umivtáj latzadikím.</p>
+    <p><strong>13. Tzadikím — Los Justos</strong></p>
+    <p>Al hatzadikím veál hajasidím veál ziknéi amejá béit Israel, veál peletát soferéihem, veál guéri hatzédek vealéinu, yehemú rajaméja, Adonái Elohéinu, vetén sajár tov lejol habotjím beShimjá beemét, vesím jelkéinu imahém, uleolám lo nevósh, ki vejá batájnu. Baruj Atá Adonái, mishán umivtáj latzadikím.</p>
 
-<p><strong>14. Yerushaláyim</strong></p>
-<p>Velirushaláyim irjá berajamím tashúv, vetishkón betojá kaashér dibárta, uvné otá bekarov beyaméinu binyán olám, vejisé David avdejá meherá letojá tajín. Baruj Atá Adonái, boné Yerushaláyim.</p>
+    <p><strong>14. Yerushaláyim</strong></p>
+    <p>Velirushaláyim irjá berajamím tashúv, vetishkón betojá kaashér dibárta, uvné otá bekarov beyaméinu binyán olám, vejisé David avdejá meherá letojá tajín. Baruj Atá Adonái, boné Yerushaláyim.</p>
 
-<p><strong>15. David — Mesías</strong></p>
-<p>Et tzémaj David avdejá meherá tatzmíaj, vekarnó tarum bishuatéja, ki lishuatéja kivínu kol hayóm. Baruj Atá Adonái, matzmíaj kéren yeshuá.</p>
+    <p><strong>15. David — Mesías</strong></p>
+    <p>Et tzémaj David avdejá meherá tatzmíaj, vekarnó tarum bishuatéja, ki lishuatéja kivínu kol hayóm. Baruj Atá Adonái, matzmíaj kéren yeshuá.</p>
 
-<p><strong>16. Tefilá — Escucha el rezo</strong></p>
-<p>Shemá kolénu, Adonái Elohéinu, jus verajem aléinu, vekabél berajamím uvratzón et tefilatéinu. Ki El shoméa tefilót vetajanunim Atá, umilfanéja malkéinu reikám al teshivéinu, ki Atá shoméa tefilát amjá Israel berajamím. Baruj Atá Adonái, shoméa tefilá.</p>
+    <p><strong>16. Tefilá — Escucha el rezo</strong></p>
+    <p>Shemá kolénu, Adonái Elohéinu, jus verajem aléinu, vekabél berajamím uvratzón et tefilatéinu. Ki El shoméa tefilót vetajanunim Atá, umilfanéja malkéinu reikám al teshivéinu, ki Atá shoméa tefilát amjá Israel berajamím. Baruj Atá Adonái, shoméa tefilá.</p>
 
-<p><strong>17. Avodá — Servicio del Templo</strong></p>
-<p>Retzé, Adonái Elohéinu, beamejá Israel uvitfilatám, vehashév et haavodá lidvír beitéja, veishéi Israel utfilatám beahavá tekabél beratzón, uthí leratzón tamíd avodát Israel amejá. Vetejezéina einéinu beshuvjá leTziyón berajamím. Baruj Atá Adonái, hamajazír shejinató leTziyón.</p>
+    <p><strong>17. Avodá — Servicio del Templo</strong></p>
+    <p>Retzé, Adonái Elohéinu, beamejá Israel uvitfilatám, vehashév et haavodá lidvír beitéja, veishéi Israel utfilatám beahavá tekabél beratzón, uthí leratzón tamíd avodát Israel amejá. Vetejezéina einéinu beshuvjá leTziyón berajamím. Baruj Atá Adonái, hamajazír shejinató leTziyón.</p>
 
-<p><strong>18. Hodaá — Agradecimiento</strong></p>
-<p>Modím anájnu Laj, shaAtá Hu Adonái Elohéinu vElohéi avoténu leolám vaéd, tzur jayéinu, maguén yishéinu Atá Hu ledór vadór. Nodé Lejá unsapér tehilatéja al jayéinu hamesurím beyadéja, veál nishmoténu hapekudót Laj, veál niséja shebejol yom imánu, veál nifleotéja vetovotéja shebejol et, érev vavóker vetzohoráyim. Hatóv, ki ló jalú rajaméja, vehamerajém ki ló támu jasadéja, meolám kivínu Laj.</p>
-<p>Veál kulám yitbaráj veyitromám shimjá malkéinu tamíd leolám vaéd. Vejol hajayím yodúja sela, vihalelú et shimjá beemét, haEl yeshuaténu veezraténu sela. Baruj Atá Adonái, hatóv shimjá ulejá naé lehodót.</p>
+    <p><strong>18. Hodaá — Agradecimiento</strong></p>
+    <p>Modím anájnu Laj, shaAtá Hu Adonái Elohéinu vElohéi avoténu leolám vaéd, tzur jayéinu, maguén yishéinu Atá Hu ledór vadór. Nodé Lejá unsapér tehilatéja al jayéinu hamesurím beyadéja, veál nishmoténu hapekudót Laj, veál niséja shebejol yom imánu, veál nifleotéja vetovotéja shebejol et, érev vavóker vetzohoráyim. Hatóv, ki ló jalú rajaméja, vehamerajém ki ló támu jasadéja, meolám kivínu Laj.</p>
+    <p>Veál kulám yitbaráj veyitromám shimjá malkéinu tamíd leolám vaéd. Vejol hajayím yodúja sela, vihalelú et shimjá beemét, haEl yeshuaténu veezraténu sela. Baruj Atá Adonái, hatóv shimjá ulejá naé lehodót.</p>
 
-<p><strong>19. Shalóm</strong></p>
-<p>Shalóm rav al Israel amjá tasím leolám, ki Atá Hu mélej adón lejol hashalóm. Vetóv beeinéja levaréij et amjá Israel bejol et uvjol shaá bishlomeja. Baruj Atá Adonái, hamevaréij et amó Israel bashalóm.</p>
+    <p><strong>19. Shalóm</strong></p>
+    <p>Shalóm rav al Israel amjá tasím leolám, ki Atá Hu mélej adón lejol hashalóm. Vetóv beeinéja levaréij et amjá Israel bejol et uvjol shaá bishlomeja. Baruj Atá Adonái, hamevaréij et amó Israel bashalóm.</p>
 
-<p class="rubric">Conclusión silenciosa:</p>
-<p>Elohái, netzór leshoní merá, usfatái midabér mirmá, velimkalelai nafshí tidóm, venafshí keafár lakól tihyé. Petáj libí betoratéja, uvmitzvotéja tirdóf nafshí. Vejol hakamím alái leraá, meherá hafer atzatám vekalkél majashavtám.</p>
-<p>Asé lemáan Shemája, asé lemáan yeminéja, asé lemáan kedushatéja, asé lemáan toratéja. Lemáan yejaltzún yedidéja, hoshía yeminjá vaanéini.</p>
-<p>Yihyú leratzón imréi fi, vehegyón libí lefanéja, Adonái tzurí vegoalí. Osé shalóm bimromáv, Hu yaasé shalóm aléinu, veál kol Israel, veimrú: Amén.</p>
-```
-
+    <p class="rubric">Conclusión silenciosa:</p>
+    <p>Elohái, netzór leshoní merá, usfatái midabér mirmá, velimkalelai nafshí tidóm, venafshí keafár lakól tihyé. Petáj libí betoratéja, uvmitzvotéja tirdóf nafshí. Vejol hakamím alái leraá, meherá hafer atzatám vekalkél majashavtám.</p>
+    <p>Asé lemáan Shemája, asé lemáan yeminéja, asé lemáan kedushatéja, asé lemáan toratéja. Lemáan yejaltzún yedidéja, hoshía yeminjá vaanéini.</p>
+    <p>Yihyú leratzón imréi fi, vehegyón libí lefanéja, Adonái tzurí vegoalí. Osé shalóm bimromáv, Hu yaasé shalóm aléinu, veál kol Israel, veimrú: Amén.</p>
   </article>
 
   <article class="prayer" id="ar-aleinu">
@@ -1909,7 +1889,6 @@ color: var(–ink) !important;
 </section>
 
 <!-- ============================ SHABAT ============================ -->
-
 <section id="shabat" class="service scroll-top-target">
 
   <article class="prayer" id="sb-encender">
@@ -1967,28 +1946,25 @@ color: var(–ink) !important;
     <p class="heb">זְמִירוֹת לְלֵיל שַׁבָּת</p>
     <p class="rubric">Cantos tradicionales durante la cena del viernes.</p>
 
-```
-<p><strong>Kol Mekadésh</strong></p>
-<p>Kol mekadésh shvií karaúi lo, kol shomér Shabat kadát mejaleló, sjaró harbé meód al pi faaló, ish al majanéhu veísh al digló.</p>
+    <p><strong>Kol Mekadésh</strong></p>
+    <p>Kol mekadésh shvií karaúi lo, kol shomér Shabat kadát mejaleló, sjaró harbé meód al pi faaló, ish al majanéhu veísh al digló.</p>
 
-<p><strong>Mená Ajalim</strong></p>
-<p>Mená ajalím, mená meragim, mizé yom mejubád mizé hu jelkí, hashomerím uzojrim sé ojeleí amí, derojvíh kelev bahir jadasht hor zaharé olamí.</p>
+    <p><strong>Mená Ajalim</strong></p>
+    <p>Mená ajalím, mená meragim, mizé yom mejubád mizé hu jelkí, hashomerím uzojrim sé ojeleí amí, derojvíh kelev bahir jadasht hor zaharé olamí.</p>
 
-<p><strong>Yom Zé Mejubád</strong></p>
-<p class="lead">Yom zé mejubád mikol yamím, ki vo shavát Tzur olamím.</p>
-<p>Shéshet yamím taasé melajtéja, veyom hashvií l'Elohéja, Shabat lo taasé vo melajá, ki jol asá shéshet yamím. <em>(Estribillo)</em></p>
-<p>Rishón hu lemikraéi kódesh, yom Shabatón yom Shabat kódesh, al ken kol ish beyenó yekadésh, al shtéi lejém yivtzeú temimím. <em>(Estribillo)</em></p>
+    <p><strong>Yom Zé Mejubád</strong></p>
+    <p class="lead">Yom zé mejubád mikol yamím, ki vo shavát Tzur olamím.</p>
+    <p>Shéshet yamím taasé melajtéja, veyom hashvií l'Elohéja, Shabat lo taasé vo melajá, ki jol asá shéshet yamím. <em>(Estribillo)</em></p>
+    <p>Rishón hu lemikraéi kódesh, yom Shabatón yom Shabat kódesh, al ken kol ish beyenó yekadésh, al shtéi lejém yivtzeú temimím. <em>(Estribillo)</em></p>
 
-<p><strong>Yá Ribón</strong></p>
-<p class="lead">Yá Ribón alám vealmayá, ant Hu malká mélej maljayá. Ovád guevurtéj vetimhayá, sh'far kodamáj lehajavayá.</p>
-<p>Shvajín asadér tzafrá veramshá, lej Elahá kadishá di vrá kol nafshá: irín kadishín uvnéi enashá, jevát bará veoféi shemayá. <em>(Estribillo)</em></p>
-<p>Ravreviín ovdáj vetakifín, majíj ramayá, zakíf kefifín, lu yijí guevár shenín alfín, la yeól guevurtéj bejushbenayá. <em>(Estribillo)</em></p>
+    <p><strong>Yá Ribón</strong></p>
+    <p class="lead">Yá Ribón alám vealmayá, ant Hu malká mélej maljayá. Ovád guevurtéj vetimhayá, sh'far kodamáj lehajavayá.</p>
+    <p>Shvajín asadér tzafrá veramshá, lej Elahá kadishá di vrá kol nafshá: irín kadishín uvnéi enashá, jevát bará veoféi shemayá. <em>(Estribillo)</em></p>
+    <p>Ravreviín ovdáj vetakifín, majíj ramayá, zakíf kefifín, lu yijí guevár shenín alfín, la yeól guevurtéj bejushbenayá. <em>(Estribillo)</em></p>
 
-<p><strong>Tzur miSheló</strong></p>
-<p class="response">Tzur misheló ajálnu, barjú emunái,<br>savánu vehotárnu kidvár Adonái.</p>
-<p>Hazán et olamó, roéinu avínu, ajálnu et lajmó veyenó shatínu. Al ken nodé lishmó unhalelú befínu, amárnu veaníinu, éin kadósh kAdonái. <em>(Estribillo)</em></p>
-```
-
+    <p><strong>Tzur miSheló</strong></p>
+    <p class="response">Tzur misheló ajálnu, barjú emunái,<br>savánu vehotárnu kidvár Adonái.</p>
+    <p>Hazán et olamó, roéinu avínu, ajálnu et lajmó veyenó shatínu. Al ken nodé lishmó unhalelú befínu, amárnu veaníinu, éin kadósh kAdonái. <em>(Estribillo)</em></p>
   </article>
 
   <article class="prayer" id="sb-birkat-mazon">
@@ -1996,42 +1972,39 @@ color: var(–ink) !important;
     <p class="heb">בִּרְכַּת הַמָּזוֹן</p>
     <p class="rubric">Bendición después de comer pan. Texto principal (versión abreviada de las cuatro bendiciones).</p>
 
-```
-<p class="rubric">Salmo introductorio en Shabat:</p>
-<p>Shir hamaalót, beshúv Adonái et shivát Tziyón hayínu kejolmím. Az yimalé sjok pínu ulshonéinu riná, az yomerú vagoyím higdíl Adonái laasót im éle. Higdíl Adonái laasót imánu, hayínu smejím. Shuvá Adonái et shvitéinu, kaafikím banéguev. Hazoreím bedimá berinaná yiktzóru. Halój yeléj uvajó nosé méshej hazará, bo yavó verinaná, nosé alumotáv.</p>
+    <p class="rubric">Salmo introductorio en Shabat:</p>
+    <p>Shir hamaalót, beshúv Adonái et shivát Tziyón hayínu kejolmím. Az yimalé sjok pínu ulshonéinu riná, az yomerú vagoyím higdíl Adonái laasót im éle. Higdíl Adonái laasót imánu, hayínu smejím. Shuvá Adonái et shvitéinu, kaafikím banéguev. Hazoreím bedimá berinaná yiktzóru. Halój yeléj uvajó nosé méshej hazará, bo yavó verinaná, nosé alumotáv.</p>
 
-<p class="rubric">Si hay tres o más comensales, el zimún:</p>
-<p><em>Líder:</em> Rabotái nevaréj.</p>
-<p class="response">Yehí Shem Adonái mevoráj meatá vead olám.</p>
-<p><em>Líder:</em> Birshút maranán verabanán verabotái, nevaréj <em>(en grupo de 10+: Elohéinu)</em> sheajálnu mishéelo.</p>
-<p class="response">Baruj <em>(Elohéinu)</em> sheajálnu mishéelo uvtuvó jayínu.</p>
+    <p class="rubric">Si hay tres o más comensales, el zimún:</p>
+    <p><em>Líder:</em> Rabotái nevaréj.</p>
+    <p class="response">Yehí Shem Adonái mevoráj meatá vead olám.</p>
+    <p><em>Líder:</em> Birshút maranán verabanán verabotái, nevaréj <em>(en grupo de 10+: Elohéinu)</em> sheajálnu mishéelo.</p>
+    <p class="response">Baruj <em>(Elohéinu)</em> sheajálnu mishéelo uvtuvó jayínu.</p>
 
-<p><strong>Bendición 1 — Por el alimento</strong></p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, hazán et haolám kuló betuvó, bején bejésed uvrajamím, Hu notén léjem lejol basár, ki leolám jasdó. Uvtuvó hagadól, tamíd lo jasár lánu, veál yejsár lánu mazón leolám vaéd, baavur shemó hagadól. Ki Hu El zan umfarnés lakól, umetív lakól, umejín mazón lejol briyotáv asher bará. Baruj Atá Adonái, hazán et hakól.</p>
+    <p><strong>Bendición 1 — Por el alimento</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hazán et haolám kuló betuvó, bején bejésed uvrajamím, Hu notén léjem lejol basár, ki leolám jasdó. Uvtuvó hagadól, tamíd lo jasár lánu, veál yejsár lánu mazón leolám vaéd, baavur shemó hagadól. Ki Hu El zan umfarnés lakól, umetív lakól, umejín mazón lejol briyotáv asher bará. Baruj Atá Adonái, hazán et hakól.</p>
 
-<p><strong>Bendición 2 — Por la Tierra</strong></p>
-<p>Nodé lejá, Adonái Elohéinu, al shehinjálta laavoténu éretz jemdá tová urjavá, veal shehotzetánu, Adonái Elohéinu, meéretz Mitzráyim ufditánu mibéit avadím, veal britjá shejatámta bivsaréinu, veal toratjá shelimadtánu, veal jukéja shehodatánu, veal jayím jen vajésed shejonantánu, veal ajilát mazón sheAtá zan umfarnés otánu tamíd, bejol yom uvjol et uvjol shaá. Veál hakól, Adonái Elohéinu, anájnu modím laj umevarjím otáj, yitbaráj shimjá befí kol jai tamíd leolám vaéd, kakatúv: Veajaltá vesavájta uveraktá et Adonái Elohéja al haáretz hatová asher nátan laj. Baruj Atá Adonái, al haáretz veal hamazón.</p>
+    <p><strong>Bendición 2 — Por la Tierra</strong></p>
+    <p>Nodé lejá, Adonái Elohéinu, al shehinjálta laavoténu éretz jemdá tová urjavá, veal shehotzetánu, Adonái Elohéinu, meéretz Mitzráyim ufditánu mibéit avadím, veal britjá shejatámta bivsaréinu, veal toratjá shelimadtánu, veal jukéja shehodatánu, veal jayím jen vajésed shejonantánu, veal ajilát mazón sheAtá zan umfarnés otánu tamíd, bejol yom uvjol et uvjol shaá. Veál hakól, Adonái Elohéinu, anájnu modím laj umevarjím otáj, yitbaráj shimjá befí kol jai tamíd leolám vaéd, kakatúv: Veajaltá vesavájta uveraktá et Adonái Elohéja al haáretz hatová asher nátan laj. Baruj Atá Adonái, al haáretz veal hamazón.</p>
 
-<p><strong>Bendición 3 — Por Yerushaláyim</strong></p>
-<p>Rajem na, Adonái Elohéinu, al Israel améja, veal Yerushaláyim iréja, veal Tziyón mishkán kevodéja, veal maljút béit David meshijéja, veal habáyit hagadól vehakadósh shenikrá shimjá aláv. Elohéinu, Avínu, reéinu, zonéinu, parnesénu vejaljelénu veharvijénu, veharvaj lánu, Adonái Elohéinu, meherá mikol tzaroténu. Vena al tatzrijénu, Adonái Elohéinu, lo lidéi matnát basár vadám, veló lidéi halvaatám, ki im leyadjá hamleá hapetujá hakdoshá veharjavá, sheló nevósh veló nikalém leolám vaéd.</p>
+    <p><strong>Bendición 3 — Por Yerushaláyim</strong></p>
+    <p>Rajem na, Adonái Elohéinu, al Israel améja, veal Yerushaláyim iréja, veal Tziyón mishkán kevodéja, veal maljút béit David meshijéja, veal habáyit hagadól vehakadósh shenikrá shimjá aláv. Elohéinu, Avínu, reéinu, zonéinu, parnesénu vejaljelénu veharvijénu, veharvaj lánu, Adonái Elohéinu, meherá mikol tzaroténu. Vena al tatzrijénu, Adonái Elohéinu, lo lidéi matnát basár vadám, veló lidéi halvaatám, ki im leyadjá hamleá hapetujá hakdoshá veharjavá, sheló nevósh veló nikalém leolám vaéd.</p>
 
-<p class="rubric">En Shabat se agrega:</p>
-<p>Retzé vehajalitzénu, Adonái Elohéinu, bemitzvotéja uvmitzvát yom hashvií haShabat hagadól vehakadósh hazé. Ki yom zé gadól vekadósh hu lefanéja, lishbát bo velanúaj bo beahavá kemitzvát retzonéja. Uvirtzonjá hanéaj lánu, Adonái Elohéinu, sheló tehé tzará veyagón vaanajá beyom menujaténu, veharéinu, Adonái Elohéinu, benejamát Tziyón iréja, uvevinyán Yerushaláyim ir kodshéja, ki Atá hu báal hayeshuót uvaal hanejamót.</p>
+    <p class="rubric">En Shabat se agrega:</p>
+    <p>Retzé vehajalitzénu, Adonái Elohéinu, bemitzvotéja uvmitzvát yom hashvií haShabat hagadól vehakadósh hazé. Ki yom zé gadól vekadósh hu lefanéja, lishbát bo velanúaj bo beahavá kemitzvát retzonéja. Uvirtzonjá hanéaj lánu, Adonái Elohéinu, sheló tehé tzará veyagón vaanajá beyom menujaténu, veharéinu, Adonái Elohéinu, benejamát Tziyón iréja, uvevinyán Yerushaláyim ir kodshéja, ki Atá hu báal hayeshuót uvaal hanejamót.</p>
 
-<p>Uvné Yerushaláyim ir hakódesh bimheirá veyaméinu. Baruj Atá Adonái, boné verajamáv Yerushaláyim. Amén.</p>
+    <p>Uvné Yerushaláyim ir hakódesh bimheirá veyaméinu. Baruj Atá Adonái, boné verajamáv Yerushaláyim. Amén.</p>
 
-<p><strong>Bendición 4 — Por Su bondad</strong></p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, haEl Avínu Malkéinu Adirénu Boréinu Goaléinu Yotzeréinu Kdoshéinu kdósh Yaakóv, roéinu roé Israel, haMélej hatóv vehametív lakól, shebejol yom vayóm Hu hetív, Hu metív, Hu yetív lánu. Hu guemalánu, Hu gomeléinu, Hu yigmeléinu laad, lején uljésed ulrajamím ulréviaj, hatzalá vehatzlajá, brajá vishuá, nejamá, parnasá vejalkalá, verajamím vejayím veshalóm vejol tov, umikol tov leolám al yejasrénu.</p>
+    <p><strong>Bendición 4 — Por Su bondad</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, haEl Avínu Malkéinu Adirénu Boréinu Goaléinu Yotzeréinu Kdoshéinu kdósh Yaakóv, roéinu roé Israel, haMélej hatóv vehametív lakól, shebejol yom vayóm Hu hetív, Hu metív, Hu yetív lánu. Hu guemalánu, Hu gomeléinu, Hu yigmeléinu laad, lején uljésed ulrajamím ulréviaj, hatzalá vehatzlajá, brajá vishuá, nejamá, parnasá vejalkalá, verajamím vejayím veshalóm vejol tov, umikol tov leolám al yejasrénu.</p>
 
-<p>HaRajamán, Hu yimlój aléinu leolám vaéd. HaRajamán, Hu yitbaráj bashamáyim uvaáretz. HaRajamán, Hu yishtabaj ledór dorím. HaRajamán, Hu yefarnesénu bejavód. HaRajamán, Hu yishbór ulénu meal tzavaréinu. HaRajamán, Hu yolijénu komemiyút leartzéinu. HaRajamán, Hu yishlaj lánu brajá merubá babáyit hazé. HaRajamán, Hu yishlaj lánu et Eliyahu HaNaví zajúr latov, vivaséir lánu besorót tovót, yeshuót venejamót.</p>
+    <p>HaRajamán, Hu yimlój aléinu leolám vaéd. HaRajamán, Hu yitbaráj bashamáyim uvaáretz. HaRajamán, Hu yishtabaj ledór dorím. HaRajamán, Hu yefarnesénu bejavód. HaRajamán, Hu yishbór ulénu meal tzavaréinu. HaRajamán, Hu yolijénu komemiyút leartzéinu. HaRajamán, Hu yishlaj lánu brajá merubá babáyit hazé. HaRajamán, Hu yishlaj lánu et Eliyahu HaNaví zajúr latov, vivaséir lánu besorót tovót, yeshuót venejamót.</p>
 
-<p>HaRajamán, Hu yanjilénu yom shekuló Shabat umnujá lejayéi haolamím.</p>
+    <p>HaRajamán, Hu yanjilénu yom shekuló Shabat umnujá lejayéi haolamím.</p>
 
-<p>Migdól yeshuót Malkó veosé jésed limshijó leDavíd ulzaró ad olám. Osé shalóm bimromáv, Hu yaasé shalóm aléinu veál kol Israel, veimrú: Amén.</p>
+    <p>Migdól yeshuót Malkó veosé jésed limshijó leDavíd ulzaró ad olám. Osé shalóm bimromáv, Hu yaasé shalóm aléinu veál kol Israel, veimrú: Amén.</p>
 
-<p>Yerú et Adonái kdosháv, ki éin majsór lireáv. Kefirím rashú veraévu, vedorshéi Adonái lo yajserú jol tov. Hodú lAdonái ki tov, ki leolám jasdó. Potéaj et yadéja, umasbía lejol jai ratzón. Baruj haguéver asher yivtaj bAdonái, vehayá Adonái mivtajó. Náar hayíti gam zakánti, veló raíti tzadík neezáv vezaró mevakésh lájem. Adonái oz leamó yitén, Adonái yevaréj et amó vashalóm.</p>
-```
-
+    <p>Yerú et Adonái kdosháv, ki éin majsór lireáv. Kefirím rashú veraévu, vedorshéi Adonái lo yajserú jol tov. Hodú lAdonái ki tov, ki leolám jasdó. Potéaj et yadéja, umasbía lejol jai ratzón. Baruj haguéver asher yivtaj bAdonái, vehayá Adonái mivtajó. Náar hayíti gam zakánti, veló raíti tzadík neezáv vezaró mevakésh lájem. Adonái oz leamó yitén, Adonái yevaréj et amó vashalóm.</p>
   </article>
 
   <article class="prayer" id="sb-kabalat">
@@ -2039,26 +2012,23 @@ color: var(–ink) !important;
     <p class="heb">קַבָּלַת שַׁבָּת</p>
     <p class="rubric">Recibimiento del Shabat en la sinagoga, viernes en la tarde. Compuesto por seis salmos (correspondientes a los seis días de la semana) más Lejá Dodí.</p>
 
-```
-<p><strong>Salmo 95</strong></p>
-<p>Lejú neranená lAdonái, naría letzur yishéinu. Nekademá fanáv betodá, bizmirót naría lo. Ki El gadól Adonái, umélej gadól al kol elohím. Asher beyadó mejkeréi áretz, vetoafót harím lo. Asher lo hayám vehú asahu, veyabéshet yadáv yatzáru. Bóu nishtajavé venijraá, nivréja lifnéi Adonái osénu. Ki Hu Elohéinu, vaanájnu am marító vetzon yadó, hayóm im bekoló tishmáu.</p>
+    <p><strong>Salmo 95</strong></p>
+    <p>Lejú neranená lAdonái, naría letzur yishéinu. Nekademá fanáv betodá, bizmirót naría lo. Ki El gadól Adonái, umélej gadól al kol elohím. Asher beyadó mejkeréi áretz, vetoafót harím lo. Asher lo hayám vehú asahu, veyabéshet yadáv yatzáru. Bóu nishtajavé venijraá, nivréja lifnéi Adonái osénu. Ki Hu Elohéinu, vaanájnu am marító vetzon yadó, hayóm im bekoló tishmáu.</p>
 
-<p><strong>Salmo 96</strong></p>
-<p>Shíru lAdonái shir jadásh, shíru lAdonái kol haáretz. Shíru lAdonái barjú shemó, baserú miyóm leyóm yeshuató. Saperú vagoyím kevodó, bejol haamím nifleotáv. Ki gadól Adonái umhulál meód, norá Hu al kol elohím.</p>
+    <p><strong>Salmo 96</strong></p>
+    <p>Shíru lAdonái shir jadásh, shíru lAdonái kol haáretz. Shíru lAdonái barjú shemó, baserú miyóm leyóm yeshuató. Saperú vagoyím kevodó, bejol haamím nifleotáv. Ki gadól Adonái umhulál meód, norá Hu al kol elohím.</p>
 
-<p><strong>Salmo 97</strong></p>
-<p>Adonái malaj taguél haáretz, yismejú iyím rabím. Anán vaarafél sevivav, tzédek umishpát mejón kisó. Esh lefanáv teléj, utlahét saviv tzaráv. Heíru verakáv tevél, raatá vatajél haáretz. Harím kadonág namásu milifnéi Adonái, milifnéi Adón kol haáretz.</p>
+    <p><strong>Salmo 97</strong></p>
+    <p>Adonái malaj taguél haáretz, yismejú iyím rabím. Anán vaarafél sevivav, tzédek umishpát mejón kisó. Esh lefanáv teléj, utlahét saviv tzaráv. Heíru verakáv tevél, raatá vatajél haáretz. Harím kadonág namásu milifnéi Adonái, milifnéi Adón kol haáretz.</p>
 
-<p><strong>Salmo 98</strong></p>
-<p>Mizmór, shíru lAdonái shir jadásh, ki niflaót asá. Hoshía lo yeminó uzróa kodshó. Hodía Adonái yeshuató, leeinéi hagoyím guilá tzidkató. Zajár jasdó veemunató levéit Israel, raú jol afséi áretz et yeshuát Elohéinu.</p>
+    <p><strong>Salmo 98</strong></p>
+    <p>Mizmór, shíru lAdonái shir jadásh, ki niflaót asá. Hoshía lo yeminó uzróa kodshó. Hodía Adonái yeshuató, leeinéi hagoyím guilá tzidkató. Zajár jasdó veemunató levéit Israel, raú jol afséi áretz et yeshuát Elohéinu.</p>
 
-<p><strong>Salmo 99</strong></p>
-<p>Adonái malaj yirgezú amím, yoshév keruvím tanút haáretz. Adonái beTziyón gadól, veram Hu al kol haamím. Yodú shimjá gadól venorá, kadósh Hu.</p>
+    <p><strong>Salmo 99</strong></p>
+    <p>Adonái malaj yirgezú amím, yoshév keruvím tanút haáretz. Adonái beTziyón gadól, veram Hu al kol haamím. Yodú shimjá gadól venorá, kadósh Hu.</p>
 
-<p><strong>Salmo 29 — Mizmor LeDavid</strong></p>
-<p>Mizmór leDavíd: Havú lAdonái bnei elím, havú lAdonái kavód vaóz. Havú lAdonái kevód shemó, hishtajavú lAdonái behadrát kódesh. Kol Adonái al hamáyim, El hakavód hirím, Adonái al máyim rabím. Kol Adonái bakóaj, kol Adonái behadár. Kol Adonái shovér arazím, vayshabér Adonái et arzéi haLevanón. Vayarkidém kemó éguel, Levanón vesiryón kemó ven reemím. Kol Adonái jotzéiv lahavót esh. Kol Adonái yajíl midbár, yajíl Adonái midbár Kadésh. Kol Adonái yejolél ayalót, vayejesóf yearót, uvheijaló kuló omér kavód. Adonái lamabúl yashav, vayéshev Adonái mélej leolám. Adonái oz leamó yitén, Adonái yevaréj et amó vashalóm.</p>
-```
-
+    <p><strong>Salmo 29 — Mizmor LeDavid</strong></p>
+    <p>Mizmór leDavíd: Havú lAdonái bnei elím, havú lAdonái kavód vaóz. Havú lAdonái kevód shemó, hishtajavú lAdonái behadrát kódesh. Kol Adonái al hamáyim, El hakavód hirím, Adonái al máyim rabím. Kol Adonái bakóaj, kol Adonái behadár. Kol Adonái shovér arazím, vayshabér Adonái et arzéi haLevanón. Vayarkidém kemó éguel, Levanón vesiryón kemó ven reemím. Kol Adonái jotzéiv lahavót esh. Kol Adonái yajíl midbár, yajíl Adonái midbár Kadésh. Kol Adonái yejolél ayalót, vayejesóf yearót, uvheijaló kuló omér kavód. Adonái lamabúl yashav, vayéshev Adonái mélej leolám. Adonái oz leamó yitén, Adonái yevaréj et amó vashalóm.</p>
   </article>
 
   <article class="prayer" id="sb-leja-dodi">
@@ -2066,29 +2036,26 @@ color: var(–ink) !important;
     <p class="heb">לְכָה דוֹדִי</p>
     <p class="rubric">Himno central de Kabalat Shabat, compuesto por Rabí Shlomó Halevi Alkabetz (siglo XVI). En la última estrofa todos se ponen de pie y se giran hacia la puerta para recibir a la "Novia Shabat".</p>
 
-```
-<p class="response" style="font-size:1.15rem;">Lejá dodí likrát kalá,<br>penéi Shabat nekabelá.</p>
+    <p class="response" style="font-size:1.15rem;">Lejá dodí likrát kalá,<br>penéi Shabat nekabelá.</p>
 
-<p>Shamór vezajór bedibúr ejad, hishmiánu El haMjuyad. Adonái ejad ushmó ejad, leshém ultiféret velithilá. <em>(Lejá dodí…)</em></p>
+    <p>Shamór vezajór bedibúr ejad, hishmiánu El haMjuyad. Adonái ejad ushmó ejad, leshém ultiféret velithilá. <em>(Lejá dodí…)</em></p>
 
-<p>Likrát Shabat lejú venelejá, ki hi mekór habrajá. Merósh mikédem nesujá, sof maasé bemajashavá tejilá. <em>(Lejá dodí…)</em></p>
+    <p>Likrát Shabat lejú venelejá, ki hi mekór habrajá. Merósh mikédem nesujá, sof maasé bemajashavá tejilá. <em>(Lejá dodí…)</em></p>
 
-<p>Mikdásh mélej ir melujá, kúmi tzeí mitój hahafejá. Rav laj shévet beémek habajá, vehú yajamól aláij jemlá. <em>(Lejá dodí…)</em></p>
+    <p>Mikdásh mélej ir melujá, kúmi tzeí mitój hahafejá. Rav laj shévet beémek habajá, vehú yajamól aláij jemlá. <em>(Lejá dodí…)</em></p>
 
-<p>Hitnaarí meafár kúmi, livshí bigdéi tifartéj amí. Al yad ben Yishái béit haLajmí, korvá el nafshí gealá. <em>(Lejá dodí…)</em></p>
+    <p>Hitnaarí meafár kúmi, livshí bigdéi tifartéj amí. Al yad ben Yishái béit haLajmí, korvá el nafshí gealá. <em>(Lejá dodí…)</em></p>
 
-<p>Hitoreri hitoreri, ki va oréj kúmi óri. Úri úri shir daberi, kevód Adonái aláij niglá. <em>(Lejá dodí…)</em></p>
+    <p>Hitoreri hitoreri, ki va oréj kúmi óri. Úri úri shir daberi, kevód Adonái aláij niglá. <em>(Lejá dodí…)</em></p>
 
-<p>Lo tevoshí veló tikalmí, ma tishtojají uma tehemí. Baj yejesú aniyéi amí, venivnetá ir al tilá. <em>(Lejá dodí…)</em></p>
+    <p>Lo tevoshí veló tikalmí, ma tishtojají uma tehemí. Baj yejesú aniyéi amí, venivnetá ir al tilá. <em>(Lejá dodí…)</em></p>
 
-<p>Vehayú limshisá shosáij, verajakú kol mevaláij. Yasís aláij Eloháij, kimsós jatán al kalá. <em>(Lejá dodí…)</em></p>
+    <p>Vehayú limshisá shosáij, verajakú kol mevaláij. Yasís aláij Eloháij, kimsós jatán al kalá. <em>(Lejá dodí…)</em></p>
 
-<p>Yamín usmól tifrótzi, veét Adonái taarítzi. Al yad ish ben Partzí, venismejá venaguílá. <em>(Lejá dodí…)</em></p>
+    <p>Yamín usmól tifrótzi, veét Adonái taarítzi. Al yad ish ben Partzí, venismejá venaguílá. <em>(Lejá dodí…)</em></p>
 
-<p class="rubric">Última estrofa — todos se ponen de pie y se giran hacia la puerta:</p>
-<p>Bói veshalóm atéret baalá, gam besimjá uvtzaholá. Tój emunéi am segulá, bói jalá, bói jalá. <em>(Lejá dodí…)</em></p>
-```
-
+    <p class="rubric">Última estrofa — todos se ponen de pie y se giran hacia la puerta:</p>
+    <p>Bói veshalóm atéret baalá, gam besimjá uvtzaholá. Tój emunéi am segulá, bói jalá, bói jalá. <em>(Lejá dodí…)</em></p>
   </article>
 
   <article class="prayer" id="sb-mizmor-shir">
@@ -2096,14 +2063,11 @@ color: var(–ink) !important;
     <p class="heb">מִזְמוֹר שִׁיר לְיוֹם הַשַּׁבָּת</p>
     <p class="rubric">Salmo 92, cantado tras Lejá Dodí.</p>
 
-```
-<p>Mizmór shir leyóm haShabat. Tov lehodót lAdonái, ulzamér leshimjá Elión. Lehaguíd babóker jasdéja, veemunatjá baleilót. Aléi asór vaaléi nável, aléi higayón bejinór. Ki simajtáni Adonái befaaléja, bemaaséi yadéja aranén. Ma gadlú maaséja Adonái, meód amkú majshvotéja. Ish báar lo yedá, ujsíl lo yavín et zot.</p>
+    <p>Mizmór shir leyóm haShabat. Tov lehodót lAdonái, ulzamér leshimjá Elión. Lehaguíd babóker jasdéja, veemunatjá baleilót. Aléi asór vaaléi nável, aléi higayón bejinór. Ki simajtáni Adonái befaaléja, bemaaséi yadéja aranén. Ma gadlú maaséja Adonái, meód amkú majshvotéja. Ish báar lo yedá, ujsíl lo yavín et zot.</p>
 
-<p>Bifróaj reshaím kemó ésev, vayatzítzu kol póalei áven, lehishamdám adéi ad. VeAtá maróm leolám Adonái. Ki hiné oyvéja Adonái, ki hiné oyvéja yovédu, yitparedú kol póalei áven. Vatárem kireím karní, balotí beshémen raanán. Vatabét einí beshurái, bakamím alái mereím tishmaná oznái.</p>
+    <p>Bifróaj reshaím kemó ésev, vayatzítzu kol póalei áven, lehishamdám adéi ad. VeAtá maróm leolám Adonái. Ki hiné oyvéja Adonái, ki hiné oyvéja yovédu, yitparedú kol póalei áven. Vatárem kireím karní, balotí beshémen raanán. Vatabét einí beshurái, bakamím alái mereím tishmaná oznái.</p>
 
-<p>Tzadík katamár yifráj, keérez baLevanón yisgué. Shtulím bevéit Adonái, bejatzrót Elohéinu yafríju. Od yenuvún besevá, dshenim veraananím yihyú. Lehaguíd ki yashár Adonái, tzurí veló avlatá bo.</p>
-```
-
+    <p>Tzadík katamár yifráj, keérez baLevanón yisgué. Shtulím bevéit Adonái, bejatzrót Elohéinu yafríju. Od yenuvún besevá, dshenim veraananím yihyú. Lehaguíd ki yashár Adonái, tzurí veló avlatá bo.</p>
   </article>
 
   <article class="prayer" id="sb-arvit-shabat">
@@ -2111,31 +2075,28 @@ color: var(–ink) !important;
     <p class="heb">עַרְבִית שֶׁל שַׁבָּת</p>
     <p class="rubric">El rezo de Arvit de Shabat sigue la estructura del Arvit cotidiano, con cambios principales en la Amidá. Aquí presentamos las partes específicas de Shabat.</p>
 
-```
-<p><strong>Bareju, Maariv Aravím, Ahavát Olám, Shemá, Emet VeEmuná, Hashkivéinu</strong></p>
-<p class="rubric">Estos rezos son iguales a Arvit cotidiano (ver pestaña Arvit).</p>
+    <p><strong>Bareju, Maariv Aravím, Ahavát Olám, Shemá, Emet VeEmuná, Hashkivéinu</strong></p>
+    <p class="rubric">Estos rezos son iguales a Arvit cotidiano (ver pestaña Arvit).</p>
 
-<p><strong>Veshamerú</strong> — Solo en Shabat</p>
-<p>Veshamerú benéi Israel et haShabat, laasót et haShabat ledorotám brit olám. Beiní uvéin benéi Israel ot hi leolám, ki shéshet yamím asá Adonái et hashamáyim veét haáretz, uvayóm hashvií shavát vayinafásh.</p>
+    <p><strong>Veshamerú</strong> — Solo en Shabat</p>
+    <p>Veshamerú benéi Israel et haShabat, laasót et haShabat ledorotám brit olám. Beiní uvéin benéi Israel ot hi leolám, ki shéshet yamím asá Adonái et hashamáyim veét haáretz, uvayóm hashvií shavát vayinafásh.</p>
 
-<p><strong>Amidá de Shabat — Arvit</strong></p>
-<p class="rubric">Las primeras 3 y últimas 3 bendiciones son iguales que en días laborables. Las 13 del medio se reemplazan por una sola:</p>
+    <p><strong>Amidá de Shabat — Arvit</strong></p>
+    <p class="rubric">Las primeras 3 y últimas 3 bendiciones son iguales que en días laborables. Las 13 del medio se reemplazan por una sola:</p>
 
-<p>Atá kidashta et yom hashvií lishméja, tajlít maasé shamáyim vaáretz, uveraktó mikol hayamím vekidashtó mikol hazmaním, vején katúv betoratéja:</p>
+    <p>Atá kidashta et yom hashvií lishméja, tajlít maasé shamáyim vaáretz, uveraktó mikol hayamím vekidashtó mikol hazmaním, vején katúv betoratéja:</p>
 
-<p>Vayjulú hashamáyim vehaáretz vejol tzevaám. Vayjál Elohím bayóm hashvií melajtó asher asá, vayishbót bayóm hashvií mikol melajtó asher asá. Vayvárej Elohím et yom hashvií vaykadésh otó, ki vo shavát mikol melajtó asher bará Elohím laasót.</p>
+    <p>Vayjulú hashamáyim vehaáretz vejol tzevaám. Vayjál Elohím bayóm hashvií melajtó asher asá, vayishbót bayóm hashvií mikol melajtó asher asá. Vayvárej Elohím et yom hashvií vaykadésh otó, ki vo shavát mikol melajtó asher bará Elohím laasót.</p>
 
-<p>Elohéinu vElohéi avoténu, retzé na vimnujaténu. Kadshéinu bemitzvotéja vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
+    <p>Elohéinu vElohéi avoténu, retzé na vimnujaténu. Kadshéinu bemitzvotéja vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
 
-<p class="rubric">Las últimas 3 bendiciones (Avodá, Hodaá, Shalóm) son iguales que en días laborables.</p>
+    <p class="rubric">Las últimas 3 bendiciones (Avodá, Hodaá, Shalóm) son iguales que en días laborables.</p>
 
-<p><strong>Magén Avot</strong></p>
-<p class="rubric">Después de la Amidá silenciosa, el jazán recita esta versión abreviada:</p>
-<p>Magén avot bidvaró, mejayé metím bemaamaró, hamélej hakadósh sheéin kamohu. Hamenija leamó beyom Shabat kodshó, ki vam ratzá lehaníaj lahém, lefanáv naavód beyirá vafájad, venodé lishmó bejol yom tamíd, meéin habrajót. El hahodaót, adón hashalóm, mekadésh haShabat umvaréij shvií, umeniaj bikdushá leam medushnéi óneg, zéjer lemaasé vereshít.</p>
+    <p><strong>Magén Avot</strong></p>
+    <p class="rubric">Después de la Amidá silenciosa, el jazán recita esta versión abreviada:</p>
+    <p>Magén avot bidvaró, mejayé metím bemaamaró, hamélej hakadósh sheéin kamohu. Hamenija leamó beyom Shabat kodshó, ki vam ratzá lehaníaj lahém, lefanáv naavód beyirá vafájad, venodé lishmó bejol yom tamíd, meéin habrajót. El hahodaót, adón hashalóm, mekadésh haShabat umvaréij shvií, umeniaj bikdushá leam medushnéi óneg, zéjer lemaasé vereshít.</p>
 
-<p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
-```
-
+    <p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
   </article>
 
   <article class="prayer" id="sb-shajarit-shabat">
@@ -2143,34 +2104,31 @@ color: var(–ink) !important;
     <p class="heb">שַׁחֲרִית שֶׁל שַׁבָּת</p>
     <p class="rubric">Shajarit de Shabat es similar al de días laborables, pero con varias adiciones especiales.</p>
 
-```
-<p><strong>Pesukei DeZimrá ampliados:</strong> Se agregan varios salmos adicionales: Salmos 19, 34, 90, 91, 135, 136, 33, 92, 93. Después se canta Nishmat Kol Jai.</p>
+    <p><strong>Pesukei DeZimrá ampliados:</strong> Se agregan varios salmos adicionales: Salmos 19, 34, 90, 91, 135, 136, 33, 92, 93. Después se canta Nishmat Kol Jai.</p>
 
-<p><strong>Nishmat Kol Jai</strong> — pieza central de Shajarit de Shabat</p>
-<p class="lead">Nishmát kol jai tevaréj et shimjá, Adonái Elohéinu. Verúaj kol basár tefaér uteromém zijrejá, Malkéinu, tamíd. Min haolám vead haolám Atá El, umibaladéja éin lánu mélej goél umoshía, podé umatzíl umfarnés umrajém bejol et tzará vetzuká. Éin lánu mélej elá Atá.</p>
+    <p><strong>Nishmat Kol Jai</strong> — pieza central de Shajarit de Shabat</p>
+    <p class="lead">Nishmát kol jai tevaréj et shimjá, Adonái Elohéinu. Verúaj kol basár tefaér uteromém zijrejá, Malkéinu, tamíd. Min haolám vead haolám Atá El, umibaladéja éin lánu mélej goél umoshía, podé umatzíl umfarnés umrajém bejol et tzará vetzuká. Éin lánu mélej elá Atá.</p>
 
-<p>Elohéi harishoním vehaajaroním, Eloha kol briyót, adón kol toladót, hamhulál berov hatishbajót, hamenahéig olamó bejésed uvriyotáv berajamím. VAdonái lo yanúm veló yishán, hamorér yeshenim vehamekitz nirdamím, vehameshíaj ilemím vehamatír asurím vehasoméij noflím vehazokéf kefufím — lejá levadejá anájnu modím.</p>
+    <p>Elohéi harishoním vehaajaroním, Eloha kol briyót, adón kol toladót, hamhulál berov hatishbajót, hamenahéig olamó bejésed uvriyotáv berajamím. VAdonái lo yanúm veló yishán, hamorér yeshenim vehamekitz nirdamím, vehameshíaj ilemím vehamatír asurím vehasoméij noflím vehazokéf kefufím — lejá levadejá anájnu modím.</p>
 
-<p>Ilú fínu malé shirá kayám, ulshonéinu riná kahamón galáv, vesiftotéinu shévaj kemerjaveí rakía, veeinéinu meirót kashémesh vejayaréaj, veyadéinu prusót kenishréi shamáyim, veragléinu kalót kaayalót, éin anájnu maspikím lehodót lejá, Adonái Elohéinu vElohéi avoténu, ulvaréij et shemája al ajat mealéf élef alféi alafím verovéi revavót peamím hatovót shesatá im avoténu veimánu.</p>
+    <p>Ilú fínu malé shirá kayám, ulshonéinu riná kahamón galáv, vesiftotéinu shévaj kemerjaveí rakía, veeinéinu meirót kashémesh vejayaréaj, veyadéinu prusót kenishréi shamáyim, veragléinu kalót kaayalót, éin anájnu maspikím lehodót lejá, Adonái Elohéinu vElohéi avoténu, ulvaréij et shemája al ajat mealéf élef alféi alafím verovéi revavót peamím hatovót shesatá im avoténu veimánu.</p>
 
-<p><strong>Bareju y Yotzer Or:</strong> En Shabat, después de Yotzer Or se canta "El Adón" (himno alfabético sobre la creación de los astros).</p>
+    <p><strong>Bareju y Yotzer Or:</strong> En Shabat, después de Yotzer Or se canta "El Adón" (himno alfabético sobre la creación de los astros).</p>
 
-<p><strong>El Adón</strong></p>
-<p class="lead">El Adón al kol hamaasím, baruj umvoráj befí kol neshamá. Godló vetuvó malé olám, dáat utvuná sovevím otó.</p>
-<p>Hamitgaé al jayót hakódesh, venehedár bejavód al hamerkavá. Zjut umishór lifnéi jisó, jésed verajamím melóu jvodó. Tovím meorót shebará Elohéinu, yetzaram bedáat bevíná uvhaskél. Kóaj uguevurá nátan bahém, lihyót moshlím bekérev tevél. Mleím ziv umfikím nóga, naé zivám bejol haolám. Smejím betzetám vesasím bevoám, osím beéimá retzón konám. Peér vejavód notnim lishmó, tzaholá veriná lezéjer maljutó. Kará lashémesh vayizráj or, raá vehitkín tzurát halevaná. Shévaj notnim lo kol tzevá maróm, tiféret ugdulá serafím vejayót veofanéi hakódesh.</p>
+    <p><strong>El Adón</strong></p>
+    <p class="lead">El Adón al kol hamaasím, baruj umvoráj befí kol neshamá. Godló vetuvó malé olám, dáat utvuná sovevím otó.</p>
+    <p>Hamitgaé al jayót hakódesh, venehedár bejavód al hamerkavá. Zjut umishór lifnéi jisó, jésed verajamím melóu jvodó. Tovím meorót shebará Elohéinu, yetzaram bedáat bevíná uvhaskél. Kóaj uguevurá nátan bahém, lihyót moshlím bekérev tevél. Mleím ziv umfikím nóga, naé zivám bejol haolám. Smejím betzetám vesasím bevoám, osím beéimá retzón konám. Peér vejavód notnim lishmó, tzaholá veriná lezéjer maljutó. Kará lashémesh vayizráj or, raá vehitkín tzurát halevaná. Shévaj notnim lo kol tzevá maróm, tiféret ugdulá serafím vejayót veofanéi hakódesh.</p>
 
-<p><strong>Lectura de la Torá:</strong> Se sacan dos Sifrei Torá. Suben siete olím (más Maftir si se lee Haftará).</p>
+    <p><strong>Lectura de la Torá:</strong> Se sacan dos Sifrei Torá. Suben siete olím (más Maftir si se lee Haftará).</p>
 
-<p><strong>Amidá de Shajarit de Shabat — Bendición central:</strong></p>
-<p>Yismaj Moshé bematnát jelkó, ki éved neemán karáta lo, klil tiféret berosho natata lo, beomdó lefanéja al har Sinái. Ushné lujót avaním horíd beyadó, vejatúv bahém shmirat Shabat, vején katúv betoratéja:</p>
+    <p><strong>Amidá de Shajarit de Shabat — Bendición central:</strong></p>
+    <p>Yismaj Moshé bematnát jelkó, ki éved neemán karáta lo, klil tiféret berosho natata lo, beomdó lefanéja al har Sinái. Ushné lujót avaním horíd beyadó, vejatúv bahém shmirat Shabat, vején katúv betoratéja:</p>
 
-<p>Veshamerú venéi Israel et haShabat, laasót et haShabat ledorotám brit olám. Beiní uvéin benéi Israel ot hi leolám, ki shéshet yamím asá Adonái et hashamáyim veét haáretz, uvayóm hashvií shavát vayinafásh.</p>
+    <p>Veshamerú venéi Israel et haShabat, laasót et haShabat ledorotám brit olám. Beiní uvéin benéi Israel ot hi leolám, ki shéshet yamím asá Adonái et hashamáyim veét haáretz, uvayóm hashvií shavát vayinafásh.</p>
 
-<p>Veló netató Adonái Elohéinu legoyéi haaratzót, veló hinjaltó Malkéinu leovdéi pesilim, vegam vimnujató lo yishkenú arelim, ki leIsrael ametja netató beahavá, lezera Yaakóv asher bam bajárta. Am mekadshéi shvií, kulám yisbe'ú veitanegú mituvéja, uvashvií ratzíta bo vekidashtó, jemdát yamím otó karáta, zéjer lemaasé vereshít.</p>
+    <p>Veló netató Adonái Elohéinu legoyéi haaratzót, veló hinjaltó Malkéinu leovdéi pesilim, vegam vimnujató lo yishkenú arelim, ki leIsrael ametja netató beahavá, lezera Yaakóv asher bam bajárta. Am mekadshéi shvií, kulám yisbe'ú veitanegú mituvéja, uvashvií ratzíta bo vekidashtó, jemdát yamím otó karáta, zéjer lemaasé vereshít.</p>
 
-<p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
-```
-
+    <p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
   </article>
 
   <article class="prayer" id="sb-musaf">
@@ -2178,29 +2136,26 @@ color: var(–ink) !important;
     <p class="heb">מוּסָף שֶׁל שַׁבָּת</p>
     <p class="rubric">Rezo adicional de Shabat, correspondiente al sacrificio adicional que se ofrecía en el Beit HaMikdash. Las primeras 3 y últimas 3 bendiciones son iguales; la del medio es específica de Musaf.</p>
 
-```
-<p><strong>Bendición central de Musaf:</strong></p>
-<p>Tikánta Shabat ratzíta korbenotéiha, tzivíta peirushéiha im siduréi nesajéiha. Meanaguéiha leolám kavód yinjálu, toaméiha jayím zajú, vegam haohavím devaréiha guedulá bajáru. Az miSinái nitztavú aléiha, vatetzavénu, Adonái Elohéinu, lehakrív ba korbán musaf Shabat karáui.</p>
+    <p><strong>Bendición central de Musaf:</strong></p>
+    <p>Tikánta Shabat ratzíta korbenotéiha, tzivíta peirushéiha im siduréi nesajéiha. Meanaguéiha leolám kavód yinjálu, toaméiha jayím zajú, vegam haohavím devaréiha guedulá bajáru. Az miSinái nitztavú aléiha, vatetzavénu, Adonái Elohéinu, lehakrív ba korbán musaf Shabat karáui.</p>
 
-<p>Yehí ratzón milfanéja, Adonái Elohéinu vElohéi avoténu, shetaalénu vesimjá leartzéinu vetitaénu bigvuléinu, vesham naasé lefanéja et korbenót jovotéinu, temidím kesidrám umusafím kehiljatám. Veét musaf yom haShabat hazé naasé venakrív lefanéja beahavá kemitzvát retzonéja, kemó shekatávta aléinu betoratéja al yedéi Moshé avdéja mipí jevodéja kaamúr:</p>
+    <p>Yehí ratzón milfanéja, Adonái Elohéinu vElohéi avoténu, shetaalénu vesimjá leartzéinu vetitaénu bigvuléinu, vesham naasé lefanéja et korbenót jovotéinu, temidím kesidrám umusafím kehiljatám. Veét musaf yom haShabat hazé naasé venakrív lefanéja beahavá kemitzvát retzonéja, kemó shekatávta aléinu betoratéja al yedéi Moshé avdéja mipí jevodéja kaamúr:</p>
 
-<p>Uvyom haShabat shnéi jevasím benéi shaná tmimím ushnéi esroním sólet minjá blulá vashémen veniskó. Olát Shabat beShabató, al olát hatamíd veniská.</p>
+    <p>Uvyom haShabat shnéi jevasím benéi shaná tmimím ushnéi esroním sólet minjá blulá vashémen veniskó. Olát Shabat beShabató, al olát hatamíd veniská.</p>
 
-<p>Yismejú vemaljutéja shomeréi Shabat vekoréi óneg, am mekadshéi shvií, kulám yisbe'ú veitanegú mituvéja, uvashvií ratzíta bo vekidashtó, jemdát yamím otó karáta, zéjer lemaasé vereshít.</p>
+    <p>Yismejú vemaljutéja shomeréi Shabat vekoréi óneg, am mekadshéi shvií, kulám yisbe'ú veitanegú mituvéja, uvashvií ratzíta bo vekidashtó, jemdát yamím otó karáta, zéjer lemaasé vereshít.</p>
 
-<p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
+    <p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
 
-<p class="rubric">Después de Musaf se canta Ein KElohéinu y Aleinu.</p>
+    <p class="rubric">Después de Musaf se canta Ein KElohéinu y Aleinu.</p>
 
-<p><strong>Ein KElohéinu</strong></p>
-<p>Ein kElohéinu, ein kAdonéinu, ein kMalkéinu, ein kMoshiénu.<br>
-Mi jElohéinu, mi jAdonéinu, mi jMalkéinu, mi jMoshiénu?<br>
-Nodé lElohéinu, nodé lAdonéinu, nodé lMalkéinu, nodé lMoshiénu.<br>
-Baruj Elohéinu, baruj Adonéinu, baruj Malkéinu, baruj Moshiénu.<br>
-Atá hu Elohéinu, Atá hu Adonéinu, Atá hu Malkéinu, Atá hu Moshiénu.<br>
-Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
-```
-
+    <p><strong>Ein KElohéinu</strong></p>
+    <p>Ein kElohéinu, ein kAdonéinu, ein kMalkéinu, ein kMoshiénu.<br>
+    Mi jElohéinu, mi jAdonéinu, mi jMalkéinu, mi jMoshiénu?<br>
+    Nodé lElohéinu, nodé lAdonéinu, nodé lMalkéinu, nodé lMoshiénu.<br>
+    Baruj Elohéinu, baruj Adonéinu, baruj Malkéinu, baruj Moshiénu.<br>
+    Atá hu Elohéinu, Atá hu Adonéinu, Atá hu Malkéinu, Atá hu Moshiénu.<br>
+    Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
   </article>
 
   <article class="prayer" id="sb-kidush-dia">
@@ -2208,15 +2163,12 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     <p class="heb">קִדּוּשָׁא רַבָּא</p>
     <p class="rubric">Kidush antes del almuerzo del Shabat, sobre vino o jugo de uva.</p>
 
-```
-<p>Veshamerú venéi Israel et haShabat, laasót et haShabat ledorotám brit olám. Beiní uvéin benéi Israel ot hi leolám, ki shéshet yamím asá Adonái et hashamáyim veét haáretz, uvayóm hashvií shavát vayinafásh.</p>
+    <p>Veshamerú venéi Israel et haShabat, laasót et haShabat ledorotám brit olám. Beiní uvéin benéi Israel ot hi leolám, ki shéshet yamím asá Adonái et hashamáyim veét haáretz, uvayóm hashvií shavát vayinafásh.</p>
 
-<p>Zajór et yom haShabat lekadshó. Shéshet yamím taavód veasíta kol melajtéja, veyom hashvií Shabat lAdonái Elohéja, lo taasé jol melajá. Al ken beraj Adonái et yom haShabat vaykadeshéhu.</p>
+    <p>Zajór et yom haShabat lekadshó. Shéshet yamím taavód veasíta kol melajtéja, veyom hashvií Shabat lAdonái Elohéja, lo taasé jol melajá. Al ken beraj Adonái et yom haShabat vaykadeshéhu.</p>
 
-<p>Savrí maranán verabanán verabotái:</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré perí hagáfen.</p>
-```
-
+    <p>Savrí maranán verabanán verabotái:</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré perí hagáfen.</p>
   </article>
 
   <article class="prayer" id="sb-zemirot-dia">
@@ -2224,23 +2176,20 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     <p class="heb">זְמִירוֹת לְיוֹם הַשַּׁבָּת</p>
     <p class="rubric">Cánticos para el almuerzo del Shabat.</p>
 
-```
-<p><strong>Baruj Adonái Yom Yom</strong></p>
-<p class="lead">Baruj Adonái yom yom, yaamós lánu yésha ufidyóm, uvshmó nagílu kol hayóm.</p>
+    <p><strong>Baruj Adonái Yom Yom</strong></p>
+    <p class="lead">Baruj Adonái yom yom, yaamós lánu yésha ufidyóm, uvshmó nagílu kol hayóm.</p>
 
-<p><strong>Yom Zé LeIsrael</strong></p>
-<p class="response">Yom zé leIsrael orá vesimjá,<br>Shabat menujá.</p>
-<p>Tzivíta pikudím bemaamád Sinái, Shabat umoadím lishmór bejol shanái, laarój lefanái mas'ét vaarujá, Shabat menujá. <em>(Estribillo)</em></p>
-<p>Jemdát halevavót leumá shvurá, linfashót nijavót neshamá yterá. Lenéfesh metzerá yasír anajá, Shabat menujá. <em>(Estribillo)</em></p>
+    <p><strong>Yom Zé LeIsrael</strong></p>
+    <p class="response">Yom zé leIsrael orá vesimjá,<br>Shabat menujá.</p>
+    <p>Tzivíta pikudím bemaamád Sinái, Shabat umoadím lishmór bejol shanái, laarój lefanái mas'ét vaarujá, Shabat menujá. <em>(Estribillo)</em></p>
+    <p>Jemdát halevavót leumá shvurá, linfashót nijavót neshamá yterá. Lenéfesh metzerá yasír anajá, Shabat menujá. <em>(Estribillo)</em></p>
 
-<p><strong>Ki Eshmerá Shabat</strong></p>
-<p class="response">Ki eshmerá Shabat, El yishmeréini.<br>Ot hi leolméi ad beinó uvéini.</p>
+    <p><strong>Ki Eshmerá Shabat</strong></p>
+    <p class="response">Ki eshmerá Shabat, El yishmeréini.<br>Ot hi leolméi ad beinó uvéini.</p>
 
-<p><strong>Deror Yikrá</strong></p>
-<p class="lead">Deror yikrá levén im bat, veyintzorjém kemó vavát. Neím shimjém veló yishbát, shvú venuju beyom Shabat.</p>
-<p>Drosh navi vealamí, veót yésha asé imí. Neta sorék betój karmí, sheé shavát benéi amí.</p>
-```
-
+    <p><strong>Deror Yikrá</strong></p>
+    <p class="lead">Deror yikrá levén im bat, veyintzorjém kemó vavát. Neím shimjém veló yishbát, shvú venuju beyom Shabat.</p>
+    <p>Drosh navi vealamí, veót yésha asé imí. Neta sorék betój karmí, sheé shavát benéi amí.</p>
   </article>
 
   <article class="prayer" id="sb-minja-shabat">
@@ -2248,17 +2197,14 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     <p class="heb">מִנְחָה שֶׁל שַׁבָּת</p>
     <p class="rubric">Rezo de la tarde de Shabat. Sigue la estructura de Minjá cotidiana, con la Amidá especial de Shabat.</p>
 
-```
-<p><strong>Ashréi</strong> y <strong>Uvá leTziyón</strong> (ver Minjá cotidiana).</p>
+    <p><strong>Ashréi</strong> y <strong>Uvá leTziyón</strong> (ver Minjá cotidiana).</p>
 
-<p><strong>Lectura de la Torá:</strong> Se lee el principio de la parashá de la siguiente semana (tres olím).</p>
+    <p><strong>Lectura de la Torá:</strong> Se lee el principio de la parashá de la siguiente semana (tres olím).</p>
 
-<p><strong>Amidá — Bendición central:</strong></p>
-<p>Atá ejad veshimjá ejad, umí keameja Israel, goi ejad baáretz. Tiféret guedulá vaateret yeshuá, yom menujá ukdushá leamejá natáta. Avrahám yaguél, Itzjak yeranén, Yaakóv uvanáv yanúju vo. Menujat ahavá undavá, menujat emét veemuná, menujat shalóm veshalvá vehashkét vavetaj, menujá shlemá sheAtá rotzé ba. Yakíru vanéja veyedeú ki meitejá hi menujatám, veál menujatám yakdíshu et shemája.</p>
+    <p><strong>Amidá — Bendición central:</strong></p>
+    <p>Atá ejad veshimjá ejad, umí keameja Israel, goi ejad baáretz. Tiféret guedulá vaateret yeshuá, yom menujá ukdushá leamejá natáta. Avrahám yaguél, Itzjak yeranén, Yaakóv uvanáv yanúju vo. Menujat ahavá undavá, menujat emét veemuná, menujat shalóm veshalvá vehashkét vavetaj, menujá shlemá sheAtá rotzé ba. Yakíru vanéja veyedeú ki meitejá hi menujatám, veál menujatám yakdíshu et shemája.</p>
 
-<p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
-```
-
+    <p>Elohéinu vElohéi avoténu, retzé vimnujaténu. Kadshéinu bemitzvotéja, vetén jelkéinu betoratéja. Sabéinu mituvéja vesamjéinu bishuatéja, vetahér libéinu leovdejá beemét. Vehanjilénu, Adonái Elohéinu, beahavá uvratzón Shabat kodshéja, veyanúju va Israel mekadshéi shemája. Baruj Atá Adonái, mekadésh haShabat.</p>
   </article>
 
   <article class="prayer" id="sb-seudá-shlishit">
@@ -2266,18 +2212,15 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     <p class="heb">סְעוּדָה שְׁלִישִׁית</p>
     <p class="rubric">La tercera comida de Shabat, entre Minjá y Arvit. Tradicionalmente se canta el Salmo 23 y otros cánticos de despedida del Shabat.</p>
 
-```
-<p><strong>Mizmor LeDavid (Salmo 23)</strong></p>
-<p class="lead">Mizmór leDavíd: Adonái roí, lo ejsár. Bin'ót déshe yarbitzéini, al méi menujót yenahaléini. Nafshí yeshovéiv, yanjéini vemaaglei tzédek lemáan shemó. Gam ki eléj begué tzalmávet, lo irá ra ki Atá imadí, shivteja umishantéja héma yenajamúni.</p>
-<p>Taarój lefanái shulján négued tzorerái, dishánta vashémen roshí, kosí revayá. Aj tov vajésed yirdefúni kol yeméi jayái, veshavtí bevéit Adonái leórej yamím.</p>
+    <p><strong>Mizmor LeDavid (Salmo 23)</strong></p>
+    <p class="lead">Mizmór leDavíd: Adonái roí, lo ejsár. Bin'ót déshe yarbitzéini, al méi menujót yenahaléini. Nafshí yeshovéiv, yanjéini vemaaglei tzédek lemáan shemó. Gam ki eléj begué tzalmávet, lo irá ra ki Atá imadí, shivteja umishantéja héma yenajamúni.</p>
+    <p>Taarój lefanái shulján négued tzorerái, dishánta vashémen roshí, kosí revayá. Aj tov vajésed yirdefúni kol yeméi jayái, veshavtí bevéit Adonái leórej yamím.</p>
 
-<p><strong>Yedíd Néfesh</strong></p>
-<p class="lead">Yedíd néfesh, Av harajamán, meshój avdejá el retzonéja. Yarútz avdejá kemó ayál, yishtajavé el mul hadaréja. Yeerav lo yedidotéja, minófet tzuf vejol táam.</p>
-<p>Hadúr naé ziv haolám, nafshí jolat ahavatéja. Ana El na refá na la, beharót la nóam zivéja. Az tit'jazék vetitrapé, vehaietá la simjat olám.</p>
+    <p><strong>Yedíd Néfesh</strong></p>
+    <p class="lead">Yedíd néfesh, Av harajamán, meshój avdejá el retzonéja. Yarútz avdejá kemó ayál, yishtajavé el mul hadaréja. Yeerav lo yedidotéja, minófet tzuf vejol táam.</p>
+    <p>Hadúr naé ziv haolám, nafshí jolat ahavatéja. Ana El na refá na la, beharót la nóam zivéja. Az tit'jazék vetitrapé, vehaietá la simjat olám.</p>
 
-<p>Tradicionalmente se acompaña con cánticos lentos y nostálgicos al despedir el Shabat.</p>
-```
-
+    <p>Tradicionalmente se acompaña con cánticos lentos y nostálgicos al despedir el Shabat.</p>
   </article>
 
   <article class="prayer" id="sb-arvit-motzaei">
@@ -2285,18 +2228,15 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     <p class="heb">עַרְבִית שֶׁל מוֹצָאֵי שַׁבָּת</p>
     <p class="rubric">Rezo de Arvit del sábado por la noche, cuando termina el Shabat. La Amidá es la cotidiana, con una adición especial.</p>
 
-```
-<p><strong>Atá Jonantanu</strong> — Adición en la 4ª bendición de la Amidá:</p>
-<p>Atá jonantánu lemadá toratéja, vatlamdéinu laasót juké retzonéja. Vatavdél, Adonái Elohéinu, béin kódesh lejol, béin or lejóshej, béin Israel laamím, béin yom hashvií leshéshet yeméi hamaasé. Avínu Malkéinu, hajél aléinu hayamím habaím likratéinu leshalóm, jasujím mikol jet, umnukim mikol avón, umdubakim beyirateja. Vejonéinu meitejá deá biná vehaskél…</p>
+    <p><strong>Atá Jonantanu</strong> — Adición en la 4ª bendición de la Amidá:</p>
+    <p>Atá jonantánu lemadá toratéja, vatlamdéinu laasót juké retzonéja. Vatavdél, Adonái Elohéinu, béin kódesh lejol, béin or lejóshej, béin Israel laamím, béin yom hashvií leshéshet yeméi hamaasé. Avínu Malkéinu, hajél aléinu hayamím habaím likratéinu leshalóm, jasujím mikol jet, umnukim mikol avón, umdubakim beyirateja. Vejonéinu meitejá deá biná vehaskél…</p>
 
-<p class="rubric">Si uno olvidó decir "Atá jonantanu" y ya comió antes de Havdalá, debe repetir la Amidá.</p>
+    <p class="rubric">Si uno olvidó decir "Atá jonantanu" y ya comió antes de Havdalá, debe repetir la Amidá.</p>
 
-<p><strong>VeYitén Lejá</strong></p>
-<p class="rubric">Después de Arvit del motzaéi Shabat, se canta esta colección de versos bíblicos de bendición.</p>
-<p>VeYitén lejá haElohím mital hashamáyim umishmanéi haáretz, verov dagán vetirósh. Yaavdúja amím veyishtajavú lejá leumím, hevé guevír leajéja veyishtajavú lejá benéi iméja. Orréja arúr umvarjéja barúj.</p>
-<p>VeEl Shadái yevaréj otjá, veyafréja veyarbéja, vehayíta likhál amím. Veyitén lejá et birkát Avrahám, lejá ulzaréja itáj, lerishtejá et éretz megouréja, asher natán Elohím leAvrahám.</p>
-```
-
+    <p><strong>VeYitén Lejá</strong></p>
+    <p class="rubric">Después de Arvit del motzaéi Shabat, se canta esta colección de versos bíblicos de bendición.</p>
+    <p>VeYitén lejá haElohím mital hashamáyim umishmanéi haáretz, verov dagán vetirósh. Yaavdúja amím veyishtajavú lejá leumím, hevé guevír leajéja veyishtajavú lejá benéi iméja. Orréja arúr umvarjéja barúj.</p>
+    <p>VeEl Shadái yevaréj otjá, veyafréja veyarbéja, vehayíta likhál amím. Veyitén lejá et birkát Avrahám, lejá ulzaréja itáj, lerishtejá et éretz megouréja, asher natán Elohím leAvrahám.</p>
   </article>
 
   <article class="prayer" id="sb-havdala">
@@ -2304,33 +2244,30 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     <p class="heb">הַבְדָּלָה</p>
     <p class="rubric">Ceremonia de despedida del Shabat, sábado por la noche al ver tres estrellas. Se necesita una copa de vino, especias (besamim) y una vela trenzada.</p>
 
-```
-<p class="rubric">Versos introductorios — sosteniendo la copa con la mano derecha:</p>
-<p>Hiné El yeshuatí, evtáj veló efjád, ki ozí vezimrát Yah Adonái, vayhi li lishuá. Ushavtém máyim besasón mimaaynéi hayeshuá. LAdonái hayeshuá, al ameja birjatéja, sela. Adonái Tzevaót imánu, misgáv lánu Elohéi Yaakóv, sela. Adonái Tzevaót, ashréi adám botéaj baj.</p>
-<p>Adonái hoshía, haMélej yaanéinu veyom korénu. Layehudím haytá orá vesimjá, vesasón vikár — ken tihyé lánu. Kos yeshuót essá, uvshém Adonái ekrá.</p>
+    <p class="rubric">Versos introductorios — sosteniendo la copa con la mano derecha:</p>
+    <p>Hiné El yeshuatí, evtáj veló efjád, ki ozí vezimrát Yah Adonái, vayhi li lishuá. Ushavtém máyim besasón mimaaynéi hayeshuá. LAdonái hayeshuá, al ameja birjatéja, sela. Adonái Tzevaót imánu, misgáv lánu Elohéi Yaakóv, sela. Adonái Tzevaót, ashréi adám botéaj baj.</p>
+    <p>Adonái hoshía, haMélej yaanéinu veyom korénu. Layehudím haytá orá vesimjá, vesasón vikár — ken tihyé lánu. Kos yeshuót essá, uvshém Adonái ekrá.</p>
 
-<p><strong>1. Sobre el vino:</strong></p>
-<p>Savrí maranán verabanán verabotái:</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré perí hagáfen.</p>
+    <p><strong>1. Sobre el vino:</strong></p>
+    <p>Savrí maranán verabanán verabotái:</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré perí hagáfen.</p>
 
-<p><strong>2. Sobre las especias</strong> (besamim) — se huelen:</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré minéi vesamím.</p>
+    <p><strong>2. Sobre las especias</strong> (besamim) — se huelen:</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré minéi vesamím.</p>
 
-<p><strong>3. Sobre la vela trenzada</strong> — mirando las uñas a la luz:</p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré meoréi haésh.</p>
+    <p><strong>3. Sobre la vela trenzada</strong> — mirando las uñas a la luz:</p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, boré meoréi haésh.</p>
 
-<p><strong>4. La bendición de la separación:</strong></p>
-<p>Baruj Atá Adonái, Elohéinu Mélej haolám, hamavdíl béin kódesh lejol, béin or lejóshej, béin Israel laamím, béin yom hashvií leshéshet yeméi hamaasé. Baruj Atá Adonái, hamavdíl béin kódesh lejol.</p>
+    <p><strong>4. La bendición de la separación:</strong></p>
+    <p>Baruj Atá Adonái, Elohéinu Mélej haolám, hamavdíl béin kódesh lejol, béin or lejóshej, béin Israel laamím, béin yom hashvií leshéshet yeméi hamaasé. Baruj Atá Adonái, hamavdíl béin kódesh lejol.</p>
 
-<p class="rubric">Se bebe la mayor parte del vino. Se apaga la vela en el vino que sobró. Es costumbre mojar los dedos en ese vino y tocarse los ojos y los bolsillos como signo de bendición.</p>
+    <p class="rubric">Se bebe la mayor parte del vino. Se apaga la vela en el vino que sobró. Es costumbre mojar los dedos en ese vino y tocarse los ojos y los bolsillos como signo de bendición.</p>
 
-<p><strong>HaMavdíl</strong> — cántico tradicional al concluir Havdalá:</p>
-<p class="response">HaMavdíl béin kódesh lejol,<br>jatotéinu Hu yimjól.<br>Zaréinu vejaspéinu yarbé jajól,<br>vejakojavím baláila.</p>
+    <p><strong>HaMavdíl</strong> — cántico tradicional al concluir Havdalá:</p>
+    <p class="response">HaMavdíl béin kódesh lejol,<br>jatotéinu Hu yimjól.<br>Zaréinu vejaspéinu yarbé jajól,<br>vejakojavím baláila.</p>
 
-<p><strong>Eliyahu HaNaví</strong></p>
-<p class="response">Eliyáhu haNaví, Eliyáhu haTishbí,<br>Eliyáhu, Eliyáhu, Eliyáhu haGuiladí.<br>Bimheirá veyaméinu, yavó eléinu,<br>im Mashíaj ben David.</p>
-```
-
+    <p><strong>Eliyahu HaNaví</strong></p>
+    <p class="response">Eliyáhu haNaví, Eliyáhu haTishbí,<br>Eliyáhu, Eliyáhu, Eliyáhu haGuiladí.<br>Bimheirá veyaméinu, yavó eléinu,<br>im Mashíaj ben David.</p>
   </article>
 
 </section>
@@ -2528,6 +2465,22 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
 
   updateHebrewDateBar();
   setInterval(updateHebrewDateBar, 60000);
+
+  // Dynamically position pages below the top chrome
+  function updatePagePositions() {
+    const wrap = document.getElementById('topWrap');
+    if (!wrap) return;
+    const h = wrap.offsetHeight;
+    document.documentElement.style.setProperty('--top-chrome-height', h + 'px');
+  }
+  updatePagePositions();
+  window.addEventListener('resize', updatePagePositions);
+  // Also update after fonts load (size may change)
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(updatePagePositions);
+  }
+  setTimeout(updatePagePositions, 500);
+  setTimeout(updatePagePositions, 1500);
 </script>
 
 <script>
@@ -2723,14 +2676,15 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
   const sizeSlider = document.getElementById('sizeSlider');
   const sizePreview = document.getElementById('sizePreview');
 
-  const SIZE_LABELS = ['Muy pequeño', 'Pequeño', 'Mediano', 'Grande', 'Más grande', 'Extra grande', 'Máximo'];
+  const SIZE_LABELS = ['Mínimo', 'Muy pequeño', 'Pequeño', 'Mediano', 'Grande', 'Más grande', 'Extra grande', 'Muy grande', 'Enorme', 'Máximo'];
 
   function applySize(idx) {
-    idx = parseInt(idx) || 2;
+    idx = parseInt(idx);
+    if (isNaN(idx)) idx = 3;
     if (idx < 0) idx = 0;
-    if (idx > 6) idx = 6;
+    if (idx > 9) idx = 9;
     // Remove all size classes
-    for (let i = 0; i <= 6; i++) {
+    for (let i = 0; i <= 9; i++) {
       document.body.classList.remove('text-size-' + i);
     }
     document.body.classList.add('text-size-' + idx);
@@ -2765,10 +2719,10 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     if (!isNaN(savedSize)) {
       applySize(savedSize);
     } else {
-      applySize(2); // Default medium
+      applySize(3); // Default Mediano
     }
   } catch(e) {
-    applySize(2);
+    applySize(3);
   }
 </script>
 
@@ -2787,6 +2741,5 @@ Atá toshiénu, Atá takúm terajém Tziyón, ki et lejennenáh ki va moéd.</p>
     });
   }
 </script>
-
 </body>
 </html>
